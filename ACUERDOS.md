@@ -11,3 +11,5 @@ Revisión : al cierre de cada iteración
 5. Mantener una comunicación constante, informar al equipo sobre avances, problemas o cambios importantes para evitar confusiones.
 6. Actualizar el repositorio antes de trabajar
 Antes de realizar cambios, ejecutar git pull para trabajar con la versión más reciente del proyecto.
+7. Respetar y apoyar el trabajo de los demas
+8. Revisar el codigo antes de subirlo 
