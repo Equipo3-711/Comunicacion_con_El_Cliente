@@ -13,3 +13,6 @@ Revisión : al cierre de cada iteración
 Antes de realizar cambios, ejecutar git pull para trabajar con la versión más reciente del proyecto.
 7. Respetar y apoyar el trabajo de los demas
 8. Revisar el codigo antes de subirlo 
+9. Actualización obligatoria: Exigir que la rama esté al día con la rama base antes de integrar los cambios
+10. Revisiones requeridas exigir al menos una o dos aprobaciones de compañeros
+11. Mensajes descriptivos: Exigir un formato claro en los commits o ligarlos a tareas e incidencias (issues)
