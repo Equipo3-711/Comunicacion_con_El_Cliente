@@ -9,3 +9,9 @@
 5. ¿Cómo determinan actualmente si una solicitud de un cliente ya fue atendida y quién es responsable de darle seguimiento?
 6. ¿Cómo se asignan actualmente las solicitudes de los clientes entre los diferentes integrantes o áreas del equipo, y qué sucede cuando una solicitud necesita ser atendida por más de una persona?
 7. ¿Qué información consideran indispensable tener disponible al momento de atender a un cliente para poder darle una respuesta rápida y adecuada?
+
+8. ¿Cuentan con tiempos máximos de respuesta (SLA) definidos para cada tipo de solicitud y cómo miden si el equipo está cumpliendo con esos tiempos?
+
+9. ¿Utilizan actualmente alguna herramienta, plantilla de correo o respuestas automatizadas para agilizar la atención de las preguntas más repetitivas?
+
+10. Una vez que se da por resuelta una solicitud o queja, ¿tienen algún mecanismo para evaluar el nivel de satisfacción del cliente con la atención recibida?
