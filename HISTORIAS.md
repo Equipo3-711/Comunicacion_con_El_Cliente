@@ -1,0 +1,25 @@
+# Historias de Usuario - Módulo de Comunicación con el Cliente
+
+**Historia:** HU-01
+**Requerimiento asociado:** RF-01
+**Descripción:** 
+* **Rol:** Como arquitecto director.
+* **Necesidad:** Quiero registrar la autorización del cliente frente a cualquier solicitud de cambio de alcance.
+* **Beneficio:** Para evitar que los cambios se ejecuten en obra antes de estar aprobados y prevenir discusiones posteriores sobre el costo.
+
+**Criterios de Aceptación:**
+1. **Dado** que un residente de obra registra un cambio solicitado verbalmente por el cliente en el sitio, **cuando** el cambio implica una modificación en el costo o la fecha, **entonces** el sistema bloquea la orden de ejecución hasta que se adjunte una evidencia verificable de la autorización del cliente propietario.
+2. **Dado** que una solicitud de cambio requiere aprobación, **cuando** el arquitecto director sube la evidencia de autorización, **entonces** el sistema cambia el estado a "Autorizado" y el responsable asignado puede proceder a su cierre.
+
+---
+
+**Historia:** HU-02
+**Requerimiento asociado:** RF-03
+**Descripción:** 
+* **Rol:** Como cliente propietario.
+* **Necesidad:** Quiero consultar el estado de mis solicitudes y la bitácora de avance de mi obra.
+* **Beneficio:** Para tener certeza del proyecto sin necesidad de perseguir al personal de la empresa o preguntar por mensajería.
+
+**Criterios de Aceptación:**
+1. **Dado** que accedo a la plataforma para ver el estatus de mi obra, **cuando** visualizo el detalle de una solicitud de cambio que incluye estimaciones de costo, **entonces** el sistema muestra únicamente mi impacto financiero final, ocultando por completo los precios de los contratistas y los márgenes de la empresa.
+2. **Dado** que tengo dudas sobre el progreso de mi proyecto, **cuando** accedo a la sección de avance, **entonces** visualizo un reporte con las fotografías de la obra sin acceder a los comentarios internos ni a las conversaciones del equipo de diseño.
