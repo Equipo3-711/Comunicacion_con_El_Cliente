@@ -23,3 +23,33 @@
 **Criterios de Aceptación:**
 1. **Dado** que accedo a la plataforma para ver el estatus de mi obra, **cuando** visualizo el detalle de una solicitud de cambio que incluye estimaciones de costo, **entonces** el sistema muestra únicamente mi impacto financiero final, ocultando por completo los precios de los contratistas y los márgenes de la empresa.
 2. **Dado** que tengo dudas sobre el progreso de mi proyecto, **cuando** accedo a la sección de avance, **entonces** visualizo un reporte con las fotografías de la obra sin acceder a los comentarios internos ni a las conversaciones del equipo de diseño.
+
+---
+
+**Historia:** HU-03
+**Requerimiento asociado:** RF-02
+
+* **Rol:** Como integrante encargado de atender al cliente.
+* **Necesidad:** Quiero clasificar cada interacción recibida según el motivo de contacto.
+* **Beneficio:** Para identificar correctamente qué tipo de atención requiere y evitar que solicitudes importantes se confundan con dudas o mensajes informativos.
+
+**Criterios de aceptación:**
+
+1. **Dado** que se registra una nueva interacción del cliente, **cuando** se complete su registro, **entonces** deberá estar clasificada como duda, cambio de alcance, queja, aprobación o informativo.
+2. **Dado** que una interacción no tiene un tipo asignado, **cuando** se intente completar su registro, **entonces** no deberá considerarse correctamente registrada.
+3. **Dado** que una interacción ya fue clasificada, **cuando** sea consultada posteriormente, **entonces** deberá conservar el tipo que le fue asignado.
+
+---
+
+**Historia:** HU-04
+**Requerimiento asociado:** RF-04
+
+* **Rol:** Como coordinador de proyectos.
+* **Necesidad:** Quiero que las solicitudes de los clientes tengan un responsable y una fecha compromiso.
+* **Beneficio:** Para saber quién debe atender cada petición y evitar solicitudes sin seguimiento.
+
+**Criterios de aceptación:**
+
+1. **Dado** que existe una solicitud pendiente, **cuando** se asigne su atención, **entonces** deberá quedar registrado el responsable correspondiente.
+2. **Dado** que una solicitud tiene un responsable, **cuando** se establezca un compromiso de atención, **entonces** deberá quedar registrada una fecha compromiso.
+3. **Dado** que se cambia al responsable de una solicitud, **cuando** se confirme el cambio, **entonces** deberá conservarse registro del responsable anterior y del nuevo responsable.
