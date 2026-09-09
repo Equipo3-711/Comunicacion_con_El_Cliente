@@ -83,4 +83,28 @@ Historia: HU-06
 2. * **Dado** que una solicitud cuenta con decisiones y evidencias asociadas, **cuando** se consulte su historial, **entonces** el sistema deberá mostrar las decisiones y evidencias relacionadas con dicha solicitud.
 3. * **Dado** que una solicitud ha cambiado de responsable o estado, **cuando** se consulte posteriormente, **entonces** el sistema deberá conservar y mostrar el registro de dichos cambios.
 
+---
+**Historia:** HU-07
+**Requerimiento asociado:** RF-12
+**Descripción:**
+* **Rol:** Como responsable de atención.
+* **Necesidad:** Quiero recibir una notificación cuando se me asigne una nueva solicitud.
+* **Beneficio:** Para enterarme rápidamente y comenzar a darle seguimiento.
+**Criterios de aceptación:**
+1. **Dado** que una nueva solicitud es asignada a un responsable, **cuando** se confirme la asignación, **entonces** el sistema deberá enviarle una notificación.
+2. **Dado** que el responsable recibe una notificación, **cuando** la seleccione, **entonces** el sistema deberá mostrar la información de la solicitud correspondiente.
+3. **Dado** que una solicitud cambia de responsable, **cuando** se confirme el cambio, **entonces** el nuevo responsable deberá recibir una notificación.
+---
+
+
+**Historia:** HU-08
+**Requerimiento asociado:** RF-14
+**Descripción:**
+* **Rol:** Como coordinador de proyectos.
+* **Necesidad:** Quiero recibir una alerta cuando una solicitud esté cerca de superar su tiempo límite de respuesta.
+* **Beneficio:** Para darle seguimiento a tiempo y evitar retrasos en la atención al cliente.
+**Criterios de aceptación:**
+1. **Dado** que una solicitud tiene un tiempo límite establecido, **cuando** esté próxima a vencer, **entonces** el sistema deberá generar una alerta.
+2. **Dado** que una solicitud supera su tiempo límite, **cuando** el coordinador consulte las solicitudes, **entonces** el sistema deberá identificarla como vencida.
+3. **Dado** que una solicitud fue atendida antes de su vencimiento, **cuando** cambie su estado a atendida o cerrada, **entonces** el sistema deberá dejar de generar alertas de vencimiento.
 
