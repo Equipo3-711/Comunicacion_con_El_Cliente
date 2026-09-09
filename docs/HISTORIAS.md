@@ -53,3 +53,14 @@
 1. **Dado** que existe una solicitud pendiente, **cuando** se asigne su atención, **entonces** deberá quedar registrado el responsable correspondiente.
 2. **Dado** que una solicitud tiene un responsable, **cuando** se establezca un compromiso de atención, **entonces** deberá quedar registrada una fecha compromiso.
 3. **Dado** que se cambia al responsable de una solicitud, **cuando** se confirme el cambio, **entonces** deberá conservarse registro del responsable anterior y del nuevo responsable.
+
+---
+
+**Historia:** HU-05
+**Requerimiento asociado:** RF-07
+* **Rol:** Como residente de obra (responsable asignado).  
+* **Necesidad:** Quiero ser el único que pueda cerrar las solicitudes que me han sido asignadas, registrando la decisión tomada.  
+* **Beneficio:** Para asegurar que nadie más cierre una queja o petición sin mi conocimiento y mantener la trazabilidad de la solución.  
+* **Criterios de aceptación:** 
+1. * **Dado** que un usuario distinto al responsable asignado visualiza una solicitud, cuando intenta hacer clic en el botón de "Cerrar solicitud", entonces el sistema bloquea la acción y muestra un mensaje indicando que no tiene los permisos.  
+2. * **Dado** que el responsable asignado está resolviendo una solicitud, cuando intenta cambiar el estado a "Cerrado" sin escribir en el campo de "Decisión final", entonces el sistema le impide avanzar y marca el campo como obligatorio. 
