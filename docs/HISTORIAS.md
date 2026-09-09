@@ -64,3 +64,23 @@
 * **Criterios de aceptación:** 
 1. * **Dado** que un usuario distinto al responsable asignado visualiza una solicitud, cuando intenta hacer clic en el botón de "Cerrar solicitud", entonces el sistema bloquea la acción y muestra un mensaje indicando que no tiene los permisos.  
 2. * **Dado** que el responsable asignado está resolviendo una solicitud, cuando intenta cambiar el estado a "Cerrado" sin escribir en el campo de "Decisión final", entonces el sistema le impide avanzar y marca el campo como obligatorio. 
+
+---
+
+Historia: HU-06
+
+**Requerimiento asociado:** RF-05
+
+**Descripción:**
+
+* **Rol:** Como coordinador de proyectos.
+* **Necesidad:** Quiero consultar el historial completo de las solicitudes de una obra.
+* **Beneficio:** Para conocer el seguimiento que ha tenido cada solicitud y mantener evidencia de las acciones realizadas durante la atención al cliente.
+
+* **Criterios de aceptación:**
+
+1. * **Dado** que una obra tiene solicitudes registradas, **cuando** el coordinador consulte su historial, **entonces** el sistema deberá mostrar las solicitudes junto con su estado, responsable y fechas correspondientes.
+2. * **Dado** que una solicitud cuenta con decisiones y evidencias asociadas, **cuando** se consulte su historial, **entonces** el sistema deberá mostrar las decisiones y evidencias relacionadas con dicha solicitud.
+3. * **Dado** que una solicitud ha cambiado de responsable o estado, **cuando** se consulte posteriormente, **entonces** el sistema deberá conservar y mostrar el registro de dichos cambios.
+
+
