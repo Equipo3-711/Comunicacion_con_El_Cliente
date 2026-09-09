@@ -19,6 +19,10 @@ RF-08 | Func. | El sistema debe proveer un tablero de control (dashboard) para l
 | RF-09 | Func. | El sistema debe permitir al responsable enviar una respuesta al cliente asociada a una solicitud, registrando la fecha y hora de la comunicación. | Alta |
 | RF-10 | Func. | El sistema debe permitir adjuntar evidencias, como fotografías o documentos, a las solicitudes de los clientes para respaldar su seguimiento y resolución. | Media |
 | RF-11 | Func. | El sistema debe permitir cambiar el estado de una solicitud entre pendiente, en proceso, atendida y cerrada, de acuerdo con las acciones realizadas por el responsable. | Alta |
+|RF-12	|Func.	|El sistema debe enviar una notificación al responsable cuando se le asigne una nueva solicitud de un cliente. | Alta |
+| RF-13	| Func.	| El sistema debe permitir buscar y filtrar solicitudes por obra, cliente, tipo, estado, responsable o fecha.	| Media |
+| RF-14	| Func.	| El sistema debe enviar una alerta al responsable cuando una solicitud esté próxima a superar su tiempo límite de respuesta. |	Alta  |
+| RF-15	| Func.	| El sistema debe permitir generar y descargar un reporte con las solicitudes registradas y su estado de atención por cada obra. | Media |
 <br>
 
 ### Requerimientos No Funcionales (RNF)
@@ -33,4 +37,4 @@ RF-08 | Func. | El sistema debe proveer un tablero de control (dashboard) para l
 | RNF-05 | Accesibilidad | El portal o bitácora de consulta para el cliente propietario debe ser accesible a través de navegadores web móviles sin requerir la descarga o instalación de una aplicación nativa. | Alta |
 | RNF-06 | Seguridad | El sistema debe proteger la información de las solicitudes mediante autenticación de usuarios, permitiendo que cada usuario acceda únicamente a las funciones y datos correspondientes a su rol. | Alta |
 | RNF-07 | Compatibilidad | El sistema debe funcionar correctamente en dispositivos móviles Android y iOS, así como en los navegadores web más utilizados, sin afectar las funciones principales del módulo. | Media |
-
+| RNF-08 | Confiabilidad | El sistema debe realizar respaldos automáticos de la información registrada al menos una vez al día para reducir el riesgo de pérdida de datos. | Alta |
