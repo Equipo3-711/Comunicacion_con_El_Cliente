@@ -1,1 +1,11 @@
+# Reglas de Grecia
 
+
+#Reglas de Ximena
+charset = utf-8
+indent_style = space
+indent_size = 2
+
+[*.md]
+indent_style = space
+indent_size = 2
