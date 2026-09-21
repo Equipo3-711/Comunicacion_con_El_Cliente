@@ -33,7 +33,11 @@ En la entrevista no se explicó de manera específica cómo se asignan las solic
 
 10. Una vez que se da por resuelta una solicitud o queja, ¿tienen algún mecanismo para evaluar el nivel de satisfacción del cliente con la atención recibida?
 
+Durante la entrevista no se mencionó un mecanismo específico para medir la satisfacción del cliente después de resolver una solicitud o queja. Por lo tanto, podría considerarse una oportunidad para implementar una encuesta o algún sistema de evaluación dentro de la plataforma.
+
 11. ¿Qué tipo de solicitudes o consultas reciben con mayor frecuencia por parte de los clientes y cuáles consideran que requieren mayor atención?
+
+Una de las solicitudes principales son las cotizaciones. Los clientes pueden estar interesados en diferentes productos, como vidrios, espejos, mosquiteros y mosquiteros enrollables. También pueden solicitar modificaciones a una cotización, en cuyo caso se realiza una nueva cotización.
 
 12. ¿Existen situaciones en las que se pierda información importante durante la comunicación con un cliente, y cuáles suelen ser las principales causas?
 
