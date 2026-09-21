@@ -11,9 +11,20 @@ Cuando un cliente está interesado, puede solicitar una cotización. Un operador
 3. ¿Cómo se registra actualmente la información y el historial de las conversaciones o solicitudes de cada cliente para poder darles seguimiento?
 Actualmente cuentan con un sistema al que los usuarios acceden mediante correo y contraseña. En este sistema pueden consultar información del prroyecto, avances y fotografías. También parte de la comunicación se realiza por WhatsApp, llamadas y redes sociales. 
 
-4. ¿Qué dificultades se presentan con mayor frecuencia al dar seguimiento a las solicitudes de los clientes y cómo las solucionan actualmente?
+ 4. ¿Qué dificultades se presentan con mayor frecuencia al dar seguimiento a las solicitudes de los clientes y cómo las solucionan actualmente?
+
+Una de las principales áreas de oportunidad es que la comunicación se realiza por diferentes medios, como WhatsApp, llamadas y redes sociales. Para dar seguimiento utilizan el sistema y los reportes fotográficos que se generan durante el proyecto. También se busca que el cliente pueda consultar directamente el avance de su proyecto.
+
 5. ¿Cómo determinan actualmente si una solicitud de un cliente ya fue atendida y quién es responsable de darle seguimiento?
+ 
+El seguimiento se realiza mediante el personal encargado de atender al cliente y mediante el sistema. Cuando se realiza una visita a la vivienda u obra, el operador genera la información necesaria para continuar con la cotización. Actualmente, quienes responden las consultas son principalmente ingenieros.
+
 6. ¿Cómo se asignan actualmente las solicitudes de los clientes entre los diferentes integrantes o áreas del equipo, y qué sucede cuando una solicitud necesita ser atendida por más de una persona?
+
+En la entrevista no se explicó de manera específica cómo se asignan las solicitudes entre las diferentes áreas. Sin embargo, participan diferentes personas, como operadores e ingenieros, dependiendo de las necesidades del proyecto. Este es un aspecto que podría organizarse mejor dentro del sistema.
+
+
+
 7. ¿Qué información consideran indispensable tener disponible al momento de atender a un cliente para poder darle una respuesta rápida y adecuada?
 
 8. ¿Cuentan con tiempos máximos de respuesta (SLA) definidos para cada tipo de solicitud y cómo miden si el equipo está cumpliendo con esos tiempos?
