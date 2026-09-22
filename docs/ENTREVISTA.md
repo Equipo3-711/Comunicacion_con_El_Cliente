@@ -47,5 +47,7 @@
 **Respuesta:** Una de las solicitudes principales son las cotizaciones. Los clientes pueden estar interesados en diferentes productos, como vidrios, espejos, mosquiteros y mosquiteros enrollables. También pueden solicitar modificaciones a una cotización, en cuyo caso se realiza una nueva cotización.
 
 12. ¿Existen situaciones en las que se pierda información importante durante la comunicación con un cliente, y cuáles suelen ser las principales causas?
+**Respuesta:**  No se mencionó directamente un caso específico de pérdida de información. Sin embargo, debido a que la comunicación se realiza por diferentes medios, como WhatsApp, llamadas, redes sociales y página web, existe la necesidad de centralizar la información para facilitar el seguimiento de cada cliente.
 
 13. ¿Qué mejoras consideran más importantes en el proceso actual de comunicación con los clientes para facilitar el trabajo del equipo y brindar una mejor atención?
+**Respuesta:** Se propone crear una interfaz exclusiva para el cliente donde pueda consultar de manera sencilla el avance de su proyecto, fotografías, presupuesto, pagos y fechas importantes. También se busca integrar facturas, contratos, términos y condiciones y permitir que los pagos puedan realizarse directamente desde el sistema. Además, sería útil contar con respuestas automáticas para preguntas frecuentes y mantener atención personalizada para dudas más complejas. La plataforma debería estar disponible en español e inglés
