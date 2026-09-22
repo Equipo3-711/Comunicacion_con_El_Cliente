@@ -1,40 +1,43 @@
 # Requerimientos - Módulo de Comunicación con el Cliente
 
 **Módulo:** Comunicación con el cliente
+
 **Equipo:** 3 (Grupo 711)
 
-### Requerimientos Funcionales (RF)
-*Objetivo:* Al menos 15 requerimientos funcionales clasificados, priorizados y verificables.
+## Requerimientos Funcionales (RF)
+
+**Objetivo:** Definir las funcionalidades necesarias para centralizar, organizar y mejorar la comunicación entre la empresa y sus clientes.
 
 | ID | Tipo | Requerimiento | Prioridad |
 | :--- | :--- | :--- | :--- |
-| RF-01 | Funcional | El sistema debe requerir y registrar la autorización del cliente propietario antes de procesar solicitudes que modifiquen el alcance, costo o fecha de entrega de la obra. | Alta |
-| RF-02 | Funcional | El sistema debe clasificar obligatoriamente cada interacción entrante bajo uno de los tipos definidos: duda, cambio de alcance, queja, aprobación o informativo. | Media |
-| RF-03 | Funcional | El módulo debe bloquear la visibilidad de información interna, asegurando que el cliente propietario no tenga acceso a los precios de contratistas, márgenes ni conversaciones internas. | Alta |
-| RF-04 | Funcional | El sistema debe permitir asignar a cada solicitud un responsable de atención y registrar una fecha compromiso de respuesta para dar seguimiento a su cumplimiento. | Alta |
-| RF-05 | Funcional | El sistema debe conservar el historial de solicitudes de cada obra, incluyendo su estado, responsable, fechas, decisiones y evidencias asociadas, para permitir su seguimiento posterior. | Alta |
-|RF-06 | Funcional | El sistema debe calcular y mostrar el tiempo límite de respuesta para cada solicitud con base en su tipo y prioridad, medido exclusivamente en horas hábiles. | Alta |
-RF-07 | Funcional | El sistema debe restringir el cierre de una solicitud exclusivamente al usuario asignado como responsable, exigiendo de forma obligatoria el registro de la decisión final tomada. | Alta |
-RF-08 | Funcional | El sistema debe proveer un tablero de control (dashboard) para la dirección que consolide y muestre el número de solicitudes abiertas, las vencidas y el tiempo promedio real de respuesta por cada obra. | Alta |
-| RF-09 | Funcional | El sistema debe permitir al responsable enviar una respuesta al cliente asociada a una solicitud, registrando la fecha y hora de la comunicación. | Alta |
-| RF-10 | Funcional | El sistema debe permitir adjuntar evidencias, como fotografías o documentos, a las solicitudes de los clientes para respaldar su seguimiento y resolución. | Media |
-| RF-11 | Funcional | El sistema debe permitir cambiar el estado de una solicitud entre pendiente, en proceso, atendida y cerrada, de acuerdo con las acciones realizadas por el responsable. | Alta |
-|RF-12	| Funcional	|El sistema debe enviar una notificación al responsable cuando se le asigne una nueva solicitud de un cliente. | Alta |
-| RF-13	| Funcional	| El sistema debe permitir buscar y filtrar solicitudes por obra, cliente, tipo, estado, responsable o fecha.	| Media |
-| RF-14	| Funcional	| El sistema debe enviar una alerta al responsable cuando una solicitud esté próxima a superar su tiempo límite de respuesta. |	Alta  |
-| RF-15	| Funcional	| El sistema debe permitir generar y descargar un reporte con las solicitudes registradas y su estado de atención por cada obra. | Media |
-<br>
+| RF-01 | Funcional | El sistema debe permitir registrar y centralizar las solicitudes recibidas desde diferentes canales de comunicación como WhatsApp, llamadas, redes sociales y página web. | Alta |
+| RF-02 | Funcional | El sistema debe permitir registrar nuevos clientes asociados a un proyecto, incluyendo datos de contacto e información básica del servicio solicitado. | Alta |
+| RF-03 | Funcional | El sistema debe permitir registrar solicitudes de cotización relacionadas con productos o servicios solicitados por el cliente. | Alta |
+| RF-04 | Funcional | El sistema debe permitir clasificar las solicitudes recibidas en categorías como cotización, duda, modificación, queja, seguimiento o información general. | Alta |
+| RF-05 | Funcional | El sistema debe permitir asignar cada solicitud a un responsable de atención para garantizar su seguimiento. | Alta |
+| RF-06 | Funcional | El sistema debe registrar el historial de comunicaciones realizadas con cada cliente, incluyendo mensajes, respuestas, fechas y responsables. | Alta |
+| RF-07 | Funcional | El sistema debe permitir consultar el avance del proyecto mediante fotografías, reportes y actualizaciones registradas por el personal encargado. | Alta |
+| RF-08 | Funcional | El sistema debe permitir al cliente consultar información relacionada con su proyecto, incluyendo avances, fotografías, presupuesto, pagos, garantías y documentos autorizados. | Alta |
+| RF-09 | Funcional | El sistema debe permitir registrar fechas importantes del proyecto como visitas, juntas programadas y fechas compromiso. | Media |
+| RF-10 | Funcional | El sistema debe permitir adjuntar documentos relacionados con el proyecto como cotizaciones, fichas técnicas, certificaciones y términos y condiciones. | Media |
+| RF-11 | Funcional | El sistema debe permitir modificar y actualizar una cotización cuando el cliente solicite cambios en productos o servicios. | Alta |
+| RF-12 | Funcional | El sistema debe generar notificaciones al responsable cuando se registre una nueva solicitud de cliente. | Alta |
+| RF-13 | Funcional | El sistema debe permitir generar respuestas automáticas para preguntas frecuentes previamente configuradas. | Media |
+| RF-14 | Funcional | El sistema debe permitir medir la satisfacción del cliente mediante una encuesta después de finalizar una solicitud o servicio. | Media |
+| RF-15 | Funcional | El sistema debe permitir generar reportes sobre solicitudes atendidas, tiempos de respuesta y seguimiento de clientes. | Media |
 
-### Requerimientos No Funcionales (RNF)
-*Objetivo:* Al menos 8 requerimientos no funcionales.
+
+## Requerimientos No Funcionales (RNF)
+
+**Objetivo:** Definir características de calidad, seguridad y desempeño del módulo.
 
 | ID | Tipo | Requerimiento | Prioridad |
 | :--- | :--- | :--- | :--- |
-| RNF-01 | Usabilidad | La interfaz móvil debe permitir al residente de obra registrar una petición en campo utilizando una sola mano libre. | Alta |
-| RNF-02 | Desempeño | La bitácora de avance debe actualizar y mostrar al cliente las evidencias fotográficas de su proyecto en un tiempo máximo de **3 segundos** al acceder con conexión estable.| Media |
-| RNF-03 | Rendimiento | El sistema deberá mostrar el estado y la información de una solicitud en un tiempo máximo de 2 segundos en el 95 % de las consultas, con hasta 50 usuarios concurrentes. | Alta |
-| RNF-04 | Disponibilidad | La aplicación móvil utilizada en obra debe permitir la captura de evidencias y solicitudes en modo fuera de línea (offline) para zonas sin cobertura (ej. sótanos) y sincronizarlas al recuperar la conexión. | Alta |
-| RNF-05 | Accesibilidad | El portal o bitácora de consulta para el cliente propietario debe ser accesible a través de navegadores web móviles sin requerir la descarga o instalación de una aplicación nativa. | Alta |
-| RNF-06 | Seguridad | El sistema debe proteger la información de las solicitudes mediante autenticación de usuarios, permitiendo que cada usuario acceda únicamente a las funciones y datos correspondientes a su rol. | Alta |
-| RNF-07 | Compatibilidad | El sistema debe funcionar correctamente en dispositivos móviles Android y iOS, así como en los navegadores web más utilizados, sin afectar las funciones principales del módulo. | Media |
-| RNF-08 | Confiabilidad | El sistema debe realizar respaldos automáticos de la información registrada al menos una vez al día para reducir el riesgo de pérdida de datos. | Alta |
+| RNF-01 | Usabilidad | El sistema debe permitir registrar una solicitud de cliente en un máximo de 5 pasos y en un tiempo menor a 60 segundos para facilitar la captura por parte del personal. | Alta |
+| RNF-02 | Desempeño | El sistema debe mostrar la información de un cliente o proyecto en un tiempo máximo de 3 segundos con una conexión estable. | Alta |
+| RNF-03 | Rendimiento | El sistema debe permitir consultar solicitudes en un tiempo máximo de 2 segundos en el 95% de las consultas con hasta 50 usuarios concurrentes. | Alta |
+| RNF-04 | Disponibilidad | El sistema debe mantener disponibles las funciones principales del módulo al menos el 99% del tiempo mensual. | Alta |
+| RNF-05 | Compatibilidad | El sistema debe funcionar correctamente en dispositivos Android versión 10 o superior, iOS versión 15 o superior y navegadores Chrome, Edge y Safari en sus 3 versiones más recientes. | Media |
+| RNF-06 | Seguridad | El sistema debe proteger la información del cliente mediante autenticación por usuario y contraseña, permitiendo acceso únicamente según el rol asignado. | Alta |
+| RNF-07 | Respaldo | El sistema debe realizar respaldos automáticos de la información registrada al menos una vez al día. | Alta |
+| RNF-08 | Comunicación | El sistema debe registrar las respuestas y comunicaciones realizadas con clientes conservando un historial mínimo de 12 meses. | Media |
