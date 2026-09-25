@@ -241,3 +241,67 @@
 2. **Dado** que un reporte fue generado,  
 **cuando** el usuario lo descargue,  
 **entonces** debe obtener un archivo con la información solicitada.
+
+---
+
+# Historia HU-16
+**Requerimiento asociado:** RNF-01
+## Descripción
+**Como:** Responsable de atención.
+**Quiero:** Registrar una solicitud de cliente en pocos pasos.
+**Para:** Capturar la información rápidamente mientras atiendo al cliente.
+## Criterios de aceptación
+1. **Dado** que llega una nueva solicitud,  
+**cuando** el responsable la registre,  
+**entonces** el flujo no debe exceder 5 pasos ni 60 segundos.
+2. **Dado** que falta un dato obligatorio,  
+**cuando** se intente guardar,  
+**entonces** el sistema debe señalar el campo faltante sin reiniciar el registro.
+
+---
+
+# Historia HU-17
+**Requerimiento asociado:** RNF-02
+## Descripción
+**Como:** Responsable de atención.
+**Quiero:** Que la información de un cliente o proyecto se muestre de inmediato.
+**Para:** Responder al cliente durante la llamada sin hacerlo esperar.
+## Criterios de aceptación
+1. **Dado** que existe una conexión estable,  
+**cuando** el responsable abra el detalle de un cliente,  
+**entonces** la información debe mostrarse en un máximo de 3 segundos.
+2. **Dado** que un proyecto tiene fotografías,  
+**cuando** se abra,  
+**entonces** la información principal debe aparecer en un máximo de 3 segundos aunque las imágenes sigan cargando.
+
+---
+
+# Historia HU-18
+**Requerimiento asociado:** RNF-03
+## Descripción
+**Como:** Coordinador de proyectos.
+**Quiero:** Consultar las solicitudes sin demoras aunque haya varios usuarios conectados.
+**Para:** Dar seguimiento en los horarios de mayor actividad.
+## Criterios de aceptación
+1. **Dado** que hay hasta 50 usuarios concurrentes,  
+**cuando** se consulte la lista de solicitudes,  
+**entonces** el 95% de las consultas debe responder en un máximo de 2 segundos.
+2. **Dado** que se aplica un filtro por categoría o responsable,  
+**cuando** se ejecute la consulta,  
+**entonces** el resultado debe respetar el mismo límite de tiempo.
+
+---
+
+# Historia HU-19
+**Requerimiento asociado:** RNF-06
+## Descripción
+**Como:** Cliente propietario.
+**Quiero:** Ingresar con usuario y contraseña y ver solo la información que me corresponde.
+**Para:** Tener la certeza de que los datos de mi proyecto están protegidos.
+## Criterios de aceptación
+1. **Dado** que el cliente tiene credenciales válidas,  
+**cuando** inicie sesión,  
+**entonces** debe acceder únicamente a las funciones de su rol.
+2. **Dado** que se ingresan credenciales inválidas,  
+**cuando** se intente acceder,  
+**entonces** el sistema debe negar el acceso sin indicar cuál dato fue incorrecto.
