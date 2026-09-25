@@ -16,3 +16,18 @@ Antes de realizar cambios, ejecutar git pull para trabajar con la versión más 
 9. Actualización obligatoria: Exigir que la rama esté al día con la rama base antes de integrar los cambios
 10. Revisiones requeridas exigir al menos una o dos aprobaciones de compañeros
 11. Mensajes descriptivos: Exigir un formato claro en los commits o ligarlos a tareas e incidencias (issues)
+
+## Definición de terminado
+
+Una tarea se considera terminada solo cuando cumple todo lo siguiente:
+
+1. Cumple todos los criterios de aceptación de su historia de usuario, y los verificó alguien distinto de quien la desarrolló.
+2. El comando `npm test` pasa sin errores y los flujos afectados se probaron con Cypress.
+3. El código respeta las reglas de `.editorconfig`: finales de línea LF, UTF-8, indentación de 2 espacios y salto de línea al final del archivo.
+4. Mantiene separada la lógica de conexión (API) de las vistas, como indica `AGENTS.md`.
+5. Los commits siguen Conventional Commits, con un commit por cambio lógico.
+6. La rama está actualizada con `main` antes de integrarse.
+7. El Pull Request explica qué cambia, por qué y cómo se verificó, y tiene al menos una aprobación de un compañero.
+8. No incluye llaves, tokens ni contraseñas; los secretos se manejan en un archivo `.env` fuera del repositorio.
+9. La tarea está en la columna Done del tablero con sus horas reales registradas.
+10. Si el cambio afecta requerimientos o historias, los documentos de `docs/` están actualizados.
