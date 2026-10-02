@@ -1,9 +1,8 @@
-
 # Registro de Riesgos
 
 | ID | Riesgo | Causa | Consecuencia | Probabilidad | Impacto | Respuesta | Responsable |
 |---|---|---|---|---|---|---|---|
-| R-01 | Pérdida de información del cliente | La comunicación se realiza por diferentes medios como WhatsApp, llamadas, redes sociales y página web. | Se puede perder información importante y dificultar el seguimiento del cliente. | Alta | Alto | Mitigar | Equipo de desarrollo |
-| R-02 | Retraso en la respuesta al cliente | Las solicitudes son atendidas por el personal y puede existir una gran cantidad de mensajes. | El cliente puede recibir una respuesta después del tiempo esperado. | Media | Alto | Mitigar | Responsable del producto |
-| R-03 | Información desactualizada para el cliente | Los avances, fotografías, pagos y cotizaciones pueden no actualizarse al mismo tiempo. | El cliente puede recibir información incorrecta sobre el estado de su proyecto. | Media | Alto | Mitigar | Equipo de desarrollo |
-| R-04 | Falta de seguimiento de solicitudes | No todas las solicitudes se encuentran centralizadas en un mismo lugar. | Una solicitud puede quedar pendiente o no recibir seguimiento. | Alta | Alto | Mitigar | Responsable del producto |
+| R-01 | Errores en el envío de mensajes | Pueden presentarse errores durante la implementación de la comunicación entre el cliente y el sistema. | Los mensajes pueden no enviarse o no llegar correctamente al destinatario. | Media | Alto | Mitigar | Equipo de desarrollo |
+| R-02 | Problemas con las notificaciones | La configuración de las notificaciones puede presentar errores durante el desarrollo. | El cliente podría no recibir avisos importantes sobre su proyecto. | Media | Alto | Mitigar | Equipo de desarrollo |
+| R-03 | Integración incorrecta con el sistema existente | El nuevo módulo puede presentar incompatibilidades con las funciones que ya existen en el proyecto. | Algunas funciones pueden dejar de funcionar correctamente o generar errores. | Media | Alto | Mitigar | Equipo de desarrollo |
+| R-04 | Falta de tiempo para realizar pruebas | El equipo puede dedicar demasiado tiempo al desarrollo y dejar pocas horas para probar el módulo. | Pueden llegar errores al producto final y afectar la comunicación con el cliente. | Alta | Alto | Mitigar | Facilitador del trabajo |
