@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso al Proyecto</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <main class="contenedor" id="login">
+        <div class="icono">🏗️</div>
+
+        <h1>Portal de Proyectos</h1>
+        <p class="subtitulo">Inicia sesión para consultar tu proyecto</p>
+
+        <form id="formLogin">
+            <label for="correo">Correo electrónico</label>
+            <input
+                type="email"
+                id="correo"
+                placeholder="Ingresa tu correo"
+                required
+            >
+
+            <label for="contrasena">Contraseña</label>
+            <input
+                type="password"
+                id="contrasena"
+                placeholder="Ingresa tu contraseña"
+                required
+            >
+
+            <button type="submit">Iniciar sesión</button>
+            <p id="mensaje"></p>
+        </form>
+
+        <div class="pruebas">
+            <p><strong>Usuarios de prueba</strong></p>
+            <p>Admin: admin@proyecto.com</p>
+            <p>Cliente: cliente@proyecto.com</p>
+            <p>Contraseña de ambos: 123456</p>
+        </div>
+    </main>
+
+    <main class="panel oculto" id="panel">
+        <header>
+            <div>
+                <h1>Portal de Proyectos</h1>
+                <p id="bienvenida"></p>
+            </div>
+            <button class="salir" id="cerrarSesion">Cerrar sesión</button>
+        </header>
+
+        <section class="informacion">
+            <h2>Información de tu proyecto</h2>
+            <p>Consulta la información disponible según tu tipo de usuario.</p>
+
+            <div class="tarjetas">
+                <article class="tarjeta">
+                    <h3>Presupuesto</h3>
+                    <p>$250,000 MXN</p>
+                </article>
+
+                <article class="tarjeta">
+                    <h3>Pagos realizados</h3>
+                    <p>$100,000 MXN</p>
+                </article>
+
+                <article class="tarjeta">
+                    <h3>Garantía</h3>
+                    <p>Vigente hasta diciembre de 2027</p>
+                </article>
+
+                <article class="tarjeta">
+                    <h3>Documentos</h3>
+                    <p>Contrato y comprobantes de pago</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="privado oculto" id="datosAdmin">
+            <h2>Información privada del administrador</h2>
+            <p>Costos internos de la empresa: $80,000 MXN</p>
+            <p>Margen interno estimado: $70,000 MXN</p>
+            <p>Esta sección solo debe estar disponible para el administrador.</p>
+        </section>
+
+        <p id="aviso"></p>
+
+
+<!-- Botón de comunicación con el cliente -->
+<button id="botonChat" class="boton-chat">
+    💬 ¿Necesitas ayuda? Contacta a tu asesor
+</button>
+
+<!-- Ventana del chat -->
+<div id="ventanaChat" class="ventana-chat oculto">
+    <div class="encabezado-chat">
+        <div>
+            <h3>Comunicación con tu asesor</h3>
+            <p>Estamos aquí para ayudarte</p>
+        </div>
+        <button id="cerrarChat" class="cerrar-chat">✕</button>
+    </div>
+
+    <div id="mensajesChat" class="mensajes-chat">
+        <div class="mensaje asesor">
+            ¡Hola! ¿En qué podemos ayudarte con tu proyecto?
+        </div>
+    </div>
+
+    <form id="formChat" class="form-chat">
+        <input
+            type="text"
+            id="textoChat"
+            placeholder="Escribe tu mensaje..."
+            required
+        >
+        <button type="submit">Enviar</button>
+    </form>
+</div>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
