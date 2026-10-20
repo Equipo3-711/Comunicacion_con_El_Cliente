@@ -87,6 +87,13 @@ Cada acuerdo es concreto y tiene una persona responsable, una fecha límite y un
 - *Fecha límite:* 23 de octubre de 2026
 - *Forma de verificación:* `npm test` se ejecuta sin errores en el repositorio y `login/script.js` ya no contiene contraseñas escritas.
 
+#### **Acuerdo 5**
+
+- **Acción:** Platicar en equipo sobre los problemas y dificultades de la iteración anterior, reorganizar nuevamente el flujo de trabajo y realizar los cambios necesarios en los requerimientos del proyecto para mejorar la distribución de las tareas y facilitar su cumplimiento.
+- **Responsable:** Todo el equipo de desarrollo, con la coordinación de Ximena Gutierrez Perez (responsable del producto) y Jairo Miguel Alvarado Gonzalez (facilitador del trabajo).
+- **Fecha límite:** 21 de octubre de 2026.
+- **Forma de verificación:** El equipo habrá revisado y actualizado los requerimientos, definido nuevamente el flujo de trabajo y organizado las tareas correspondientes en el tablero de GitHub Projects para la Iteración 5.
+
 ### 7. Seguimiento de los acuerdos
 
 El equipo dará seguimiento a los acuerdos para verificar su cumplimiento en las fechas definidas.
