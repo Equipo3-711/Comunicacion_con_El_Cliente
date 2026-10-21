@@ -1,0 +1,64 @@
+# Diagrama de contexto (C4, nivel 1)
+
+Módulo de Comunicación con el Cliente · Equipo 3 · Grupo 711
+
+## Qué muestra este diagrama
+
+El modelo C4 describe un sistema en niveles, del más general al más detallado. Este es el nivel 1, el contexto: el sistema aparece como una sola caja, junto con las personas que lo usan y los sistemas externos con los que se comunica. No muestra tecnologías ni pantallas; eso está en [CONTAINERS.md](CONTAINERS.md).
+
+Colores: azul oscuro = persona, azul = nuestro sistema, gris = sistema externo. La línea continua es comunicación a través del sistema; la punteada, comunicación fuera de él.
+
+## Diagrama
+
+```mermaid
+flowchart TB
+    admin["<b>Administrador</b><br/>[Persona]<br/>Personal de la vidriería"]
+    cliente["<b>Cliente</b><br/>[Persona]<br/>Empresa que contrata a la vidriería"]
+
+    portal["<b>Portal de Proyectos</b><br/>[Sistema de software]<br/>Centraliza solicitudes y permite consultar proyectos"]
+    canales["<b>Canales de contacto</b><br/>[Sistema externo]<br/>WhatsApp, llamadas y redes sociales"]
+    actual["<b>Sistema actual de la empresa</b><br/>[Sistema externo]<br/>Avance, fotografías y presupuestos"]
+    correo["<b>Servicio de correo</b><br/>[Sistema externo]<br/>Envía avisos por correo electrónico"]
+
+    cliente -->|"Consulta sus obras y usa el chat [HTTPS]"| portal
+    admin -->|"Registra clientes y solicitudes, responde chats [HTTPS]"| portal
+    cliente -.->|"Escribe o llama"| canales
+    admin -.->|"Revisa lo que llega y lo captura en el portal"| canales
+    portal -->|"Lee avance, fotos y presupuesto"| actual
+    portal -->|"Pide enviar avisos"| correo
+    correo -.->|"Avisa al responsable"| admin
+
+    classDef person fill:#08427b,stroke:#052e56,color:#ffffff
+    classDef system fill:#1168bd,stroke:#0b4884,color:#ffffff
+    classDef external fill:#8a8a8a,stroke:#6b6b6b,color:#ffffff
+    class admin,cliente person
+    class portal system
+    class canales,actual,correo external
+```
+
+## Personas
+
+
+| Persona | Quién es | Qué hace en el sistema | Requerimientos |
+| :--- | :--- | :--- | :--- |
+| Administrador | Personal de la vidriería: operadores e ingenieros. | Registra clientes y solicitudes, clasifica y asigna responsables, consulta el historial y atiende mensajes. | RF-01, RF-04, RF-05, RF-06 |
+| Cliente | Empresa que contrata a la vidriería (una constructora, un despacho o un negocio). | Consulta el avance de sus obras, fotografías, reportes y documentos autorizados mediante un acceso seguro. | RF-07, RF-08, RNF-06 |
+
+## Sistemas externos
+
+| Sistema externo | Qué es | Por qué aparece |
+| :--- | :--- | :--- |
+| Canales de contacto | WhatsApp, llamadas, TikTok, Instagram, Facebook y página web. | Por ahí llegan hoy las solicitudes (entrevista, pregunta 1). En el prototipo no hay conexión directa: el administrador captura cada solicitud con su canal de origen (RF-01). |
+| Sistema actual de la empresa | El sistema donde los clientes ya entran con correo y contraseña para ver avances y fotografías (entrevista, pregunta 3). | El portal toma de ahí el avance, las fotos y el presupuesto de cada obra. Una mala integración es el riesgo R-03. |
+| Servicio de correo | Un servicio externo de correo electrónico. | Envía al responsable el aviso de una solicitud nueva o de un chat que espera asesor (RF-12, para una iteración posterior). |
+
+## Relaciones
+
+| De | A | Qué pasa | Cómo |
+| :--- | :--- | :--- | :--- |
+| Cliente | Portal de Proyectos | Consulta sus obras y solicitudes, y pregunta en el chat. | Navegador, HTTPS |
+| Administrador | Portal de Proyectos | Registra clientes y solicitudes, las asigna y responde chats. | Navegador, HTTPS |
+| Cliente | Canales de contacto | Escribe o llama fuera del portal. | WhatsApp, teléfono y redes sociales |
+| Administrador | Canales de contacto | Revisa lo que llega y lo captura en el portal. | Manual |
+| Portal de Proyectos | Sistema actual de la empresa | Lee el avance, las fotos y el presupuesto de cada obra. | Por definir con la empresa |
+| Portal de Proyectos | Servicio de correo | Pide enviar avisos al responsable. | Correo electrónico (SMTP) |
