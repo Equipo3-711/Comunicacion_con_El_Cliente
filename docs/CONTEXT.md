@@ -46,8 +46,19 @@ flowchart TB
 
 ## Sistemas externos
 
-> Pendiente: tabla de sistemas externos (Jorge).
+| Sistema externo | Qué es | Por qué aparece |
+| :--- | :--- | :--- |
+| Canales de contacto | WhatsApp, llamadas, TikTok, Instagram, Facebook y página web. | Por ahí llegan hoy las solicitudes (entrevista, pregunta 1). En el prototipo no hay conexión directa: el administrador captura cada solicitud con su canal de origen (RF-01). |
+| Sistema actual de la empresa | El sistema donde los clientes ya entran con correo y contraseña para ver avances y fotografías (entrevista, pregunta 3). | El portal toma de ahí el avance, las fotos y el presupuesto de cada obra. Una mala integración es el riesgo R-03. |
+| Servicio de correo | Un servicio externo de correo electrónico. | Envía al responsable el aviso de una solicitud nueva o de un chat que espera asesor (RF-12, para una iteración posterior). |
 
 ## Relaciones
 
-> Pendiente: tabla de relaciones (Jorge).
+| De | A | Qué pasa | Cómo |
+| :--- | :--- | :--- | :--- |
+| Cliente | Portal de Proyectos | Consulta sus obras y solicitudes, y pregunta en el chat. | Navegador, HTTPS |
+| Administrador | Portal de Proyectos | Registra clientes y solicitudes, las asigna y responde chats. | Navegador, HTTPS |
+| Cliente | Canales de contacto | Escribe o llama fuera del portal. | WhatsApp, teléfono y redes sociales |
+| Administrador | Canales de contacto | Revisa lo que llega y lo captura en el portal. | Manual |
+| Portal de Proyectos | Sistema actual de la empresa | Lee el avance, las fotos y el presupuesto de cada obra. | Por definir con la empresa |
+| Portal de Proyectos | Servicio de correo | Pide enviar avisos al responsable. | Correo electrónico (SMTP) |
