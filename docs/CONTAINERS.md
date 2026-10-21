@@ -44,10 +44,23 @@ flowchart TB
 ```
 
 
-## Contenedores
+## **Contenedores**
 
-> Pendiente: tabla de contenedores (Romina).
+| Contenedor | Tecnología | Qué hace | Requerimientos |
+| :--- | :--- | :--- | :--- |
+| Aplicación web | HTML, CSS y JavaScript | Contiene las pantallas de inicio de sesión, panel del administrador, panel del cliente y chat. Muestra los datos y los envía a la API, sin guardar información por su cuenta. | RNF-01, RNF-05, RNF-06 |
+| API del portal | Node.js con Express | Valida usuarios, contraseñas y roles. Guarda y entrega clientes, obras, solicitudes, mensajes y preguntas frecuentes, y responde en formato JSON. | RF-01 a RF-08, RF-13, RNF-02, RNF-03 |
+| Base de datos | MySQL | Guarda usuarios, empresas, obras, solicitudes, mensajes del chat durante al menos 12 meses y preguntas frecuentes. Se realizan respaldos diarios. | RF-06, RNF-07, RNF-08 |
+| Archivos | Carpeta en el servidor | Guarda fotografías de avance y documentos de cada obra. | RF-07, RF-10 |
 
-## Qué se construye en el prototipo
+## **Qué se construye en el prototipo**
 
-> Pendiente: alcance del prototipo (Romina).
+En la Iteración 5 se construirá únicamente la aplicación web. La API y la base de datos se simularán con datos de ejemplo almacenados en un archivo JavaScript independiente, para mantener separadas las vistas y los datos. Cuando se implemente la API real, se sustituirá el archivo que proporciona los datos simulados por la conexión correspondiente, sin necesidad de rehacer las pantallas.
+
+Las pantallas del prototipo serán las definidas en `docs/diseno`:
+
+- Inicio de sesión.
+- Panel del administrador.
+- Panel del cliente.
+- Chat del administrador con lista de clientes.
+- Chat del cliente con preguntas frecuentes.
