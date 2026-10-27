@@ -1,0 +1,23 @@
+changelog:
+  exclude:
+    labels:
+      - omitir-en-notas
+  categories:
+    - title: Cambios incompatibles
+      labels:
+        - cambio-incompatible
+    - title: Nuevas funciones
+      labels:
+        - nueva-funcion
+    - title: Correcciones
+      labels:
+        - correccion
+    - title: Documentación
+      labels:
+        - documentacion
+    - title: Mantenimiento
+      labels:
+        - mantenimiento
+    - title: Otros cambios
+      labels:
+        - "*"
