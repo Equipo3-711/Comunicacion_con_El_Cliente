@@ -15,7 +15,7 @@ Primera versión documentada del Portal de Proyectos, todavía en prototipo. Son
 
 - Maqueta del inicio de sesión por roles, con vista de administrador y de cliente, en `login/`.
 - Primera versión de las interfaces del portal, exportadas como imágenes en `docs/diseño/`.
-- Diagramas C4 de contexto y de contenedores en `docs/CONTEXT.md` y `docs/CONTAINERS.md` (#42)..
+- Diagramas C4 de contexto y de contenedores en `docs/CONTEXT.md` y `docs/CONTAINERS.md` (#42).
 - Definición de terminado de las tareas en `docs/ACUERDOS.md` (#28).
 - Roles del equipo en el README (#31).
 - Documentación del proyecto: entrevista, requerimientos, historias de usuario, riesgos, acuerdos, definición de terminado y retrospectivas en `docs/`.
