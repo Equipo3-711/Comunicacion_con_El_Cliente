@@ -19,7 +19,7 @@ Primera versión documentada del Portal de Proyectos, todavía en prototipo. Son
 - Definición de terminado de las tareas en `docs/ACUERDOS.md` (#28).
 - Roles del equipo en el README (#31).
 - Documentación del proyecto: entrevista, requerimientos, historias de usuario, riesgos, acuerdos, definición de terminado y retrospectivas en `docs/`.
-- Categorías para las notas automáticas de cada versión en `.github/release.yml`. (#45).
+- Categorías para las notas automáticas de cada versión en `.github/release.yml` (#45).
 - Este CHANGELOG, con el formato de Keep a Changelog (#46).
 - Instrucciones de instalación y uso en el README (#47).
 - Ejemplos de uso y de contribución en `docs/EJEMPLOS.md` (#44).
