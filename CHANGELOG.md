@@ -21,7 +21,7 @@ Primera versión documentada del Portal de Proyectos, todavía en prototipo. Son
 - Documentación del proyecto: entrevista, requerimientos, historias de usuario, riesgos, acuerdos, definición de terminado y retrospectivas en `docs/`.
 - Categorías para las notas automáticas de cada versión en `.github/release.yml`. (#45).
 - Este CHANGELOG, con el formato de Keep a Changelog (#46).
-- Instrucciones de instalación y uso en el README, y ejemplos paso a paso en `docs/EJEMPLOS.md`. (#47).
+- Instrucciones de instalación y uso en el README (#47).
 - Ejemplos de uso y de contribución en `docs/EJEMPLOS.md` (#44).
 
 [Unreleased]: https://github.com/Equipo3-711/Comunicacion_con_El_Cliente/compare/v0.1.0...HEAD
