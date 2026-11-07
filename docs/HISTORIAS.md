@@ -33,6 +33,9 @@
 2. **Dado** que un cliente ya está registrado,  
 **cuando** solicite información nuevamente,  
 **entonces** el sistema debe permitir consultar sus datos.
+3. **Dado** que una persona quiere solicitar una cotización,  
+**cuando** no tenga cuenta,  
+**entonces** el sistema debe pedirle que se registre antes de mostrar el formulario.
 
 ---
 
@@ -49,6 +52,9 @@
 2. **Dado** que existe una solicitud de cotización,  
 **cuando** el responsable la consulte,  
 **entonces** debe visualizar la información proporcionada.
+3. **Dado** que un cliente registrado llena el formulario de cotización,  
+**cuando** falte un campo obligatorio,  
+**entonces** el sistema debe marcarlo y conservar los datos ya capturados.
 
 ---
 

@@ -11,8 +11,8 @@
 | ID | Tipo | Requerimiento | Prioridad |
 | :--- | :--- | :--- | :--- |
 | RF-01 | Funcional | El sistema debe permitir registrar y centralizar las solicitudes recibidas desde diferentes canales de comunicación como WhatsApp, llamadas, redes sociales y página web. | Alta |
-| RF-02 | Funcional | El sistema debe permitir registrar nuevos clientes asociados a un proyecto, incluyendo datos de contacto e información básica del servicio solicitado. | Alta |
-| RF-03 | Funcional | El sistema debe permitir registrar solicitudes de cotización relacionadas con productos o servicios solicitados por el cliente. | Alta |
+| RF-02 | Funcional | El sistema debe permitir que el cliente se registre o que el personal lo dé de alta, asociándolo a un proyecto e incluyendo datos de contacto e información básica del servicio solicitado. El registro es obligatorio antes de solicitar una cotización. | Alta |
+| RF-03 | Funcional | El sistema debe permitir que un cliente registrado solicite una cotización mediante el formulario definido en la sección «Formulario de cotización». | Alta |
 | RF-04 | Funcional | El sistema debe permitir clasificar las solicitudes recibidas en categorías como cotización, duda, modificación, queja, seguimiento o información general. | Alta |
 | RF-05 | Funcional | El sistema debe permitir asignar cada solicitud a un responsable de atención para garantizar su seguimiento. | Alta |
 | RF-06 | Funcional | El sistema debe registrar el historial de comunicaciones realizadas con cada cliente, incluyendo mensajes, respuestas, fechas y responsables. | Alta |
@@ -41,3 +41,21 @@
 | RNF-06 | Seguridad | El sistema debe proteger la información del cliente mediante autenticación por usuario y contraseña, permitiendo acceso únicamente según el rol asignado. | Alta |
 | RNF-07 | Respaldo | El sistema debe realizar respaldos automáticos de la información registrada al menos una vez al día. | Alta |
 | RNF-08 | Comunicación | El sistema debe registrar las respuestas y comunicaciones realizadas con clientes conservando un historial mínimo de 12 meses. | Media |
+
+## Formulario de cotización
+
+**Objetivo:** Definir los datos que captura la cotización (RF-03, CC-10).
+
+| Campo | Tipo | Obligatorio | Opciones o regla |
+| :--- | :--- | :--- | :--- |
+| Cliente | Automático | Sí | Nombre de la cuenta con sesión iniciada |
+| Correo | Automático | Sí | Correo de la cuenta |
+| Teléfono | Texto | Sí | Se llena con el de la cuenta y se puede corregir |
+| Tipo de cliente | Selección | Sí | Particular, constructora, arquitecto u otro |
+| Tipo de trabajo | Selección | Sí | Ventanas, fachada, canceles o barandales |
+| Dirección de la obra | Texto | Sí | Calle, número, colonia y ciudad |
+| Medidas aproximadas | Texto | No | Ejemplo: 3 ventanas de 1.20 × 1.50 m |
+| Descripción | Texto largo | Sí | Lo que necesita el cliente |
+| Fotos o planos | Archivo | No | Imágenes o PDF |
+
+Si falta un campo obligatorio, el formulario lo marca y conserva lo ya capturado.
