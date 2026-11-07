@@ -27,6 +27,7 @@ flowchart TB
     portal -->|"Lee avance, fotos y presupuesto"| actual
     portal -->|"Pide enviar avisos"| correo
     correo -.->|"Avisa al responsable"| admin
+    correo -.->|"Avisa de actualizaciones"| cliente
 
     classDef person fill:#08427b,stroke:#052e56,color:#ffffff
     classDef system fill:#1168bd,stroke:#0b4884,color:#ffffff
@@ -50,7 +51,7 @@ flowchart TB
 | :--- | :--- | :--- |
 | Canales de contacto | WhatsApp, llamadas, TikTok, Instagram, Facebook y página web. | Por ahí llegan hoy las solicitudes (entrevista, pregunta 1). En el prototipo no hay conexión directa: el administrador captura cada solicitud con su canal de origen (RF-01). |
 | Sistema actual de la empresa | El sistema donde los clientes ya entran con correo y contraseña para ver avances y fotografías (entrevista, pregunta 3). | El portal toma de ahí el avance, las fotos y el presupuesto de cada obra. Una mala integración es el riesgo R-03. |
-| Servicio de correo | Un servicio externo de correo electrónico. | Envía al responsable el aviso de una solicitud nueva o de un chat que espera asesor (RF-12, para una iteración posterior). |
+| Servicio de correo | Un servicio externo de correo electrónico. | Avisa al responsable de lo pendiente (RF-12) y envía al cliente el resumen de cada actualización con un enlace, para que dé seguimiento sin entrar a la plataforma (RF-19, CC-03). |
 
 ## Relaciones
 
@@ -62,3 +63,8 @@ flowchart TB
 | Administrador | Canales de contacto | Revisa lo que llega y lo captura en el portal. | Manual |
 | Portal de Proyectos | Sistema actual de la empresa | Lee el avance, las fotos y el presupuesto de cada obra. | Por definir con la empresa |
 | Portal de Proyectos | Servicio de correo | Pide enviar avisos al responsable. | Correo electrónico (SMTP) |
+| Servicio de correo | Cliente | Le envía el resumen de cada actualización de su proyecto. | Correo electrónico |
+
+## Cambios pospuestos
+
+El seguimiento por inteligencia artificial (CC-05) no forma parte de este diagrama. Se agregará como sistema externo si se aprueba después de la entrega final.
