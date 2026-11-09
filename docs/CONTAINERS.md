@@ -17,9 +17,9 @@ flowchart TB
     cliente["<b>Cliente</b><br/>[Persona]<br/>Empresa que contrata"]
 
     subgraph portal["Portal de Proyectos · Sistema de software"]
-        web["<b>Aplicación web</b><br/>[Contenedor: HTML, CSS y JavaScript]<br/>Login, panel del administrador,<br/>panel del cliente y chat"]
-        api["<b>API del portal</b><br/>[Contenedor: Node.js y Express]<br/>Sesiones y roles, clientes, solicitudes,<br/>chat, preguntas frecuentes e historial"]
-        db[("<b>Base de datos</b><br/>[Contenedor: MySQL]<br/>Usuarios, empresas, obras, solicitudes,<br/>mensajes y preguntas frecuentes")]
+        web["<b>Aplicación web</b><br/>[Contenedor: HTML, CSS y JavaScript]<br/>Login, panel del administrador, panel del cliente,<br/>seguimiento por proyecto, campanas y chat"]
+        api["<b>API del portal</b><br/>[Contenedor: Node.js y Express]<br/>Sesiones y roles, clientes, cotizaciones, actualizaciones,<br/>historial, avisos, chat y preguntas frecuentes"]
+        db[("<b>Base de datos</b><br/>[Contenedor: MySQL]<br/>Usuarios, empresas, obras, cotizaciones, actualizaciones,<br/>historial, pendientes y mensajes")]
         files[("<b>Archivos</b><br/>[Contenedor: carpeta en el servidor]<br/>Fotos de avance y documentos")]
     end
 
@@ -48,9 +48,9 @@ flowchart TB
 
 | Contenedor | Tecnología | Qué hace | Requerimientos |
 | :--- | :--- | :--- | :--- |
-| Aplicación web | HTML, CSS y JavaScript | Contiene las pantallas de inicio de sesión, panel del administrador, panel del cliente y chat. Muestra los datos y los envía a la API, sin guardar información por su cuenta. | RNF-01, RNF-05, RNF-06 |
-| API del portal | Node.js con Express | Valida usuarios, contraseñas y roles. Guarda y entrega clientes, obras, solicitudes, mensajes y preguntas frecuentes, y responde en formato JSON. | RF-01 a RF-08, RF-13, RNF-02, RNF-03 |
-| Base de datos | MySQL | Guarda usuarios, empresas, obras, solicitudes, mensajes del chat durante al menos 12 meses y preguntas frecuentes. Se realizan respaldos diarios. | RF-06, RNF-07, RNF-08 |
+| Aplicación web | HTML, CSS y JavaScript | Contiene inicio de sesión, registro, panel del administrador, panel del cliente, seguimiento por proyecto, campanas y chat. Muestra los datos y los envía a la API, sin guardar información por su cuenta. | RNF-01, RNF-05, RNF-06, RF-16, RF-18 |
+| API del portal | Node.js con Express | Valida usuarios, contraseñas y roles. Guarda y entrega clientes, cotizaciones, actualizaciones, historial, pendientes y mensajes. Publica lo realizado y pide enviar avisos por correo. | RF-01 a RF-08, RF-13, RF-16 a RF-19, RNF-02, RNF-03 |
+| Base de datos | MySQL | Guarda usuarios, empresas, obras, cotizaciones, actualizaciones, historial, pendientes y mensajes durante al menos 12 meses. Se realizan respaldos diarios. | RF-06, RF-16, RF-17, RF-18, RNF-07, RNF-08 |
 | Archivos | Carpeta en el servidor | Guarda fotografías de avance y documentos de cada obra. | RF-07, RF-10 |
 
 ## **Qué se construye en el prototipo**

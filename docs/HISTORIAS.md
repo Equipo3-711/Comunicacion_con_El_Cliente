@@ -87,16 +87,16 @@
 # Historia HU-06
 **Requerimiento asociado:** RF-06
 ## Descripción
-**Como:** Responsable de atención.
-**Quiero:** Consultar el historial de comunicación con un cliente.
-**Para:** Conocer conversaciones anteriores y evitar pérdida de información.
+**Como:** Responsable de atención o cliente.
+**Quiero:** Consultar el historial de un proyecto.
+**Para:** Conocer lo que ha sucedido sin buscarlo en conversaciones.
 ## Criterios de aceptación
-1. **Dado** que un cliente tiene comunicaciones registradas,  
-**cuando** el responsable consulte su información,  
-**entonces** debe visualizar mensajes, fechas y responsables.
-2. **Dado** que se genera una nueva comunicación,  
-**cuando** sea registrada,  
-**entonces** debe agregarse al historial.
+1. **Dado** que un proyecto tiene actividad registrada,
+**cuando** se consulte su historial,
+**entonces** debe mostrar en orden de fecha lo sucedido, con su tipo y responsable.
+2. **Dado** que ocurre una nueva actividad,
+**cuando** sea registrada,
+**entonces** debe agregarse al historial del proyecto.
 
 ---
 
