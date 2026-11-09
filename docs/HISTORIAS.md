@@ -311,3 +311,79 @@
 2. **Dado** que se ingresan credenciales inválidas,  
 **cuando** se intente acceder,  
 **entonces** el sistema debe negar el acceso sin indicar cuál dato fue incorrecto.
+
+---
+
+# Historia HU-20
+**Requerimiento asociado:** RF-16
+
+## Descripción
+**Como:** Cliente.  
+**Quiero:** Ver las actualizaciones de mi proyecto en un formato claro.  
+**Para:** Conocer cómo va sin tener que iniciar una conversación.
+
+## Criterios de aceptación
+1. **Dado** que el proyecto tiene actualizaciones,  
+   **cuando** el cliente lo consulte,  
+   **entonces** debe ver el tipo, la descripción, la fecha y el responsable de cada una.
+
+2. **Dado** que el cliente tiene una duda,  
+   **cuando** la actualización no la resuelva,  
+   **entonces** debe poder abrir el chat para preguntar.
+
+---
+
+# Historia HU-21
+**Requerimiento asociado:** RF-17
+
+## Descripción
+**Como:** Arquitecto.  
+**Quiero:** Marcar una actividad como realizada.  
+**Para:** Que el cliente la vea de inmediato sin escribirle un mensaje.
+
+## Criterios de aceptación
+1. **Dado** que terminó una actividad,  
+   **cuando** el arquitecto la marque como realizada,  
+   **entonces** debe aparecer en el proyecto del cliente con fecha y responsable.
+
+2. **Dado** que se publicó una actividad,  
+   **cuando** el cliente consulte el proyecto,  
+   **entonces** debe verla sin que exista una conversación.
+
+---
+
+# Historia HU-22
+**Requerimiento asociado:** RF-18
+
+## Descripción
+**Como:** Usuario del portal.  
+**Quiero:** Ver una campana cuando tenga algo pendiente.  
+**Para:** Atender actualizaciones, dudas o solicitudes sin revisar todo el proyecto.
+
+## Criterios de aceptación
+1. **Dado** que existe algo pendiente,  
+   **cuando** el usuario entre al portal,  
+   **entonces** la campana debe mostrar cuántos pendientes tiene.
+
+2. **Dado** que el usuario abre un pendiente,  
+   **cuando** lo revise,  
+   **entonces** el contador debe disminuir y mostrar el elemento relacionado.
+
+---
+
+# Historia HU-23
+**Requerimiento asociado:** RF-19
+
+## Descripción
+**Como:** Cliente.  
+**Quiero:** Recibir por correo las actualizaciones de mi proyecto.  
+**Para:** Dar seguimiento sin tener que entrar a la plataforma.
+
+## Criterios de aceptación
+1. **Dado** que se publica una actualización,  
+   **cuando** se guarde,  
+   **entonces** el cliente debe recibir un correo con el resumen y un enlace a su proyecto.
+
+2. **Dado** que el cliente abre el enlace,  
+   **cuando** no tenga sesión iniciada,  
+   **entonces** el sistema debe pedirle que inicie sesión antes de mostrar el proyecto.
