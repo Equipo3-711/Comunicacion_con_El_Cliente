@@ -25,7 +25,10 @@
 | RF-13 | Funcional | El sistema debe permitir generar respuestas automáticas para preguntas frecuentes previamente configuradas. | Media |
 | RF-14 | Funcional | El sistema debe permitir medir la satisfacción del cliente mediante una encuesta después de finalizar una solicitud o servicio. | Media |
 | RF-15 | Funcional | El sistema debe permitir generar reportes sobre solicitudes atendidas, tiempos de respuesta y seguimiento de clientes. | Media |
-
+| RF-16 | Funcional | El sistema debe registrar el seguimiento de cada proyecto mediante actualizaciones estructuradas con tipo, descripción, fecha y responsable, sin requerir una conversación. | Alta |
+| RF-17 | Funcional | El sistema debe permitir al arquitecto marcar una actividad como realizada y publicarla de inmediato para el cliente, sin iniciar una conversación. | Alta |
+| RF-18 | Funcional | El sistema debe mostrar a cada usuario una campana con el número de actualizaciones, dudas y solicitudes pendientes. | Alta |
+| RF-19 | Funcional | El sistema debe enviar al cliente un aviso por correo electrónico cuando se publique una actualización de su proyecto, con un resumen y un enlace. | Media |
 
 ## Requerimientos No Funcionales (RNF)
 
