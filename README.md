@@ -73,11 +73,14 @@ El detalle de cada versión está en el [CHANGELOG](CHANGELOG.md).
 
 ## Cómo contribuir
 
-1. Crea una rama desde `main`.
+1. Actualiza `main` con `git pull --no-rebase` y crea desde ahí una rama llamada `tipo/ID-descripcion`: el tipo de Conventional Commits, el identificador del issue que atiende y dos o tres palabras. Por ejemplo, `docs/CC-09-interfaces-v2` o `docs/T-14-flujo-de-ramas`.
 2. Haz commits con [Conventional Commits](https://www.conventionalcommits.org/es/v1.0.0/), por ejemplo `docs(readme): agregar instalacion`.
 3. Abre un Pull Request con el mismo formato en el título y una etiqueta de tipo: `nueva-funcion`, `correccion`, `documentacion` o `mantenimiento`. Si rompe algo que ya funcionaba, agrega también `cambio-incompatible`.
-4. En la descripción explica qué cambia, por qué y cómo se verificó, y pide la aprobación de un compañero.
-5. Si el cambio le importa a quien usa el proyecto, agrega una línea en la sección `Unreleased` del [CHANGELOG](CHANGELOG.md).
+4. En la descripción explica qué cambia, por qué y cómo se verificó, menciona el issue con `Relacionado con #N` y pide la aprobación de un compañero.
+5. Con la aprobación, intégralo con **Create a merge commit**. GitHub borra la rama al integrarla; si sigue ahí, bórrala con **Delete branch**.
+6. Si el cambio le importa a quien usa el proyecto, agrega una línea en la sección `Unreleased` del [CHANGELOG](CHANGELOG.md).
+
+Ningún cambio llega a `main` sin Pull Request, y ninguna rama se queda con commits sin su Pull Request.
 
 ## Integrantes y roles
 
