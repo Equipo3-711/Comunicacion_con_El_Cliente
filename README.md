@@ -50,7 +50,7 @@ Hay más ejemplos paso a paso en [docs/EJEMPLOS.md](docs/EJEMPLOS.md).
 | :--- | :--- |
 | `login/` | Maqueta del inicio de sesión por roles: `index.html`, `styles.css` y `script.js`. |
 | `docs/` | Requerimientos, historias de usuario, riesgos, acuerdos, retrospectivas, diagramas C4 y ejemplos. |
-| `docs/diseño/` | Interfaces del portal exportadas como imágenes. |
+| `docs/diseno/` | Interfaces del portal exportadas como imágenes. |
 | `.github/release.yml` | Categorías de las notas automáticas de cada versión. |
 | `CHANGELOG.md` | Cambios de cada versión. |
 | `AGENTS.md` | Reglas del proyecto: arquitectura, pruebas, Git y seguridad. |

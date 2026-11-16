@@ -17,7 +17,8 @@
 | RF-05 | Funcional | El sistema debe permitir asignar cada solicitud a un responsable de atención para garantizar su seguimiento. | Alta |
 | RF-06 | Funcional | El sistema debe registrar el historial de comunicaciones realizadas con cada cliente, incluyendo mensajes, respuestas, fechas y responsables. | Alta |
 | RF-07 | Funcional | El sistema debe permitir consultar el avance del proyecto mediante fotografías, reportes y actualizaciones registradas por el personal encargado. | Alta |
-| RF-08 | Funcional | El sistema debe permitir al cliente consultar información relacionada con su proyecto, incluyendo avances, fotografías, presupuesto, pagos, garantías y documentos autorizados. | Alta |
+| RF-08 | Funcional | El sistema debe permitir al cliente consultar información relacionada con su proyecto, incluyendo avances, fotografías, presupuesto, pagos, garantías y documentos autorizados. Los documentos se pueden visualizar, pero no descargar. | 
+Alta |
 | RF-09 | Funcional | El sistema debe permitir registrar fechas importantes del proyecto como visitas, juntas programadas y fechas compromiso. | Media |
 | RF-10 | Funcional | El sistema debe permitir adjuntar documentos relacionados con el proyecto como cotizaciones, fichas técnicas, certificaciones y términos y condiciones. | Media |
 | RF-11 | Funcional | El sistema debe permitir modificar y actualizar una cotización cuando el cliente solicite cambios en productos o servicios. | Alta |

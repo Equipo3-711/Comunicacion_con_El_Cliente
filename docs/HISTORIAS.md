@@ -135,6 +135,7 @@
 2. **Dado** que existe información privada de la empresa,  
 **cuando** el cliente consulte su proyecto,  
 **entonces** el sistema debe restringir datos no autorizados.
+3. **Dado** que el cliente abre un documento autorizado, **cuando** lo consulte, **entonces** debe visualizarlo dentro del portal sin una opción para descargarlo.
 
 ---
 
