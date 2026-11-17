@@ -36,3 +36,4 @@ Una tarea se considera terminada solo cuando cumple todo lo siguiente:
 ## Ramas y pull requests
 
 1. **Rama principal con revisión obligatoria:** `main` es la rama principal y la única que se entrega. Ningún cambio se sube directo a `main`: todo llega por pull request, con al menos una aprobación de un integrante distinto del autor, y se integra con **Create a merge commit**. En GitHub, `main` está configurada para exigir el pull request y la aprobación antes de integrar.
+2. **Borrado de ramas:** cuando un pull request se integra a `main`, su rama se borra el mismo día. GitHub lo hace solo con la opción **Automatically delete head branches**; si la rama sigue, el autor la borra con **Delete branch**. Una rama que se cierra sin integrar también se borra, después de explicar el motivo en su pull request.
