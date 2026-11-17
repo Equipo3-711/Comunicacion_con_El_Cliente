@@ -31,3 +31,19 @@ Una tarea se considera terminada solo cuando cumple todo lo siguiente:
 8. No incluye llaves, tokens ni contraseñas; los secretos se manejan en un archivo `.env` fuera del repositorio.
 9. La tarea está en la columna Done del tablero con sus horas reales registradas.
 10. Si el cambio afecta requerimientos o historias, los documentos de `docs/` están actualizados.
+
+## Ramas y pull requests
+
+Reglas para trabajar con ramas y pull requests en este repositorio.
+
+### Rama principal con revisión obligatoria
+
+Pendiente: la escribe Jairo (T-16).
+
+### Borrado de ramas
+
+Pendiente: la escribe Ximena (T-17).
+
+### Nombre de las ramas
+
+Pendiente: la escribe Grecia (T-18).
