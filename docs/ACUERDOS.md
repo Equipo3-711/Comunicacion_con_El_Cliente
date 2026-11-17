@@ -31,3 +31,8 @@ Una tarea se considera terminada solo cuando cumple todo lo siguiente:
 8. No incluye llaves, tokens ni contraseñas; los secretos se manejan en un archivo `.env` fuera del repositorio.
 9. La tarea está en la columna Done del tablero con sus horas reales registradas.
 10. Si el cambio afecta requerimientos o historias, los documentos de `docs/` están actualizados.
+
+
+## Ramas y pull requests
+
+1. **Rama principal con revisión obligatoria:** `main` es la rama principal y la única que se entrega. Ningún cambio se sube directo a `main`: todo llega por pull request, con al menos una aprobación de un integrante distinto del autor, y se integra con **Create a merge commit**. En GitHub, `main` está configurada para exigir el pull request y la aprobación antes de integrar.
