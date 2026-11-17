@@ -37,3 +37,8 @@ Una tarea se considera terminada solo cuando cumple todo lo siguiente:
 
 1. **Rama principal con revisión obligatoria:** `main` es la rama principal y la única que se entrega. Ningún cambio se sube directo a `main`: todo llega por pull request, con al menos una aprobación de un integrante distinto del autor, y se integra con **Create a merge commit**. En GitHub, `main` está configurada para exigir el pull request y la aprobación antes de integrar.
 2. **Borrado de ramas:** cuando un pull request se integra a `main`, su rama se borra el mismo día. GitHub lo hace solo con la opción **Automatically delete head branches**; si la rama sigue, el autor la borra con **Delete branch**. Una rama que se cierra sin integrar también se borra, después de explicar el motivo en su pull request.
+3. **Nombre de las ramas:** cada rama se llama `tipo/ID-descripcion`, tomando el tipo de [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):
+   - **tipo:** uno de los que usa el equipo: `feat`, `fix`, `docs`, `style`, `refactor`, `test` o `chore`. Es el mismo tipo de sus commits y del título de su pull request.
+   - **ID:** el identificador del issue que atiende, por ejemplo `CC-09`, `HU-03` o `T-15`.
+   - **descripcion:** de dos a cuatro palabras en minúsculas, separadas por guiones y sin acentos ni ñ.
+   - Ejemplos: `feat/HU-03-formulario-cotizacion`, `fix/CC-09-correcciones-interfaces-v2` y `docs/T-15-reglas-plantilla-y-entrega`.
