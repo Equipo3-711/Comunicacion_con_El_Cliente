@@ -31,7 +31,7 @@ No hay dependencias que instalar ni nada que compilar.
    cd Comunicacion_con_El_Cliente
    ```
 
-También puedes descargar una versión publicada desde [Releases](https://github.com/Equipo3-711/Comunicacion_con_El_Cliente/releases), en el archivo **Source code (zip)**.
+También puedes descargar una versión publicada desde [Releases](https://github.com/Equipo3-711/Comunicacion_con_El_Cliente/releases): baja el archivo `portal-proyectos-vX.Y.Z.zip` de la versión más reciente y descomprímelo. Cómo se genera ese archivo está en [docs/BUILD.md](docs/BUILD.md).
 
 ## Uso
 
