@@ -38,7 +38,7 @@ Reglas para trabajar con ramas y pull requests en este repositorio.
 
 ### Rama principal con revisión obligatoria
 
-Pendiente: la escribe Jairo (T-16).
+`main` es la rama principal y la única que se entrega. Ningún cambio se sube directo a `main`: todo llega por pull request, con al menos una aprobación de un integrante distinto del autor, y se integra con **Create a merge commit**. Mientras el repositorio sea privado con el plan gratuito, GitHub no permite exigirlo con una regla de protección, así que el equipo lo cumple por acuerdo y el facilitador lo revisa antes de cada integración.
 
 ### Borrado de ramas
 
