@@ -2,9 +2,22 @@
 // Cada regla devuelve un mensaje si el campo está mal, o null si está bien.
 
 const texto = (valor) => (typeof valor === 'string' ? valor.trim() : '');
+const vacio = (valor) => valor === undefined || valor === null || (typeof valor === 'string' && valor.trim() === '');
 
 function requerido(mensaje = 'Este campo es obligatorio.') {
-  return (valor) => (texto(valor) ? null : mensaje);
+  return (valor) => (vacio(valor) ? mensaje : null);
+}
+
+function enteroPositivo(mensaje = 'Elige una opción válida.') {
+  return (valor) => (vacio(valor) || (Number.isInteger(Number(valor)) && Number(valor) > 0) ? null : mensaje);
+}
+
+function numeroNoNegativo(mensaje = 'Escribe una cantidad mayor o igual a cero.') {
+  return (valor) => (vacio(valor) || (Number.isFinite(Number(valor)) && Number(valor) >= 0) ? null : mensaje);
+}
+
+function fecha(mensaje = 'Escribe la fecha como AAAA-MM-DD.') {
+  return (valor) => (vacio(valor) || (/^\d{4}-\d{2}-\d{2}$/.test(String(valor)) && !Number.isNaN(Date.parse(valor))) ? null : mensaje);
 }
 
 function maximo(caracteres) {
@@ -45,4 +58,6 @@ function validar(datos, reglasPorCampo) {
   return errores;
 }
 
-module.exports = { texto, requerido, maximo, minimo, unoDe, correo, telefono, validar };
+module.exports = {
+  texto, vacio, requerido, maximo, minimo, unoDe, correo, telefono, enteroPositivo, numeroNoNegativo, fecha, validar,
+};

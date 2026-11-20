@@ -11,6 +11,7 @@ function obtenerPool() {
       waitForConnections: true,
       connectionLimit: 10,
       dateStrings: true,
+      decimalNumbers: true,
       charset: 'utf8mb4',
     });
   }
