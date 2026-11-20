@@ -44,11 +44,99 @@ Los usuarios de prueba son datos de ejemplo del prototipo, definidos en `login/s
 
 Hay más ejemplos paso a paso en [docs/EJEMPLOS.md](docs/EJEMPLOS.md).
 
+## API del portal (backend)
+
+La carpeta `backend/` tiene la API que usa la aplicación web, como indica el [diagrama de contenedores](docs/CONTAINERS.md). Está hecha con Node.js y Express, guarda los datos en MySQL, y las fotos y documentos en una carpeta del servidor.
+
+### Requisitos
+
+- Node.js 20 o superior.
+- MySQL 8.
+
+### Cómo levantarla
+
+Todos los comandos de `AGENTS.md` (`npm install`, `npm run dev`, `npm test` y `npm run build`) se ejecutan **dentro de `backend/`**.
+
+1. Instala las dependencias:
+
+   ```bash
+   cd backend
+   npm install
+   ```
+
+2. Copia `backend/.env.example` como `backend/.env` y llena los valores: la conexión a MySQL y una frase larga y aleatoria en `JWT_SECRET`. El archivo `.env` nunca se sube al repositorio.
+
+3. Crea la base de datos y sus tablas:
+
+   ```bash
+   mysql -u TU_USUARIO -p -e "CREATE DATABASE portal_proyectos CHARACTER SET utf8mb4"
+   mysql -u TU_USUARIO -p portal_proyectos < database/schema.sql
+   ```
+
+4. Crea la cuenta del personal. El script pide nombre, correo y contraseña en la terminal, para que ninguna contraseña quede escrita en el repositorio:
+
+   ```bash
+   npm run crear-admin
+   ```
+
+5. Levanta la API y comprueba que responde en `http://localhost:3000/api/salud`:
+
+   ```bash
+   npm run dev
+   ```
+
+Los clientes crean su propia cuenta con `POST /api/auth/registro`.
+
+### Comandos
+
+| Comando | Qué hace |
+| :--- | :--- |
+| `npm run dev` | Levanta la API y la reinicia al guardar cambios. |
+| `npm start` | Levanta la API, sin reinicio automático. |
+| `npm test` | Corre las pruebas. No necesita MySQL. |
+| `npm run build` | No hace nada: la API no necesita compilarse. |
+| `npm run crear-admin` | Crea una cuenta de administrador. |
+
+### Cómo está organizada
+
+Cada petición pasa por cuatro capas, para mantener separada la conexión de las vistas, como pide `AGENTS.md`:
+
+| Carpeta | Qué hace |
+| :--- | :--- |
+| `src/routes/` | Relaciona cada dirección con su controlador y revisa la sesión y el rol. |
+| `src/controllers/` | Recibe la petición, valida los datos y responde. |
+| `src/services/` | Aplica las reglas del negocio, por ejemplo que sin sesión no se cotiza. |
+| `src/repositories/` | Hace las consultas SQL. Es la única capa que habla con MySQL. |
+
+Además están `src/validators/` (reglas de cada formulario), `src/middlewares/` (sesión, rol y errores), `src/utils/` (archivos y correo), `database/schema.sql` (tablas) y `tests/` (pruebas).
+
+### Rutas principales
+
+Todas empiezan con `/api`. Salvo el registro, el inicio de sesión y la ruta de salud, piden el encabezado `Authorization: Bearer <token>` que devuelve el inicio de sesión.
+
+| Ruta | Quién | Para qué | Requerimiento |
+| :--- | :--- | :--- | :--- |
+| `POST /auth/registro` | Cualquiera | Crear la cuenta de cliente con su empresa | RF-02, CC-01 |
+| `POST /auth/login` | Cualquiera | Iniciar sesión; el rol decide qué puede hacer | RNF-06 |
+| `POST /cotizaciones` | Cliente | Enviar el formulario de cotización, con fotos o planos opcionales | RF-03, CC-10 |
+| `GET /cotizaciones` | Ambos | El cliente ve las suyas; el personal, todas | RF-03 |
+| `GET /proyectos` y `GET /proyectos/:id` | Ambos | Mis proyectos y su detalle, sin las notas internas para el cliente | RF-08, T-06 |
+| `POST /proyectos` y `PATCH /proyectos/:id/estado` | Personal | Abrir un proyecto y cambiar su estado | RF-07 |
+| `GET /proyectos/:id/historial` | Ambos | Todo lo que ha sucedido en el proyecto, en orden de fecha | RF-06, CC-06 |
+| `POST /proyectos/:id/actualizaciones` | Personal | Registrar un avance con tipo, descripción, fecha y responsable | RF-16, CC-04 |
+| `PATCH /actividades/:id/realizada` | Personal | Marcar una actividad como realizada y publicarla al cliente | RF-17, CC-07 |
+| `GET /proyectos/:id/documentos` y `GET /documentos/:id/ver` | Ambos | Ver los documentos dentro del portal, sin descarga | RF-08, CC-02 |
+| `GET` y `POST /proyectos/:id/mensajes` | Ambos | Chat del proyecto, solo para dudas | CC-04 |
+| `GET /pendientes` | Ambos | Contador y lista de la campana | RF-18, CC-08 |
+
+Cada actualización, cambio de estado, actividad realizada o documento nuevo le aparece al cliente en su campana y, si `SMTP_HOST` está configurado, le llega por correo (RF-19). Ver un documento no ofrece descargarlo, pero no puede impedir una captura de pantalla, como quedó acordado en CC-02.
+
 ## Estructura del repositorio
 
 | Carpeta o archivo | Contenido |
 | :--- | :--- |
 | `login/` | Maqueta del inicio de sesión por roles: `index.html`, `styles.css` y `script.js`. |
+| `backend/` | API del portal con Node.js, Express y MySQL. Ver [API del portal](#api-del-portal-backend). |
 | `docs/` | Requerimientos, historias de usuario, riesgos, acuerdos, retrospectivas, diagramas C4 y ejemplos. |
 | `docs/diseno/` | Interfaces del portal exportadas como imágenes. |
 | `.github/release.yml` | Categorías de las notas automáticas de cada versión. |
