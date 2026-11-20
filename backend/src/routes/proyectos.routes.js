@@ -2,6 +2,7 @@ const { Router } = require('express');
 const proyectos = require('../controllers/proyectos.controller');
 const seguimiento = require('../controllers/seguimiento.controller');
 const documentos = require('../controllers/documentos.controller');
+const mensajes = require('../controllers/mensajes.controller');
 const { subidaEn } = require('../utils/archivos');
 const { requiereSesion, requiereRol } = require('../middlewares/auth');
 
@@ -23,5 +24,8 @@ router.post('/:id/actividades', soloAdmin, seguimiento.crearActividad);
 
 router.get('/:id/documentos', documentos.listar);
 router.post('/:id/documentos', soloAdmin, subidaEn('documentos').single('archivo'), documentos.subir);
+
+router.get('/:id/mensajes', mensajes.listar);
+router.post('/:id/mensajes', mensajes.enviar);
 
 module.exports = router;
