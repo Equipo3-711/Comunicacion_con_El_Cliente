@@ -51,4 +51,4 @@ async function marcarRealizada(admin, actividadId) {
   return actualizacion;
 }
 
-module.exports = { registrarActualizacion, listarActividades, crearActividad, marcarRealizada };
+module.exports = { publicar, registrarActualizacion, listarActividades, crearActividad, marcarRealizada };

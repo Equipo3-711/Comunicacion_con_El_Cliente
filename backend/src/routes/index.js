@@ -11,5 +11,6 @@ router.use('/cotizaciones', require('./cotizaciones.routes'));
 router.use('/empresas', require('./empresas.routes'));
 router.use('/proyectos', require('./proyectos.routes'));
 router.use('/actividades', require('./actividades.routes'));
+router.use('/documentos', require('./documentos.routes'));
 
 module.exports = router;
