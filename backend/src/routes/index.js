@@ -7,5 +7,6 @@ router.get('/salud', (req, res) => {
 });
 
 router.use('/auth', require('./auth.routes'));
+router.use('/cotizaciones', require('./cotizaciones.routes'));
 
 module.exports = router;
