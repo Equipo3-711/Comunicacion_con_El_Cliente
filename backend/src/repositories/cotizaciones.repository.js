@@ -3,7 +3,7 @@ const db = require('../config/db');
 async function crear({ usuarioId, telefono, tipoCliente, tipoTrabajo, direccion, medidas, descripcion }, conexion) {
   const resultado = await db.consultar(
     `INSERT INTO cotizaciones (usuario_id, telefono, tipo_cliente, tipo_trabajo, direccion, medidas, descripcion)
-     VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      VALUES (?, ?, ?, ?, ?, ?, ?)`,
     [usuarioId, telefono, tipoCliente, tipoTrabajo, direccion, medidas || null, descripcion],
     conexion,
   );
@@ -20,9 +20,9 @@ async function agregarArchivo({ cotizacionId, nombreOriginal, ruta, tipoMime }, 
 
 const SELECT_COTIZACION = `
   SELECT c.id, c.tipo_cliente AS tipoCliente, c.tipo_trabajo AS tipoTrabajo, c.direccion, c.medidas,
-         c.descripcion, c.telefono, c.estado, c.creado_en AS creadoEn,
-         u.id AS clienteId, u.nombre AS cliente, u.correo, e.nombre AS empresa,
-         (SELECT COUNT(*) FROM cotizacion_archivos a WHERE a.cotizacion_id = c.id) AS archivos
+          c.descripcion, c.telefono, c.estado, c.creado_en AS creadoEn,
+          u.id AS clienteId, u.nombre AS cliente, u.correo, e.nombre AS empresa,
+          (SELECT COUNT(*) FROM cotizacion_archivos a WHERE a.cotizacion_id = c.id) AS archivos
     FROM cotizaciones c
     JOIN usuarios u ON u.id = c.usuario_id
     LEFT JOIN empresas e ON e.id = u.empresa_id`;

@@ -12,7 +12,7 @@ async function crear({ usuarioId, tipo, descripcion, proyectoId = null }, conexi
 async function listarSinLeer(usuarioId) {
   return db.consultar(
     `SELECT id, tipo, descripcion, proyecto_id AS proyectoId, creado_en AS creadoEn
-       FROM pendientes
+        FROM pendientes
       WHERE usuario_id = ? AND leido = FALSE
       ORDER BY creado_en DESC, id DESC`,
     [usuarioId],

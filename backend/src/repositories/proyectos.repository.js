@@ -2,8 +2,8 @@ const db = require('../config/db');
 
 const SELECT_RESUMEN = `
   SELECT p.id, p.nombre, p.tipo_trabajo AS tipoTrabajo, p.estado, p.empresa_id AS empresaId, e.nombre AS empresa,
-         COALESCE((SELECT MAX(a.creado_en) FROM actualizaciones a WHERE a.proyecto_id = p.id), p.creado_en)
-           AS ultimaActualizacion
+          COALESCE((SELECT MAX(a.creado_en) FROM actualizaciones a WHERE a.proyecto_id = p.id), p.creado_en)
+            AS ultimaActualizacion
     FROM proyectos p
     JOIN empresas e ON e.id = p.empresa_id`;
 
@@ -20,9 +20,9 @@ async function buscarPorId(id, conexion) {
     `SELECT p.id, p.nombre, p.tipo_trabajo AS tipoTrabajo, p.estado, p.empresa_id AS empresaId, e.nombre AS empresa,
             p.presupuesto, p.pagado, p.garantia_hasta AS garantiaHasta, p.notas_internas AS notasInternas,
             p.responsable_id AS responsableId, u.nombre AS responsable, p.creado_en AS creadoEn
-       FROM proyectos p
-       JOIN empresas e ON e.id = p.empresa_id
-       JOIN usuarios u ON u.id = p.responsable_id
+        FROM proyectos p
+        JOIN empresas e ON e.id = p.empresa_id
+        JOIN usuarios u ON u.id = p.responsable_id
       WHERE p.id = ?`,
     [id],
     conexion,
@@ -33,7 +33,7 @@ async function buscarPorId(id, conexion) {
 async function crear({ empresaId, nombre, tipoTrabajo, responsableId, presupuesto, garantiaHasta, notasInternas }, conexion) {
   const resultado = await db.consultar(
     `INSERT INTO proyectos (empresa_id, nombre, tipo_trabajo, responsable_id, presupuesto, garantia_hasta, notas_internas)
-     VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      VALUES (?, ?, ?, ?, ?, ?, ?)`,
     [empresaId, nombre, tipoTrabajo, responsableId, presupuesto ?? null, garantiaHasta ?? null, notasInternas ?? null],
     conexion,
   );

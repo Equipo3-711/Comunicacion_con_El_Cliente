@@ -13,8 +13,8 @@ async function crear({ proyectoId, tipo, descripcion, responsableId }, conexion)
 async function listarPorProyecto(proyectoId) {
   return db.consultar(
     `SELECT a.id, a.tipo, a.descripcion, a.creado_en AS fecha, u.nombre AS responsable
-       FROM actualizaciones a
-       JOIN usuarios u ON u.id = a.responsable_id
+        FROM actualizaciones a
+        JOIN usuarios u ON u.id = a.responsable_id
       WHERE a.proyecto_id = ?
       ORDER BY a.creado_en DESC, a.id DESC`,
     [proyectoId],

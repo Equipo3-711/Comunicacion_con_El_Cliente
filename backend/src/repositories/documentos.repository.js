@@ -12,8 +12,8 @@ async function crear({ proyectoId, nombre, ruta, tipoMime, subidoPor }, conexion
 async function listarPorProyecto(proyectoId) {
   return db.consultar(
     `SELECT d.id, d.nombre, d.tipo_mime AS tipoMime, d.creado_en AS creadoEn, u.nombre AS subidoPor
-       FROM documentos d
-       JOIN usuarios u ON u.id = d.subido_por
+        FROM documentos d
+        JOIN usuarios u ON u.id = d.subido_por
       WHERE d.proyecto_id = ?
       ORDER BY d.creado_en DESC, d.id DESC`,
     [proyectoId],

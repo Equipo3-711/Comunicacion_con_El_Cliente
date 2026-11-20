@@ -5,8 +5,8 @@ const comoBooleano = (fila) => ({ ...fila, realizada: Boolean(fila.realizada) })
 async function listarPorProyecto(proyectoId) {
   const filas = await db.consultar(
     `SELECT a.id, a.descripcion, a.realizada, a.realizada_en AS realizadaEn, u.nombre AS realizadaPor
-       FROM actividades a
-       LEFT JOIN usuarios u ON u.id = a.realizada_por
+        FROM actividades a
+        LEFT JOIN usuarios u ON u.id = a.realizada_por
       WHERE a.proyecto_id = ?
       ORDER BY a.realizada, a.creado_en, a.id`,
     [proyectoId],
