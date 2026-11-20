@@ -12,5 +12,6 @@ router.use('/empresas', require('./empresas.routes'));
 router.use('/proyectos', require('./proyectos.routes'));
 router.use('/actividades', require('./actividades.routes'));
 router.use('/documentos', require('./documentos.routes'));
+router.use('/pendientes', require('./pendientes.routes'));
 
 module.exports = router;
