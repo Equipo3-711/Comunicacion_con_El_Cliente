@@ -1,7 +1,7 @@
 // Crea una cuenta de administrador (personal de la vidriería).
 // Pide los datos en la terminal para que ninguna contraseña quede escrita en el repositorio.
 //   npm run crear-admin
-const readline = require('node:readline/promises');
+const readline = require('node:readline');
 const bcrypt = require('bcryptjs');
 const config = require('../src/config/env');
 const db = require('../src/config/db');
@@ -14,11 +14,19 @@ async function main() {
     process.exit(1);
   }
 
-  const terminal = readline.createInterface({ input: process.stdin, output: process.stdout });
-  const nombre = (await terminal.question('Nombre del administrador: ')).trim();
-  const correo = (await terminal.question('Correo: ')).trim().toLowerCase();
-  const contrasena = await terminal.question('Contraseña (mínimo 8 caracteres): ');
+  // Se leen las líneas en orden, para que funcione al escribir a mano o al recibir los datos por tubería.
+  const terminal = readline.createInterface({ input: process.stdin });
+  const lineas = terminal[Symbol.asyncIterator]();
+  const preguntar = async (texto) => {
+    process.stdout.write(texto);
+    const { value } = await lineas.next();
+    return value ?? '';
+  };
+  const nombre = (await preguntar('Nombre del administrador: ')).trim();
+  const correo = (await preguntar('Correo: ')).trim().toLowerCase();
+  const contrasena = await preguntar('Contraseña (mínimo 8 caracteres): ');
   terminal.close();
+  process.stdout.write('\n');
 
   if (!nombre || !correo.includes('@') || contrasena.length < 8) {
     console.error('Datos incompletos: escribe nombre, un correo válido y una contraseña de al menos 8 caracteres.');
