@@ -46,4 +46,9 @@ Pendiente: la escribe Ximena (T-17).
 
 ### Nombre de las ramas
 
-Pendiente: la escribe Grecia (T-18).
+Cada rama se llama `tipo/ID-descripcion`, tomando el tipo de [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):
+
+- **tipo:** uno de los que usa el equipo: `feat`, `fix`, `docs`, `style`, `refactor`, `test` o `chore`. Es el mismo tipo de sus commits y del título de su pull request.
+- **ID:** el identificador del issue que atiende, por ejemplo `CC-09`, `HU-03` o `T-18`.
+- **descripcion:** de dos a cuatro palabras en minúsculas, separadas por guiones y sin acentos ni ñ.
+- Ejemplos: `feat/HU-03-formulario-cotizacion`, `fix/CC-09-correcciones-interfaces-v2` y `docs/T-18-regla-nombre-ramas`.
