@@ -8,6 +8,7 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "test": "jest",
+    "cobertura": "jest --coverage",
     "build": "node -e \"console.log('La API no necesita compilarse: se ejecuta con npm start.')\"",
     "crear-admin": "node scripts/crear-admin.js"
   },
@@ -18,7 +19,18 @@
     "testEnvironment": "node",
     "setupFiles": [
       "<rootDir>/tests/setup.js"
-    ]
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 80,
+        "branches": 60,
+        "functions": 70,
+        "lines": 80
+      }
+    }
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
