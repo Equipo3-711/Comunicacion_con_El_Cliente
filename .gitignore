@@ -1,0 +1,15 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno: nunca se suben (AGENTS.md)
+.env
+
+# Fotos y documentos que suben los usuarios
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Reportes de pruebas
+coverage/
+
+# Archivos del sistema
+.DS_Store

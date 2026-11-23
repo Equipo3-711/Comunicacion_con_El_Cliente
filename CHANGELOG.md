@@ -7,6 +7,10 @@ y este proyecto sigue el [Versionado Semántico](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+### Added
+
+- API del portal en `backend/`, con Node.js, Express y MySQL. Incluye registro e inicio de sesión por rol, cotización con formulario, proyectos con historial, actualizaciones y actividades realizadas, documentos que se ven sin descargarse, chat para dudas, campana de pendientes y aviso por correo (#91).
+
 ## [0.1.0] - 2026-10-29
 
 Primera versión documentada del Portal de Proyectos, todavía en prototipo. Son las notas de la [release v0.1.0](https://github.com/Equipo3-711/Comunicacion_con_El_Cliente/releases/tag/v0.1.0), editadas a mano.
