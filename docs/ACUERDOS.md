@@ -42,7 +42,7 @@ Reglas para trabajar con ramas y pull requests en este repositorio.
 
 ### Borrado de ramas
 
-Pendiente: la escribe Ximena (T-17).
+Cuando un pull request se integra a `main`, su rama se borra el mismo día. GitHub lo hace solo con la opción **Automatically delete head branches**, que está activada en el repositorio; si la rama sigue, el autor la borra con **Delete branch**. Una rama que se cierra sin integrar también se borra, después de explicar el motivo en su pull request.
 
 ### Nombre de las ramas
 
