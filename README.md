@@ -150,6 +150,7 @@ Cada actualización, cambio de estado, actividad realizada o documento nuevo le 
 - [Diagrama de contexto](docs/CONTEXT.md) y [diagrama de contenedores](docs/CONTAINERS.md).
 - [Riesgos](docs/RIESGOS.md), [acuerdos y definición de terminado](docs/ACUERDOS.md) y [retrospectivas](docs/RETROSPECTIVAS.md).
 - [Ejemplos de uso](docs/EJEMPLOS.md).
+- [Pruebas y calidad](docs/PRUEBAS.md).
 
 ## Versiones
 
