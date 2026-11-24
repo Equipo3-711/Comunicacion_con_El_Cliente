@@ -85,9 +85,17 @@ async function actualizarDatos(admin, proyectoId, cambios) {
   return { ...proyecto, ...cambios };
 }
 
+// Cada evento del historial lleva los ids de sus fotos, que se ven en /api/fotos/:id/ver.
 async function historial(usuario, proyectoId) {
   const proyecto = await verificarAcceso(usuario, proyectoId);
-  return actualizaciones.listarPorProyecto(proyecto.id);
+  const [eventos, fotos] = await Promise.all([
+    actualizaciones.listarPorProyecto(proyecto.id),
+    actualizaciones.listarFotosPorProyecto(proyecto.id),
+  ]);
+  return eventos.map((evento) => ({
+    ...evento,
+    fotos: (fotos || []).filter((foto) => foto.actualizacionId === evento.id).map((foto) => foto.id),
+  }));
 }
 
 module.exports = {

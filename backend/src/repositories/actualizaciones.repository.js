@@ -21,4 +21,37 @@ async function listarPorProyecto(proyectoId) {
   );
 }
 
-module.exports = { crear, listarPorProyecto };
+async function agregarFoto({ actualizacionId, ruta, tipoMime }, conexion) {
+  const resultado = await db.consultar(
+    'INSERT INTO actualizacion_fotos (actualizacion_id, ruta, tipo_mime) VALUES (?, ?, ?)',
+    [actualizacionId, ruta, tipoMime],
+    conexion,
+  );
+  return resultado.insertId;
+}
+
+// Fotos de todas las actualizaciones de un proyecto, para unirlas al historial.
+async function listarFotosPorProyecto(proyectoId) {
+  return db.consultar(
+    `SELECT f.id, f.actualizacion_id AS actualizacionId
+        FROM actualizacion_fotos f
+        JOIN actualizaciones a ON a.id = f.actualizacion_id
+      WHERE a.proyecto_id = ?
+      ORDER BY f.id`,
+    [proyectoId],
+  );
+}
+
+// Devuelve la foto con el proyecto al que pertenece, para revisar el acceso antes de mostrarla.
+async function buscarFoto(id) {
+  const filas = await db.consultar(
+    `SELECT f.id, f.ruta, f.tipo_mime AS tipoMime, a.proyecto_id AS proyectoId
+        FROM actualizacion_fotos f
+        JOIN actualizaciones a ON a.id = f.actualizacion_id
+      WHERE f.id = ?`,
+    [id],
+  );
+  return filas[0] || null;
+}
+
+module.exports = { crear, listarPorProyecto, agregarFoto, listarFotosPorProyecto, buscarFoto };

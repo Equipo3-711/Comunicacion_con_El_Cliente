@@ -1,9 +1,25 @@
 const seguimiento = require('../services/seguimiento.service');
 const { validarActualizacion, validarActividad } = require('../validators/seguimiento.validator');
+const { borrarArchivos } = require('../utils/archivos');
 
+// Acepta JSON o un formulario con fotos opcionales en el campo "fotos".
 async function registrarActualizacion(req, res) {
-  const actualizacion = await seguimiento.registrarActualizacion(req.usuario, req.params.id, validarActualizacion(req.body));
-  res.status(201).json({ actualizacion });
+  const fotos = req.files || [];
+  try {
+    const datos = validarActualizacion(req.body);
+    const actualizacion = await seguimiento.registrarActualizacion(req.usuario, req.params.id, datos, fotos);
+    res.status(201).json({ actualizacion });
+  } catch (error) {
+    await borrarArchivos(fotos);
+    throw error;
+  }
+}
+
+// Muestra la foto dentro del portal, igual que los documentos.
+async function verFoto(req, res) {
+  const foto = await seguimiento.obtenerFotoParaVer(req.usuario, req.params.id);
+  res.set({ 'Content-Type': foto.tipoMime, 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
+  res.sendFile(foto.ruta);
 }
 
 async function listarActividades(req, res) {
@@ -19,4 +35,4 @@ async function marcarRealizada(req, res) {
   res.json({ actualizacion: await seguimiento.marcarRealizada(req.usuario, req.params.id) });
 }
 
-module.exports = { registrarActualizacion, listarActividades, crearActividad, marcarRealizada };
+module.exports = { registrarActualizacion, verFoto, listarActividades, crearActividad, marcarRealizada };

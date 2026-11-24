@@ -5,7 +5,7 @@
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-DROP TABLE IF EXISTS pendientes, mensajes, documentos, actividades, actualizaciones,
+DROP TABLE IF EXISTS pendientes, mensajes, documentos, actividades, actualizacion_fotos, actualizaciones,
   cotizacion_archivos, cotizaciones, proyectos, usuarios, empresas;
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -90,6 +90,17 @@ CREATE TABLE actualizaciones (
   KEY ix_actualizaciones_proyecto (proyecto_id, creado_en),
   CONSTRAINT fk_actualizaciones_proyecto FOREIGN KEY (proyecto_id) REFERENCES proyectos (id),
   CONSTRAINT fk_actualizaciones_responsable FOREIGN KEY (responsable_id) REFERENCES usuarios (id)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+
+-- Fotos opcionales de una actualización: el cliente ve el avance en fotografías (RF-07).
+CREATE TABLE actualizacion_fotos (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  actualizacion_id INT UNSIGNED NOT NULL,
+  ruta VARCHAR(255) NOT NULL,
+  tipo_mime VARCHAR(100) NOT NULL,
+  creado_en DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY ix_fotos_actualizacion (actualizacion_id),
+  CONSTRAINT fk_fotos_actualizacion FOREIGN KEY (actualizacion_id) REFERENCES actualizaciones (id) ON DELETE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 -- Actividades que el arquitecto marca como realizadas (RF-17, CC-07).
