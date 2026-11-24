@@ -3,7 +3,7 @@ const proyectos = require('../controllers/proyectos.controller');
 const seguimiento = require('../controllers/seguimiento.controller');
 const documentos = require('../controllers/documentos.controller');
 const mensajes = require('../controllers/mensajes.controller');
-const { subidaEn } = require('../utils/archivos');
+const { subidaEn, verificarContenido } = require('../utils/archivos');
 const { requiereSesion, requiereRol } = require('../middlewares/auth');
 
 const router = Router();
@@ -25,7 +25,7 @@ router.get('/:id/actividades', seguimiento.listarActividades);
 router.post('/:id/actividades', soloAdmin, seguimiento.crearActividad);
 
 router.get('/:id/documentos', documentos.listar);
-router.post('/:id/documentos', soloAdmin, subidaEn('documentos').single('archivo'), documentos.subir);
+router.post('/:id/documentos', soloAdmin, subidaEn('documentos').single('archivo'), verificarContenido, documentos.subir);
 
 router.get('/:id/mensajes', mensajes.listar);
 router.post('/:id/mensajes', mensajes.enviar);

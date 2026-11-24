@@ -45,4 +45,45 @@ async function borrarArchivos(archivos = []) {
   await Promise.all(archivos.map((archivo) => fs.promises.unlink(archivo.path).catch(() => {})));
 }
 
-module.exports = { subidaEn, rutaRelativa, rutaAbsoluta, borrarArchivos, TIPOS_PERMITIDOS };
+// Primeros bytes («firma») de cada tipo permitido. El tipo que manda el navegador
+// se puede falsificar; el contenido del archivo no (OWASP File Upload Cheat Sheet).
+const FIRMAS = {
+  'image/jpeg': [0xff, 0xd8, 0xff],
+  'image/png': [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a],
+  'application/pdf': [0x25, 0x50, 0x44, 0x46, 0x2d],
+};
+
+// Revisa que el contenido corresponda al tipo declarado.
+function coincideFirma(tipo, inicio) {
+  if (tipo === 'image/webp') {
+    return inicio.toString('latin1', 0, 4) === 'RIFF' && inicio.toString('latin1', 8, 12) === 'WEBP';
+  }
+  const firma = FIRMAS[tipo];
+  return Boolean(firma) && firma.every((byte, posicion) => inicio[posicion] === byte);
+}
+
+async function leerInicio(ruta) {
+  const archivo = await fs.promises.open(ruta, 'r');
+  try {
+    const { buffer, bytesRead } = await archivo.read(Buffer.alloc(12), 0, 12, 0);
+    return buffer.subarray(0, bytesRead);
+  } finally {
+    await archivo.close();
+  }
+}
+
+// Va después de multer: si algún archivo no es lo que dice ser, borra todos y responde 400.
+async function verificarContenido(req, res, siguiente) {
+  const archivos = req.file ? [req.file] : req.files || [];
+  for (const archivo of archivos) {
+    if (!coincideFirma(archivo.mimetype, await leerInicio(archivo.path))) {
+      await borrarArchivos(archivos);
+      throw solicitudInvalida('El archivo no es una imagen JPG, PNG o WEBP ni un PDF válido.');
+    }
+  }
+  siguiente();
+}
+
+module.exports = {
+  subidaEn, rutaRelativa, rutaAbsoluta, borrarArchivos, coincideFirma, verificarContenido, TIPOS_PERMITIDOS,
+};
