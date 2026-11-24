@@ -79,11 +79,23 @@ export const api = {
 
   // Cotizaciones
   cotizaciones: () => pedir('GET', '/cotizaciones'),
+  cotizacion: (id) => pedir('GET', `/cotizaciones/${id}`),
   enviarCotizacion: (formulario) => pedir('POST', '/cotizaciones', formulario),
+  modificarCotizacion: (id, datos) => pedir('PUT', `/cotizaciones/${id}`, datos),
+  verArchivoCotizacion: (id) => pedirArchivo(`/cotizaciones/archivos/${id}/ver`),
 
   // Solo el personal (arquitecto)
   empresas: () => pedir('GET', '/empresas'),
+  clientes: () => pedir('GET', '/clientes'),
   agregarCliente: (datos) => pedir('POST', '/clientes', datos),
+  cambiarEstadoCotizacion: (id, estado) => pedir('PATCH', `/cotizaciones/${id}/estado`, { estado }),
+  solicitudes: (filtros = {}) => {
+    const consulta = new URLSearchParams(filtros).toString();
+    return pedir('GET', `/solicitudes${consulta ? `?${consulta}` : ''}`);
+  },
+  registrarSolicitud: (datos) => pedir('POST', '/solicitudes', datos),
+  actualizarSolicitud: (id, cambios) => pedir('PATCH', `/solicitudes/${id}`, cambios),
+  responsables: () => pedir('GET', '/solicitudes/responsables'),
   crearProyecto: (datos) => pedir('POST', '/proyectos', datos),
   actualizarDatos: (id, datos) => pedir('PATCH', `/proyectos/${id}`, datos),
   cambiarEstado: (id, estado) => pedir('PATCH', `/proyectos/${id}/estado`, { estado }),

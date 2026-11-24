@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cotización · T Efficiency</title>
+  <link rel="icon" href="../img/icono.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap">
+  <link rel="stylesheet" href="../css/estilos.css">
+  <!-- pdf.js dibuja los planos en PDF como imágenes, sin la barra del navegador que ofrece descargarlos. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+  <div class="w">
+    <header class="top" id="encabezado"></header>
+    <main id="contenido">
+      <p><a href="inicio.html#cotizaciones">← Cotizaciones recibidas</a></p>
+      <div class="g dos-uno">
+        <section class="card">
+          <div class="row">
+            <h1 class="pagina" id="titulo" style="margin:0">Cotización</h1>
+            <span class="tag" id="estado"></span>
+          </div>
+          <dl class="datos mt" id="datos"></dl>
+          <h2 class="mt">Fotos y planos</h2>
+          <div id="archivos"><p class="vacio">Cargando…</p></div>
+          <div class="doc mt" id="visor" hidden></div>
+        </section>
+
+        <div class="g">
+          <section class="card">
+            <h2>Estado</h2>
+            <label for="nuevoEstado">Cambiar a</label>
+            <select class="in" id="nuevoEstado"></select>
+            <button class="btn p" id="guardarEstado" type="button">Guardar estado</button>
+            <p class="suave nota">Al marcarla como «Enviada», sus solicitudes quedan atendidas. El cliente recibe el aviso en su campana.</p>
+          </section>
+          <section class="card">
+            <h2>Proyecto</h2>
+            <div id="proyecto"></div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="../js/paginas/arquitecto-cotizacion.js"></script>
+</body>
+</html>

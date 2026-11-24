@@ -3,7 +3,7 @@ import { api } from '../api.js';
 import { exigirSesion } from '../sesion.js';
 import {
   montarEncabezado, escapar, iniciales, fechaCorta, avisar, mostrarErrores, limpiarErrores, mientrasSeEnvia,
-  errorAlCargar, ATENCION, TIPOS_TRABAJO, TIPOS_CLIENTE, ESTADOS_COTIZACION,
+  errorAlCargar, parametro, ATENCION, TIPOS_TRABAJO, TIPOS_CLIENTE, ESTADOS_COTIZACION,
 } from '../ui.js';
 
 const usuario = exigirSesion('admin');
@@ -56,16 +56,27 @@ document.getElementById('dudas').addEventListener('click', () => {
 
 let cotizaciones = [];
 
+// Si ya se abrió su proyecto, se enlaza a él; si no, se ofrece abrirlo.
+function accionCotizacion(registro, indice) {
+  return registro.proyectoId
+    ? `<a class="btn s" href="proyecto.html?id=${registro.proyectoId}">Proyecto #${registro.proyectoId}</a>`
+    : `<button class="btn s" type="button" data-cotizacion="${indice}">Abrir proyecto</button>`;
+}
+
 function filaCotizacion(registro, indice) {
   return `<div class="act">
     <div>
       <b>${escapar(registro.cliente)} · ${escapar(registro.empresa)}</b>
-      <span class="tag">${escapar(ESTADOS_COTIZACION[registro.estado])}</span><br>
+      <span class="tag">${escapar(ESTADOS_COTIZACION[registro.estado])}</span>
+      ${registro.modificadaEn ? '<span class="tag pendiente">Modificada</span>' : ''}<br>
       <small class="suave">${escapar(TIPOS_TRABAJO[registro.tipoTrabajo])} · ${escapar(TIPOS_CLIENTE[registro.tipoCliente])} ·
         ${escapar(registro.direccion)} · ${escapar(registro.telefono)} · ${fechaCorta(registro.creadoEn)}</small>
       <p style="margin:4px 0 0">${escapar(registro.descripcion)}${registro.medidas ? ` <small class="suave">(${escapar(registro.medidas)})</small>` : ''}</p>
     </div>
-    <button class="btn s" type="button" data-cotizacion="${indice}">Abrir proyecto</button>
+    <div class="acciones">
+      <a class="btn s" href="cotizacion.html?id=${registro.id}">Ver${registro.archivos ? ` (${registro.archivos} archivo${registro.archivos > 1 ? 's' : ''})` : ''}</a>
+      ${accionCotizacion(registro, indice)}
+    </div>
   </div>`;
 }
 
@@ -85,6 +96,8 @@ document.getElementById('listaCotizaciones').addEventListener('click', (evento) 
 
 const dialogo = document.getElementById('dialogoAgregar');
 const formulario = document.getElementById('formAgregar');
+// Cotización de la que nace el proyecto, para dejarlos ligados.
+let cotizacionElegida = null;
 
 function modoActual() {
   return formulario.modo.value;
@@ -104,6 +117,7 @@ async function llenarEmpresas(elegida) {
 
 // Si viene de una cotización, se abre como «Cliente ya registrado» con su empresa y su tipo de trabajo.
 async function abrirDialogo(cotizacion = null) {
+  cotizacionElegida = cotizacion;
   formulario.reset();
   formulario.modo.value = cotizacion ? 'registrado' : 'nuevo';
   cambiarModo();
@@ -115,7 +129,8 @@ async function abrirDialogo(cotizacion = null) {
 function datosDelFormulario() {
   const datos = Object.fromEntries(new FormData(formulario));
   if (modoActual() === 'nuevo') return datos;
-  return { empresaId: datos.empresaId, nombre: datos.nombreProyecto, tipoTrabajo: datos.tipoTrabajo };
+  const proyecto = { empresaId: datos.empresaId, nombre: datos.nombreProyecto, tipoTrabajo: datos.tipoTrabajo };
+  return cotizacionElegida ? { ...proyecto, cotizacionId: cotizacionElegida.id } : proyecto;
 }
 
 // La API llama «nombre» al nombre de la obra cuando se crea solo el proyecto.
@@ -137,15 +152,31 @@ formulario.addEventListener('submit', async (evento) => {
     await mientrasSeEnvia(formulario.querySelector('button[type="submit"]'), enviar);
     dialogo.close();
     avisar('Listo: el cliente ya está en tu cartera.');
-    await cargarClientes();
+    await Promise.all([cargarClientes(), cargarCotizaciones()]);
   } catch (error) {
     mostrarErrores(formulario, adaptarErrores(error));
   }
 });
 
+// ---------- Solicitudes por atender ----------
+
+// Cuenta las que siguen abiertas y son del usuario o de nadie.
+async function contarSolicitudes() {
+  const { solicitudes } = await api.solicitudes();
+  const porAtender = solicitudes.filter((solicitud) => solicitud.estado !== 'atendida'
+    && (solicitud.responsableId === null || solicitud.responsableId === usuario.id)).length;
+  const contador = document.getElementById('numSolicitudes');
+  contador.hidden = porAtender === 0;
+  contador.textContent = `${porAtender} por atender`;
+}
+
 try {
   await Promise.all([cargarClientes(), cargarCotizaciones()]);
+  contarSolicitudes().catch(() => {});
   if (window.location.hash === '#cotizaciones') document.getElementById('cotizaciones').scrollIntoView();
+  // Desde el detalle de una cotización: «Abrir proyecto» llega aquí con ?cotizacion=ID.
+  const desdeCotizacion = cotizaciones.find((registro) => String(registro.id) === parametro('cotizacion') && !registro.proyectoId);
+  if (desdeCotizacion) await abrirDialogo(desdeCotizacion);
 } catch (error) {
   errorAlCargar(document.getElementById('contenido'), error);
 }

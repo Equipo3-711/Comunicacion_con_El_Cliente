@@ -14,7 +14,8 @@
     <header class="top" id="encabezado"></header>
     <main class="card formulario">
       <form id="formulario" novalidate>
-        <h2>Solicitar cotización</h2>
+        <h2 id="tituloFormulario">Solicitar cotización</h2>
+        <p class="nota" id="avisoEdicion" hidden></p>
         <div class="g g2">
           <div>
             <label for="cliente">Cliente <i>*</i></label>
@@ -68,7 +69,7 @@
         <p class="er general" data-error="general" role="alert"></p>
         <div class="g g2">
           <a class="btn" href="proyectos.html">Cancelar</a>
-          <button class="btn p" type="submit">Enviar cotización</button>
+          <button class="btn p" type="submit" id="enviar">Enviar cotización</button>
         </div>
       </form>
     </main>

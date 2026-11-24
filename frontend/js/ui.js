@@ -16,6 +16,21 @@ export const TIPOS_EVENTO = { avance: 'Avance', cambio_estado: 'Cambio de estado
 export const TIPOS_TRABAJO = { ventanas: 'Ventanas', fachada: 'Fachada', canceles: 'Canceles', barandales: 'Barandales' };
 export const TIPOS_CLIENTE = { particular: 'Particular', constructora: 'Constructora', arquitecto: 'Arquitecto', otro: 'Otro' };
 export const ESTADOS_COTIZACION = { recibida: 'Recibida', en_revision: 'En revisión', enviada: 'Enviada' };
+export const CANALES = {
+  portal: 'Portal web', whatsapp: 'WhatsApp', llamada: 'Llamada', redes_sociales: 'Redes sociales', correo: 'Correo', presencial: 'En persona',
+};
+export const CATEGORIAS = {
+  cotizacion: 'Cotización', duda: 'Duda', modificacion: 'Modificación', queja: 'Queja', seguimiento: 'Seguimiento', informacion: 'Información general',
+};
+export const ESTADOS_SOLICITUD = { nueva: 'Nueva', en_atencion: 'En atención', atendida: 'Atendida' };
+
+// Opciones de un <select> a partir de un objeto { valor: texto }.
+export function opciones(textos, elegida = '', vacia = null) {
+  const primera = vacia === null ? '' : `<option value="">${escapar(vacia)}</option>`;
+  return primera + Object.entries(textos)
+    .map(([valor, texto]) => `<option value="${escapar(valor)}" ${String(valor) === String(elegida) ? 'selected' : ''}>${escapar(texto)}</option>`)
+    .join('');
+}
 
 // Todo lo que llega de la API se escapa antes de ponerlo en la página.
 export function escapar(valor) {
@@ -161,7 +176,8 @@ function iniciarTema(boton) {
 
 function destinoDe(pendiente, usuario) {
   const carpeta = usuario.rol === 'admin' ? 'arquitecto' : 'cliente';
-  if (pendiente.tipo === 'cotizacion') return 'arquitecto/inicio.html#cotizaciones';
+  if (pendiente.tipo === 'solicitud') return 'arquitecto/solicitudes.html';
+  if (pendiente.tipo === 'cotizacion') return usuario.rol === 'admin' ? 'arquitecto/inicio.html#cotizaciones' : 'cliente/proyectos.html#seccionCotizaciones';
   if (!pendiente.proyectoId) return inicioDe(usuario.rol);
   if (pendiente.tipo === 'mensaje') return `${carpeta}/chat.html?id=${pendiente.proyectoId}`;
   return `${carpeta}/proyecto.html?id=${pendiente.proyectoId}`;
