@@ -76,8 +76,23 @@ Pendiente: lo escribe Romina (T-21).
 
 ### Dependencias con vulnerabilidades
 
-Pendiente: lo escribe Jairo (T-21).
+El trabajo **Seguridad** del flujo ejecuta `npm audit --audit-level=high` dentro de `backend/`. `npm audit` compara las versiones del `package-lock.json` con la base de avisos de seguridad de npm. Si encuentra una vulnerabilidad alta o crítica, termina con error y el flujo queda en rojo.
+
+Además están activadas las alertas de Dependabot del repositorio, que avisan aunque nadie abra un PR.
+
+- **Resultado al activarlo:** 0 vulnerabilidades altas o críticas. Hay avisos moderados en herramientas de desarrollo (Jest y nodemon), que no llegan al servidor.
+- **Si el flujo marca una:** se actualiza la dependencia con `npm update` o `npm audit fix`. No se usa `npm audit fix --force` sin revisar qué cambia, porque puede instalar versiones incompatibles.
+- **Por qué no usamos la revisión de dependencias de GitHub:** en un repositorio privado del plan gratuito necesita GitHub Advanced Security.
 
 ### Llaves, contraseñas y secretos
 
-Pendiente: lo escribe Jairo (T-21).
+**Dónde se guardan.** Los valores reales van en `backend/.env`, que `.gitignore` excluye. `backend/.env.example` solo trae los nombres de las variables. Si un día el flujo necesita un secreto, se guarda en *Settings › Secrets and variables › Actions* y se lee con `${{ secrets.NOMBRE }}`; GitHub lo oculta en los registros.
+
+**Cómo se detectan.** El trabajo **Seguridad** descarga Gitleaks y ejecuta `gitleaks git` sobre todo el historial (el checkout usa `fetch-depth: 0`). Si encuentra una llave o contraseña, el flujo queda en rojo. Primera revisión: 95 commits, 0 hallazgos.
+
+**La API no muestra secretos.** Si falta una variable obligatoria, el servidor solo dice su nombre. Lo comprueba `tests/config.test.js`.
+
+**Si aparece un secreto:**
+1. Se cambia de inmediato en el servicio al que pertenece. Borrarlo del código no basta, porque sigue en el historial y en cada copia del repositorio.
+2. El valor nuevo se guarda solo en `.env` o en los secretos de GitHub.
+3. Se quita del código en un PR y se avisa al equipo en el issue.
