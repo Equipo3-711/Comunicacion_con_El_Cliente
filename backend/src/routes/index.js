@@ -9,6 +9,7 @@ router.get('/salud', (req, res) => {
 router.use('/auth', require('./auth.routes'));
 router.use('/cotizaciones', require('./cotizaciones.routes'));
 router.use('/empresas', require('./empresas.routes'));
+router.use('/clientes', require('./clientes.routes'));
 router.use('/proyectos', require('./proyectos.routes'));
 router.use('/actividades', require('./actividades.routes'));
 router.use('/documentos', require('./documentos.routes'));

@@ -32,20 +32,26 @@ async function obtener(usuario, proyectoId) {
   return paraUsuario(await verificarAcceso(usuario, proyectoId), usuario);
 }
 
+const eventoApertura = (admin) => ({
+  tipo: 'cambio_estado', descripcion: `Se abrió el proyecto en estado «${ESTADOS.cotizacion}».`, responsable: admin.nombre,
+});
+
+// Guarda el proyecto con su primer evento del historial y avisa a los clientes de la empresa.
+// Se llama dentro de una transacción; también la usa el alta de clientes.
+async function abrir(admin, datos, conexion) {
+  const evento = eventoApertura(admin);
+  const id = await proyectos.crear({ ...datos, responsableId: admin.id }, conexion);
+  await actualizaciones.crear({ proyectoId: id, tipo: evento.tipo, descripcion: evento.descripcion, responsableId: admin.id }, conexion);
+  const proyecto = { id, ...datos, estado: 'cotizacion', atencion: 'atendido', responsableId: admin.id };
+  const clientes = await notificaciones.avisarClientes(proyecto, { descripcion: evento.descripcion }, conexion);
+  return { proyecto, clientes, evento };
+}
+
 async function crear(admin, datos) {
   if (!(await empresas.buscarPorId(datos.empresaId))) {
     throw solicitudInvalida('Revisa los campos marcados.', { empresaId: 'La empresa no existe.' });
   }
-  const evento = { tipo: 'cambio_estado', descripcion: `Se abrió el proyecto en estado «${ESTADOS.cotizacion}».`, responsable: admin.nombre };
-
-  const { proyecto, clientes } = await db.transaccion(async (conexion) => {
-    const id = await proyectos.crear({ ...datos, responsableId: admin.id }, conexion);
-    await actualizaciones.crear({ proyectoId: id, tipo: evento.tipo, descripcion: evento.descripcion, responsableId: admin.id }, conexion);
-    const nuevo = { id, ...datos, estado: 'cotizacion', responsableId: admin.id };
-    const avisados = await notificaciones.avisarClientes(nuevo, { descripcion: evento.descripcion }, conexion);
-    return { proyecto: nuevo, clientes: avisados };
-  });
-
+  const { proyecto, clientes, evento } = await db.transaccion((conexion) => abrir(admin, datos, conexion));
   notificaciones.enviarCorreos(clientes, proyecto, evento);
   return proyecto;
 }
@@ -85,5 +91,5 @@ async function historial(usuario, proyectoId) {
 }
 
 module.exports = {
-  verificarAcceso, listar, obtener, crear, cambiarEstado, cambiarAtencion, actualizarDatos, historial,
+  verificarAcceso, listar, obtener, abrir, crear, cambiarEstado, cambiarAtencion, actualizarDatos, historial,
 };
