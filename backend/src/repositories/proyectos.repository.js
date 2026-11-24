@@ -1,7 +1,10 @@
 const db = require('../config/db');
 
+// Incluye el semáforo de atención y el contacto principal de la empresa (el primer cliente registrado).
 const SELECT_RESUMEN = `
-  SELECT p.id, p.nombre, p.tipo_trabajo AS tipoTrabajo, p.estado, p.empresa_id AS empresaId, e.nombre AS empresa,
+  SELECT p.id, p.nombre, p.tipo_trabajo AS tipoTrabajo, p.estado, p.atencion, p.empresa_id AS empresaId, e.nombre AS empresa,
+          (SELECT u.nombre FROM usuarios u WHERE u.empresa_id = p.empresa_id AND u.rol = 'cliente' ORDER BY u.id LIMIT 1)
+            AS cliente,
           COALESCE((SELECT MAX(a.creado_en) FROM actualizaciones a WHERE a.proyecto_id = p.id), p.creado_en)
             AS ultimaActualizacion
     FROM proyectos p
@@ -17,7 +20,7 @@ async function listarDeEmpresa(empresaId) {
 
 async function buscarPorId(id, conexion) {
   const filas = await db.consultar(
-    `SELECT p.id, p.nombre, p.tipo_trabajo AS tipoTrabajo, p.estado, p.empresa_id AS empresaId, e.nombre AS empresa,
+    `SELECT p.id, p.nombre, p.tipo_trabajo AS tipoTrabajo, p.estado, p.atencion, p.empresa_id AS empresaId, e.nombre AS empresa,
             p.presupuesto, p.pagado, p.garantia_hasta AS garantiaHasta, p.notas_internas AS notasInternas,
             p.responsable_id AS responsableId, u.nombre AS responsable, p.creado_en AS creadoEn
         FROM proyectos p
@@ -44,6 +47,10 @@ async function actualizarEstado(id, estado, conexion) {
   await db.consultar('UPDATE proyectos SET estado = ? WHERE id = ?', [estado, id], conexion);
 }
 
+async function actualizarAtencion(id, atencion, conexion) {
+  await db.consultar('UPDATE proyectos SET atencion = ? WHERE id = ?', [atencion, id], conexion);
+}
+
 // Solo estas columnas se pueden cambiar desde la API.
 const COLUMNAS_EDITABLES = {
   presupuesto: 'presupuesto',
@@ -59,4 +66,6 @@ async function actualizarDatos(id, campos) {
   await db.consultar(`UPDATE proyectos SET ${asignaciones} WHERE id = ?`, [...nombres.map((campo) => campos[campo]), id]);
 }
 
-module.exports = { listarTodos, listarDeEmpresa, buscarPorId, crear, actualizarEstado, actualizarDatos };
+module.exports = {
+  listarTodos, listarDeEmpresa, buscarPorId, crear, actualizarEstado, actualizarAtencion, actualizarDatos,
+};

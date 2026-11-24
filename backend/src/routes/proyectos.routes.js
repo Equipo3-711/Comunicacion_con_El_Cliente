@@ -16,6 +16,7 @@ router.post('/', soloAdmin, proyectos.crear);
 router.get('/:id', proyectos.obtener);
 router.patch('/:id', soloAdmin, proyectos.actualizarDatos);
 router.patch('/:id/estado', soloAdmin, proyectos.cambiarEstado);
+router.patch('/:id/atencion', soloAdmin, proyectos.cambiarAtencion);
 router.get('/:id/historial', proyectos.historial);
 
 router.post('/:id/actualizaciones', soloAdmin, seguimiento.registrarActualizacion);

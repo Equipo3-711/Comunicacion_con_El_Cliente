@@ -66,6 +66,13 @@ async function cambiarEstado(admin, proyectoId, estado) {
   return proyecto;
 }
 
+// El arquitecto cambia a mano el semáforo de atención del proyecto.
+async function cambiarAtencion(admin, proyectoId, atencion) {
+  const proyecto = await verificarAcceso(admin, proyectoId);
+  await proyectos.actualizarAtencion(proyecto.id, atencion);
+  return { ...proyecto, atencion };
+}
+
 async function actualizarDatos(admin, proyectoId, cambios) {
   const proyecto = await verificarAcceso(admin, proyectoId);
   await proyectos.actualizarDatos(proyecto.id, cambios);
@@ -77,4 +84,6 @@ async function historial(usuario, proyectoId) {
   return actualizaciones.listarPorProyecto(proyecto.id);
 }
 
-module.exports = { verificarAcceso, listar, obtener, crear, cambiarEstado, actualizarDatos, historial };
+module.exports = {
+  verificarAcceso, listar, obtener, crear, cambiarEstado, cambiarAtencion, actualizarDatos, historial,
+};

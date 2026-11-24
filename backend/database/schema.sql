@@ -33,6 +33,7 @@ CREATE TABLE usuarios (
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 -- Obras de cada empresa (RF-07, RF-08). notas_internas nunca se muestra al cliente (T-06).
+-- atencion es el semáforo de las dudas: cambia solo con el chat y el arquitecto lo ajusta a mano.
 CREATE TABLE proyectos (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   empresa_id INT UNSIGNED NOT NULL,
@@ -44,6 +45,7 @@ CREATE TABLE proyectos (
   pagado DECIMAL(12, 2) NOT NULL DEFAULT 0,
   garantia_hasta DATE NULL,
   notas_internas TEXT NULL,
+  atencion ENUM('no_atendido', 'pendiente', 'atendido') NOT NULL DEFAULT 'atendido',
   creado_en DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   KEY ix_proyectos_empresa (empresa_id),
   CONSTRAINT fk_proyectos_empresa FOREIGN KEY (empresa_id) REFERENCES empresas (id),
