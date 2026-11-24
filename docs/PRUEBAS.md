@@ -40,11 +40,25 @@ El repositorio es privado y del plan gratuito, así que GitHub no permite hacer 
 
 ### Linter y regla de complejidad
 
-Pendiente: lo escribe Grecia (T-21).
+Usamos **ESLint 9**, configurado en `backend/eslint.config.js`, y se ejecuta con `npm run lint`.
+
+- `js.configs.recommended` activa las reglas recomendadas de ESLint, como `no-unused-vars`, `no-undef`, `no-unreachable` y `no-dupe-keys`.
+- `complexity: ["error", 10]` limita la complejidad ciclomática de cada función a 10. Cada `if`, `case`, ciclo, `&&`, `||`, `??` y `?:` suma un camino. ESLint no la activa por defecto, y su máximo por defecto es 20.
+- `no-unused-vars` con `ignoreRestSiblings` permite descartar un campo con `const { campo, ...resto } = objeto`. Así ocultamos las notas internas al cliente.
+
+En el flujo, el paso **Linter** va antes de las pruebas. Si ESLint encuentra un error, el flujo queda en rojo.
 
 ### Resultado del primer análisis
 
-Pendiente: lo escribe Grecia (T-21).
+Primer análisis, el 24 de noviembre de 2026, sobre el código de `main` sin corregir nada: **1 hallazgo** (1 error, 0 advertencias).
+
+| Regla | Archivo | Qué encontró | Cómo se resolvió |
+| :--- | :--- | :--- | :--- |
+| `no-unused-vars` | `src/services/proyectos.service.js:23` | `notasInternas` se declara y no se usa | Se descarta a propósito para ocultarla al cliente; se activó `ignoreRestSiblings` |
+
+Ninguna función superó la complejidad de 10.
+
+**Prueba del umbral.** En el PR #105 se agregó `formatearFecha` con un `switch` de 12 casos (complejidad 13), y el flujo quedó en rojo. En el mismo PR se cambió por una lista de meses (complejidad 4), y el flujo quedó en verde antes de integrar.
 
 ### Cobertura
 
