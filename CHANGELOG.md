@@ -10,6 +10,15 @@ y este proyecto sigue el [Versionado Semántico](https://semver.org/lang/es/).
 ### Added
 
 - API del portal en `backend/`, con Node.js, Express y MySQL. Incluye registro e inicio de sesión por rol, cotización con formulario, proyectos con historial, actualizaciones y actividades realizadas, documentos que se ven sin descargarse, chat para dudas, campana de pendientes y aviso por correo (#91).
+- Aplicación web en `frontend/` con las interfaces V2, conectada a la API: inicio de sesión y registro, mis proyectos, cotización, detalle con historial y fotos, visor de documentos sin descarga, chat, campana de pendientes y, para el arquitecto, sus clientes, el registro de avances y el semáforo de atención.
+- Semáforo de atención de las dudas (No atendido, Pendiente y Atendido), que cambia solo con el chat y el arquitecto ajusta a mano.
+- Alta de clientes por el arquitecto, con su empresa y su primer proyecto (RF-02).
+- Fotos opcionales en las actualizaciones del proyecto (RF-07).
+- MySQL con Docker (`backend/docker-compose.yml`) y datos de prueba (`backend/scripts/datos-prueba.js`) para probar la aplicación en local.
+
+### Removed
+
+- La maqueta del inicio de sesión en `login/`, reemplazada por la aplicación web de `frontend/`.
 
 ## [0.1.0] - 2026-10-29
 

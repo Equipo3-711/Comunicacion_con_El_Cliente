@@ -12,7 +12,7 @@ const config = {
     .split(',')
     .map((origen) => origen.trim())
     .filter(Boolean),
-  urlPortal: process.env.PORTAL_URL || 'http://127.0.0.1:5500/login/index.html',
+  urlPortal: process.env.PORTAL_URL || 'http://127.0.0.1:5500/frontend/index.html',
   db: {
     host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT) || 3306,

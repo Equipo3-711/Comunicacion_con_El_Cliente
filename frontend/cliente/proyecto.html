@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Proyecto · T Efficiency</title>
+  <link rel="icon" href="../img/icono.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap">
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+  <div class="w">
+    <header class="top" id="encabezado"></header>
+    <main id="contenido">
+      <p class="aviso" id="vistaCliente" hidden>Estás viendo el proyecto tal como lo ve el cliente.
+        <a id="volverArquitecto" href="#">Volver a la vista del arquitecto</a></p>
+      <div class="row" style="margin-bottom:12px">
+        <h1 class="pagina" id="nombre">Cargando…</h1>
+        <span class="tag" id="estado"></span>
+      </div>
+      <div class="g g3">
+        <div class="card"><small class="suave">Presupuesto</small><h3 id="presupuesto"></h3></div>
+        <div class="card"><small class="suave">Pagos realizados</small><h3 id="pagado"></h3></div>
+        <div class="card"><small class="suave">Garantía</small><h3 id="garantia" style="color:var(--ok)"></h3></div>
+      </div>
+      <section class="card mt">
+        <h2>Historial del proyecto</h2>
+        <div id="historial"></div>
+      </section>
+      <section class="card mt">
+        <h2>Documentos</h2>
+        <div id="documentos"></div>
+      </section>
+      <a class="btn mt" id="abrirChat" href="#">¿Tienes una duda? Abrir chat</a>
+    </main>
+  </div>
+  <script type="module" src="../js/paginas/proyecto-detalle.js"></script>
+</body>
+</html>

@@ -3,9 +3,9 @@
 
 Módulo de Comunicación con el Cliente. Equipo 3, Grupo 711.
 
-Prototipo del **Portal de Proyectos** de una vidriería. El personal registra las solicitudes de sus clientes y les da seguimiento, y cada cliente consulta la información autorizada de su obra.
+**Portal de Proyectos** de una vidriería. El personal registra las solicitudes de sus clientes y les da seguimiento, y cada cliente consulta la información autorizada de su obra.
 
-Esta versión es un prototipo hecho con HTML, CSS y JavaScript, sin servidor.
+Tiene dos partes, como indica el [diagrama de contenedores](docs/CONTAINERS.md): la aplicación web en `frontend/` (HTML, CSS y JavaScript) y la API en `backend/` (Node.js, Express y MySQL).
 
 Versión actual y cambios: [Releases](https://github.com/Equipo3-711/Comunicacion_con_El_Cliente/releases) y [CHANGELOG](CHANGELOG.md).
 
@@ -13,9 +13,8 @@ Versión actual y cambios: [Releases](https://github.com/Equipo3-711/Comunicacio
 
 - Git, para clonar el repositorio.
 - Un navegador actualizado: Chrome, Edge, Firefox o Safari.
-- Opcional: Visual Studio Code con la extensión Live Server.
-
-No hay dependencias que instalar ni nada que compilar.
+- Visual Studio Code con la extensión Live Server, para abrir la aplicación web.
+- Node.js 20 o superior y Docker Desktop, para la API. Ver [API del portal](#api-del-portal-backend).
 
 ## Instalación
 
@@ -35,12 +34,23 @@ También puedes descargar una versión publicada desde [Releases](https://github
 
 ## Uso
 
-1. Abre `login/index.html` en el navegador con doble clic. En VS Code también puedes dar clic derecho sobre el archivo y elegir **Open with Live Server**.
-2. Entra con uno de los usuarios de prueba que aparecen en la misma pantalla de inicio: uno es administrador y el otro es cliente.
-3. El administrador ve la información del proyecto y la información privada de la empresa. El cliente solo ve la información autorizada de su proyecto.
-4. El botón de chat abre la ventana de mensajes, y **Cerrar sesión** regresa al inicio.
+1. Levanta la API con sus datos de prueba, como se explica en [API del portal](#api-del-portal-backend).
+2. Abre la carpeta del repositorio en VS Code, da clic derecho sobre `frontend/index.html` y elige **Open with Live Server**. Se abre en `http://127.0.0.1:5500/frontend/index.html`.
 
-Los usuarios de prueba son datos de ejemplo del prototipo, definidos en `login/script.js`; no son cuentas reales.
+   Tiene que abrirse con un servidor como Live Server, no con doble clic: las pantallas usan módulos de JavaScript, que el navegador no carga desde un archivo suelto. Si la API está en otra dirección, cámbiala en `frontend/js/config.js`.
+3. Entra con una de las cuentas que creó `node scripts/datos-prueba.js`, con la contraseña que escribiste al cargarlas:
+   - **Arquitecto** (`arquitecto@tefficiency.test`): ve a sus clientes con el semáforo de atención, agrega clientes, registra avances con fotos, marca actividades como realizadas, sube documentos y responde dudas.
+   - **Cliente** (`ana@roble.test`): ve sus proyectos con presupuesto, pagos, garantía, historial y documentos, solicita cotizaciones y escribe sus dudas en el chat.
+
+   También puedes crear tu propia cuenta de cliente con **Crear cuenta**.
+
+| Pantalla | Archivo |
+| :--- | :--- |
+| Iniciar sesión y crear cuenta | `frontend/index.html` y `frontend/registro.html` |
+| Mis proyectos, cotización, detalle, visor de documentos y chat del cliente | `frontend/cliente/` |
+| Mis clientes, proyecto y chat del arquitecto | `frontend/arquitecto/` |
+| Campana de pendientes | En el encabezado de todas las pantallas con sesión |
+| Correo de aviso | Lo envía la API (`backend/src/services/notificaciones.service.js`) |
 
 Hay más ejemplos paso a paso en [docs/EJEMPLOS.md](docs/EJEMPLOS.md).
 
@@ -155,7 +165,7 @@ Cada actualización, cambio de estado, actividad realizada o documento nuevo le 
 
 | Carpeta o archivo | Contenido |
 | :--- | :--- |
-| `login/` | Maqueta del inicio de sesión por roles: `index.html`, `styles.css` y `script.js`. |
+| `frontend/` | Aplicación web: una página HTML por pantalla, sus estilos y su JavaScript. Ver la tabla siguiente. |
 | `backend/` | API del portal con Node.js, Express y MySQL. Ver [API del portal](#api-del-portal-backend). |
 | `docs/` | Requerimientos, historias de usuario, riesgos, acuerdos, retrospectivas, diagramas C4 y ejemplos. |
 | `docs/diseno/` | Interfaces del portal exportadas como imágenes. |
@@ -163,6 +173,19 @@ Cada actualización, cambio de estado, actividad realizada o documento nuevo le 
 | `CHANGELOG.md` | Cambios de cada versión. |
 | `AGENTS.md` | Reglas del proyecto: arquitectura, pruebas, Git y seguridad. |
 | `.editorconfig` | Formato de los archivos. |
+
+Dentro de `frontend/`, la conexión con la API está separada de las vistas, como pide `AGENTS.md`:
+
+| Carpeta o archivo | Qué hace |
+| :--- | :--- |
+| `index.html`, `registro.html`, `cliente/` y `arquitecto/` | Una página por pantalla de las interfaces V2. |
+| `css/estilos.css` | Colores, tema claro y oscuro, y componentes de las interfaces. |
+| `js/config.js` | Dirección de la API. |
+| `js/api.js` | Único archivo que hace peticiones a la API. |
+| `js/sesion.js` | Guarda la sesión en el navegador y revisa el rol de cada pantalla. |
+| `js/ui.js` | Encabezado con la campana, tema, formatos de fecha y dinero, y errores de formulario. |
+| `js/componentes/` | Piezas que se reutilizan: el chat y el historial con fotos. |
+| `js/paginas/` | La lógica de cada pantalla. |
 
 ## Documentación
 

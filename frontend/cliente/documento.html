@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Documento · T Efficiency</title>
+  <link rel="icon" href="../img/icono.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap">
+  <link rel="stylesheet" href="../css/estilos.css">
+  <!-- pdf.js dibuja el PDF como imágenes, sin la barra del navegador que ofrece descargar o imprimir. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+  <div class="w">
+    <header class="top" id="encabezado"></header>
+    <main class="card media" id="contenido">
+      <div class="row">
+        <h2 style="margin:0" id="titulo">Cargando…</h2>
+        <a class="btn s" id="cerrar" href="#">Cerrar</a>
+      </div>
+      <div class="doc mt" id="visor" aria-live="polite"></div>
+      <p class="nota">Solo lectura: el documento se ve dentro del portal, sin botones de descargar ni imprimir.</p>
+    </main>
+  </div>
+  <script type="module" src="../js/paginas/documento.js"></script>
+</body>
+</html>
