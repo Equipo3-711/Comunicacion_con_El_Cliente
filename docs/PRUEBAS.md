@@ -62,7 +62,21 @@ Pendiente: lo escribe Ximena (T-21).
 
 ### Validación de entradas
 
-Pendiente: lo escribe Romina (T-21).
+Todo lo que manda el usuario se valida en el servidor antes de llegar a un servicio, a una consulta o a un archivo. Si algo no cumple, la API responde 400 con el campo y el motivo.
+
+- **Formularios:** cada ruta usa un validador de `src/validators/` con lista de lo permitido: valores válidos (por ejemplo, el tipo de trabajo), formato (correo, teléfono de 10 a 15 dígitos, fechas AAAA-MM-DD) y largo máximo.
+- **Consultas:** los repositorios usan `?` en todas las consultas (`execute` de mysql2), así que el texto del usuario nunca se pega dentro del SQL.
+- **Identificadores:** un `id` que no es un entero positivo se trata como inexistente (404).
+- **Archivos:** multer solo acepta JPG, PNG, WEBP o PDF de hasta 10 MB y les pone un nombre aleatorio. Además, `verificarContenido` lee los primeros bytes de cada archivo y lo rechaza si no corresponden al tipo declarado; en ese caso borra lo recibido y responde 400.
+
+**Pruebas del caso que debe fallar:**
+
+| Prueba | Qué manda | Qué comprueba |
+| :--- | :--- | :--- |
+| `tests/archivos.test.js` | Un programa con nombre `contrato.pdf` | 400, el mensaje y que no se guardó nada |
+| `tests/archivos.test.js` | Un texto que dice ser PNG | Que se borra del servidor |
+| `tests/cotizaciones.test.js` | Campos vacíos o un `.exe` | 400 con el campo marcado |
+| `tests/auth.test.js` | Correo o contraseña inválidos | 400 y mensaje genérico al iniciar sesión |
 
 ### Dependencias con vulnerabilidades
 
