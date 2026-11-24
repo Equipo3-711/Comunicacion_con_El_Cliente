@@ -24,7 +24,8 @@ jobs:
           cache-dependency-path: backend/package-lock.json
       - name: Instalar dependencias
         run: npm ci
-      # Linter: lo agrega Grecia (T-21).
+      - name: Linter
+        run: npm run lint
       - name: Pruebas con cobertura
         run: npm run cobertura
 
