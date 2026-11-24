@@ -56,8 +56,18 @@ Pendiente: lo escribe Grecia (T-21).
 
 ### Umbrales acordados
 
-Pendiente: lo escribe Ximena (T-21).
+Acordados en el issue #94. Se fijaron un poco por debajo de la medición inicial, para que el código actual pase y cualquier cambio que empeore la calidad ponga el flujo en rojo.
 
+| Umbral | Valor | Dónde se configura | Motivo |
+|---|---|---|---|
+| Complejidad por función | 10 | `backend/eslint.config.js` | Ninguna función actual la pasa; el valor por defecto de ESLint (20) es muy alto para un proyecto chico. |
+| Cobertura de líneas | 80 % | `backend/package.json` | Medición inicial: 83 %. |
+| Cobertura de sentencias | 80 % | `backend/package.json` | Medición inicial: 82.38 %. |
+| Cobertura de funciones | 70 % | `backend/package.json` | Medición inicial: 71.34 %; la bajan los repositorios, que se simulan. |
+| Cobertura de ramas | 60 % | `backend/package.json` | Medición inicial: 62.69 %. |
+| Vulnerabilidades | 0 altas o críticas | `.github/workflows/calidad.yml` | Las moderadas solo están en herramientas de desarrollo. |
+
+**Cuándo se suben.** Cuando la cobertura real supere un umbral por 5 puntos, se sube ese umbral en un PR propio. Nunca se bajan para que un PR pase.
 ## Pruebas de seguridad
 
 ### Validación de entradas
