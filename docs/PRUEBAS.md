@@ -91,7 +91,7 @@ Todo lo que manda el usuario se valida en el servidor antes de llegar a un servi
 - **Formularios:** cada ruta usa un validador de `src/validators/` con lista de lo permitido: valores válidos (por ejemplo, el tipo de trabajo), formato (correo, teléfono de 10 a 15 dígitos, fechas AAAA-MM-DD) y largo máximo.
 - **Consultas:** los repositorios usan `?` en todas las consultas (`execute` de mysql2), así que el texto del usuario nunca se pega dentro del SQL.
 - **Identificadores:** un `id` que no es un entero positivo se trata como inexistente (404).
-- **Archivos:** multer solo acepta JPG, PNG, WEBP o PDF de hasta 10 MB y les pone un nombre aleatorio. Además, `verificarContenido` lee los primeros bytes de cada archivo y lo rechaza si no corresponden al tipo declarado; en ese caso borra lo recibido y responde 400.
+- **Archivos:** multer solo acepta JPG, PNG, WEBP o PDF de hasta 10 MB y les pone un nombre aleatorio. Además, `verificarContenido` lee los primeros bytes de cada archivo y lo rechaza si no corresponden al tipo declarado; en ese caso borra lo recibido y responde 400. Se aplica a los documentos del proyecto, a los archivos de la cotización y a las fotos de los avances.
 
 **Pruebas del caso que debe fallar:**
 
@@ -99,6 +99,7 @@ Todo lo que manda el usuario se valida en el servidor antes de llegar a un servi
 | :--- | :--- | :--- |
 | `tests/archivos.test.js` | Un programa con nombre `contrato.pdf` | 400, el mensaje y que no se guardó nada |
 | `tests/archivos.test.js` | Un texto que dice ser PNG | Que se borra del servidor |
+| `tests/fotos.test.js` | Una foto de avance que dice ser PNG y no lo es | 400, que no se registra la actualización y que no se guarda el archivo |
 | `tests/cotizaciones.test.js` | Campos vacíos o un `.exe` | 400 con el campo marcado |
 | `tests/auth.test.js` | Correo o contraseña inválidos | 400 y mensaje genérico al iniciar sesión |
 
