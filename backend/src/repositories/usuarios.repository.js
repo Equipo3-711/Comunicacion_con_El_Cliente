@@ -1,10 +1,12 @@
 const db = require('../config/db');
 
-const COLUMNAS_PUBLICAS = 'id, nombre, correo, telefono, rol, empresa_id AS empresaId';
+// Incluye el nombre de la empresa, que la aplicación muestra junto al nombre del cliente.
+const COLUMNAS_PUBLICAS = 'u.id, u.nombre, u.correo, u.telefono, u.rol, u.empresa_id AS empresaId, e.nombre AS empresa';
+const DESDE_USUARIOS = 'FROM usuarios u LEFT JOIN empresas e ON e.id = u.empresa_id';
 
 async function buscarPorCorreo(correo, conexion) {
   const filas = await db.consultar(
-    `SELECT ${COLUMNAS_PUBLICAS}, contrasena_hash AS contrasenaHash FROM usuarios WHERE correo = ?`,
+    `SELECT ${COLUMNAS_PUBLICAS}, u.contrasena_hash AS contrasenaHash ${DESDE_USUARIOS} WHERE u.correo = ?`,
     [correo],
     conexion,
   );
@@ -12,7 +14,7 @@ async function buscarPorCorreo(correo, conexion) {
 }
 
 async function buscarPorId(id, conexion) {
-  const filas = await db.consultar(`SELECT ${COLUMNAS_PUBLICAS} FROM usuarios WHERE id = ?`, [id], conexion);
+  const filas = await db.consultar(`SELECT ${COLUMNAS_PUBLICAS} ${DESDE_USUARIOS} WHERE u.id = ?`, [id], conexion);
   return filas[0] || null;
 }
 
