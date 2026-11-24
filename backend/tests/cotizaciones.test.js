@@ -86,6 +86,17 @@ describe('POST /api/cotizaciones', () => {
     );
   });
 
+  test('conserva los acentos y la ñ del nombre del archivo', async () => {
+    const peticion = request(app).post('/api/cotizaciones').set('Authorization', bearer(CLIENTE));
+    for (const [campo, valor] of Object.entries(formulario)) peticion.field(campo, valor);
+    await peticion.attach('archivos', Buffer.from('%PDF-1.4 plano'), { filename: 'plano baño único.pdf', contentType: 'application/pdf' });
+
+    expect(cotizaciones.agregarArchivo).toHaveBeenCalledWith(
+      expect.objectContaining({ nombreOriginal: 'plano baño único.pdf' }),
+      'cx',
+    );
+  });
+
   test('rechaza archivos que no son imagen ni PDF', async () => {
     const peticion = request(app).post('/api/cotizaciones').set('Authorization', bearer(CLIENTE));
     for (const [campo, valor] of Object.entries(formulario)) peticion.field(campo, valor);
