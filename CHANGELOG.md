@@ -7,18 +7,32 @@ y este proyecto sigue el [Versionado Semántico](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-24
+
+El Portal de Proyectos deja de ser una maqueta: la aplicación web con las interfaces V2 ya funciona conectada a una API con base de datos, y cada pull request pasa por pruebas, análisis estático y revisión de seguridad. Son las notas de la [release v0.2.0](https://github.com/Equipo3-711/Comunicacion_con_El_Cliente/releases/tag/v0.2.0), editadas a mano.
+
 ### Added
 
-- API del portal en `backend/`, con Node.js, Express y MySQL. Incluye registro e inicio de sesión por rol, cotización con formulario, proyectos con historial, actualizaciones y actividades realizadas, documentos que se ven sin descargarse, chat para dudas, campana de pendientes y aviso por correo (#91).
-- Aplicación web en `frontend/` con las interfaces V2, conectada a la API: inicio de sesión y registro, mis proyectos, cotización, detalle con historial y fotos, visor de documentos sin descarga, chat, campana de pendientes y, para el arquitecto, sus clientes, el registro de avances y el semáforo de atención.
-- Semáforo de atención de las dudas (No atendido, Pendiente y Atendido), que cambia solo con el chat y el arquitecto ajusta a mano.
-- Alta de clientes por el arquitecto, con su empresa y su primer proyecto (RF-02).
-- Fotos opcionales en las actualizaciones del proyecto (RF-07).
-- MySQL con Docker (`backend/docker-compose.yml`) y datos de prueba (`backend/scripts/datos-prueba.js`) para probar la aplicación en local.
+- API del portal en `backend/`, con Node.js, Express y MySQL: registro e inicio de sesión por rol, cotización con formulario, proyectos con historial, actualizaciones y actividades realizadas, documentos que se ven sin descargarse, chat para dudas, campana de pendientes y aviso por correo (#91).
+- Semáforo de atención de las dudas, alta de clientes por el arquitecto, fotos opcionales en los avances y nombre de la empresa en la cuenta (#102).
+- Aplicación web en `frontend/` con las interfaces V2, conectada a la API, para el cliente y para el arquitecto (#103).
+- MySQL con Docker y datos de prueba para probar la aplicación en local (#101).
+- Flujo de calidad en GitHub Actions: pruebas con umbral de cobertura (#95), ESLint con límite de complejidad 10 (#105) y revisión de dependencias y secretos con npm audit y Gitleaks (#104). Los umbrales acordados y cómo ejecutar todo están en `docs/PRUEBAS.md` (#96).
+- Reglas de ramas y pull requests en `docs/ACUERDOS.md`: rama principal con revisión (#89), nombres de las ramas (#93) y borrado de ramas (#92), y su resumen en el README (#78).
+- Plantilla de pull request (#88) y guía de entrega en `docs/BUILD.md` (#87).
+- Requerimientos de seguimiento y avisos al cliente (#64), registro obligatorio y formulario de cotización (#57), interfaces V2 del cliente (#76) y diagramas C4 con historial por proyecto (#75) y avisos por correo (#74).
+
+### Fixed
+
+- Nombres de las imágenes de diseño y fila de RF-08 en los requerimientos (#80).
+
+### Security
+
+- La API revisa el contenido real de cada archivo subido, no solo el tipo que dice el navegador: documentos y cotizaciones (#97) y fotos de los avances (#107).
 
 ### Removed
 
-- La maqueta del inicio de sesión en `login/`, reemplazada por la aplicación web de `frontend/`.
+- La maqueta del inicio de sesión en `login/`, reemplazada por la aplicación web de `frontend/` (#103).
 
 ## [0.1.0] - 2026-10-29
 
@@ -37,5 +51,6 @@ Primera versión documentada del Portal de Proyectos, todavía en prototipo. Son
 - Instrucciones de instalación y uso en el README (#47).
 - Ejemplos de uso y de contribución en `docs/EJEMPLOS.md` (#44).
 
-[Unreleased]: https://github.com/Equipo3-711/Comunicacion_con_El_Cliente/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/Equipo3-711/Comunicacion_con_El_Cliente/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/Equipo3-711/Comunicacion_con_El_Cliente/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/Equipo3-711/Comunicacion_con_El_Cliente/releases/tag/v0.1.0
