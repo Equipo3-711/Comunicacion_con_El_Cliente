@@ -104,4 +104,10 @@ describe('GET /api/auth/yo', () => {
     expect(respuesta.status).toBe(200);
     expect(respuesta.body.usuario.id).toBe(CLIENTE.id);
   });
+
+  test('incluye el nombre de la empresa, que se muestra junto al cliente', async () => {
+    usuarios.buscarPorId.mockResolvedValue({ ...CLIENTE, correo: 'c@x.mx', telefono: null, empresa: 'Constructora Alba' });
+    const respuesta = await request(app).get('/api/auth/yo').set('Authorization', bearer(CLIENTE));
+    expect(respuesta.body.usuario).toMatchObject({ nombre: CLIENTE.nombre, empresa: 'Constructora Alba' });
+  });
 });

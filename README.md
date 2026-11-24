@@ -137,12 +137,17 @@ Todas empiezan con `/api`. Salvo el registro, el inicio de sesión y la ruta de 
 | `GET /cotizaciones` | Ambos | El cliente ve las suyas; el personal, todas | RF-03 |
 | `GET /proyectos` y `GET /proyectos/:id` | Ambos | Mis proyectos y su detalle, sin las notas internas para el cliente | RF-08, T-06 |
 | `POST /proyectos` y `PATCH /proyectos/:id/estado` | Personal | Abrir un proyecto y cambiar su estado | RF-07 |
+| `POST /clientes` | Personal | Agregar un cliente a la cartera: su cuenta, su empresa y su primer proyecto | RF-02 |
+| `PATCH /proyectos/:id/atencion` | Personal | Semáforo de las dudas: No atendido, Pendiente o Atendido | CC-04 |
 | `GET /proyectos/:id/historial` | Ambos | Todo lo que ha sucedido en el proyecto, en orden de fecha | RF-06, CC-06 |
-| `POST /proyectos/:id/actualizaciones` | Personal | Registrar un avance con tipo, descripción, fecha y responsable | RF-16, CC-04 |
+| `POST /proyectos/:id/actualizaciones` | Personal | Registrar un avance con tipo, descripción, fecha, responsable y hasta 5 fotos opcionales | RF-16, RF-07 |
+| `GET /fotos/:id/ver` | Ambos | Ver las fotos de un avance dentro del portal | RF-07 |
 | `PATCH /actividades/:id/realizada` | Personal | Marcar una actividad como realizada y publicarla al cliente | RF-17, CC-07 |
 | `GET /proyectos/:id/documentos` y `GET /documentos/:id/ver` | Ambos | Ver los documentos dentro del portal, sin descarga | RF-08, CC-02 |
 | `GET` y `POST /proyectos/:id/mensajes` | Ambos | Chat del proyecto, solo para dudas | CC-04 |
 | `GET /pendientes` | Ambos | Contador y lista de la campana | RF-18, CC-08 |
+
+El semáforo de atención cambia solo con el chat: una duda nueva del cliente deja el proyecto en «No atendido» y la respuesta del arquitecto lo pasa a «Pendiente», hasta que él lo marca como «Atendido».
 
 Cada actualización, cambio de estado, actividad realizada o documento nuevo le aparece al cliente en su campana y, si `SMTP_HOST` está configurado, le llega por correo (RF-19). Ver un documento no ofrece descargarlo, pero no puede impedir una captura de pantalla, como quedó acordado en CC-02.
 

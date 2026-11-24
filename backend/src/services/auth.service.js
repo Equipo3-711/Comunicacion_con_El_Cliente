@@ -18,7 +18,9 @@ function firmarToken(usuario) {
   );
 }
 
-const publico = ({ id, nombre, correo, telefono, rol, empresaId }) => ({ id, nombre, correo, telefono, rol, empresaId });
+const publico = ({ id, nombre, correo, telefono, rol, empresaId, empresa = null }) => ({
+  id, nombre, correo, telefono, rol, empresaId, empresa,
+});
 
 // El cliente crea su cuenta antes de cotizar (CC-01). Se registra con su empresa.
 async function registrar({ nombre, empresa, correo, telefono, contrasena }) {
@@ -33,7 +35,7 @@ async function registrar({ nombre, empresa, correo, telefono, contrasena }) {
       { nombre, correo, telefono, contrasenaHash, rol: 'cliente', empresaId },
       conexion,
     );
-    return { id, nombre, correo, telefono, rol: 'cliente', empresaId };
+    return { id, nombre, correo, telefono, rol: 'cliente', empresaId, empresa };
   });
 
   return { token: firmarToken(usuario), usuario: publico(usuario) };

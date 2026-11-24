@@ -32,20 +32,26 @@ async function obtener(usuario, proyectoId) {
   return paraUsuario(await verificarAcceso(usuario, proyectoId), usuario);
 }
 
+const eventoApertura = (admin) => ({
+  tipo: 'cambio_estado', descripcion: `Se abrió el proyecto en estado «${ESTADOS.cotizacion}».`, responsable: admin.nombre,
+});
+
+// Guarda el proyecto con su primer evento del historial y avisa a los clientes de la empresa.
+// Se llama dentro de una transacción; también la usa el alta de clientes.
+async function abrir(admin, datos, conexion) {
+  const evento = eventoApertura(admin);
+  const id = await proyectos.crear({ ...datos, responsableId: admin.id }, conexion);
+  await actualizaciones.crear({ proyectoId: id, tipo: evento.tipo, descripcion: evento.descripcion, responsableId: admin.id }, conexion);
+  const proyecto = { id, ...datos, estado: 'cotizacion', atencion: 'atendido', responsableId: admin.id };
+  const clientes = await notificaciones.avisarClientes(proyecto, { descripcion: evento.descripcion }, conexion);
+  return { proyecto, clientes, evento };
+}
+
 async function crear(admin, datos) {
   if (!(await empresas.buscarPorId(datos.empresaId))) {
     throw solicitudInvalida('Revisa los campos marcados.', { empresaId: 'La empresa no existe.' });
   }
-  const evento = { tipo: 'cambio_estado', descripcion: `Se abrió el proyecto en estado «${ESTADOS.cotizacion}».`, responsable: admin.nombre };
-
-  const { proyecto, clientes } = await db.transaccion(async (conexion) => {
-    const id = await proyectos.crear({ ...datos, responsableId: admin.id }, conexion);
-    await actualizaciones.crear({ proyectoId: id, tipo: evento.tipo, descripcion: evento.descripcion, responsableId: admin.id }, conexion);
-    const nuevo = { id, ...datos, estado: 'cotizacion', responsableId: admin.id };
-    const avisados = await notificaciones.avisarClientes(nuevo, { descripcion: evento.descripcion }, conexion);
-    return { proyecto: nuevo, clientes: avisados };
-  });
-
+  const { proyecto, clientes, evento } = await db.transaccion((conexion) => abrir(admin, datos, conexion));
   notificaciones.enviarCorreos(clientes, proyecto, evento);
   return proyecto;
 }
@@ -66,15 +72,32 @@ async function cambiarEstado(admin, proyectoId, estado) {
   return proyecto;
 }
 
+// El arquitecto cambia a mano el semáforo de atención del proyecto.
+async function cambiarAtencion(admin, proyectoId, atencion) {
+  const proyecto = await verificarAcceso(admin, proyectoId);
+  await proyectos.actualizarAtencion(proyecto.id, atencion);
+  return { ...proyecto, atencion };
+}
+
 async function actualizarDatos(admin, proyectoId, cambios) {
   const proyecto = await verificarAcceso(admin, proyectoId);
   await proyectos.actualizarDatos(proyecto.id, cambios);
   return { ...proyecto, ...cambios };
 }
 
+// Cada evento del historial lleva los ids de sus fotos, que se ven en /api/fotos/:id/ver.
 async function historial(usuario, proyectoId) {
   const proyecto = await verificarAcceso(usuario, proyectoId);
-  return actualizaciones.listarPorProyecto(proyecto.id);
+  const [eventos, fotos] = await Promise.all([
+    actualizaciones.listarPorProyecto(proyecto.id),
+    actualizaciones.listarFotosPorProyecto(proyecto.id),
+  ]);
+  return eventos.map((evento) => ({
+    ...evento,
+    fotos: (fotos || []).filter((foto) => foto.actualizacionId === evento.id).map((foto) => foto.id),
+  }));
 }
 
-module.exports = { verificarAcceso, listar, obtener, crear, cambiarEstado, actualizarDatos, historial };
+module.exports = {
+  verificarAcceso, listar, obtener, abrir, crear, cambiarEstado, cambiarAtencion, actualizarDatos, historial,
+};

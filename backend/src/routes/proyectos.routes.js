@@ -16,9 +16,11 @@ router.post('/', soloAdmin, proyectos.crear);
 router.get('/:id', proyectos.obtener);
 router.patch('/:id', soloAdmin, proyectos.actualizarDatos);
 router.patch('/:id/estado', soloAdmin, proyectos.cambiarEstado);
+router.patch('/:id/atencion', soloAdmin, proyectos.cambiarAtencion);
 router.get('/:id/historial', proyectos.historial);
 
-router.post('/:id/actualizaciones', soloAdmin, seguimiento.registrarActualizacion);
+// Fotos opcionales del avance: hasta 5 imágenes en el campo "fotos" (RF-07).
+router.post('/:id/actualizaciones', soloAdmin, subidaEn('fotos', { maxArchivos: 5 }).array('fotos', 5), seguimiento.registrarActualizacion);
 router.get('/:id/actividades', seguimiento.listarActividades);
 router.post('/:id/actividades', soloAdmin, seguimiento.crearActividad);
 

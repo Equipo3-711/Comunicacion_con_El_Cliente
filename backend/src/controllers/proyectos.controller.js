@@ -1,5 +1,7 @@
 const proyectosService = require('../services/proyectos.service');
-const { validarNuevoProyecto, validarEstado, validarDatosProyecto } = require('../validators/proyecto.validator');
+const {
+  validarNuevoProyecto, validarEstado, validarAtencion, validarDatosProyecto,
+} = require('../validators/proyecto.validator');
 
 async function listar(req, res) {
   res.json({ proyectos: await proyectosService.listar(req.usuario) });
@@ -19,6 +21,11 @@ async function cambiarEstado(req, res) {
   res.json({ proyecto });
 }
 
+async function cambiarAtencion(req, res) {
+  const proyecto = await proyectosService.cambiarAtencion(req.usuario, req.params.id, validarAtencion(req.body));
+  res.json({ proyecto });
+}
+
 async function actualizarDatos(req, res) {
   const proyecto = await proyectosService.actualizarDatos(req.usuario, req.params.id, validarDatosProyecto(req.body));
   res.json({ proyecto });
@@ -28,4 +35,4 @@ async function historial(req, res) {
   res.json({ historial: await proyectosService.historial(req.usuario, req.params.id) });
 }
 
-module.exports = { listar, obtener, crear, cambiarEstado, actualizarDatos, historial };
+module.exports = { listar, obtener, crear, cambiarEstado, cambiarAtencion, actualizarDatos, historial };

@@ -11,6 +11,13 @@ const ESTADOS = {
   terminado: 'Terminado',
 };
 
+// Semáforo de las dudas del cliente en el chat del proyecto.
+const ATENCION = {
+  no_atendido: 'No atendido',
+  pendiente: 'Pendiente',
+  atendido: 'Atendido',
+};
+
 const numeroONulo = (valor) => (vacio(valor) ? null : Number(valor));
 
 function lanzarSiHayErrores(errores) {
@@ -41,6 +48,11 @@ function validarEstado(datos) {
   return texto(datos.estado).toLowerCase();
 }
 
+function validarAtencion(datos) {
+  lanzarSiHayErrores(validar(datos, { atencion: [requerido('Elige el estado de atención.'), unoDe(Object.keys(ATENCION))] }));
+  return texto(datos.atencion).toLowerCase();
+}
+
 function validarDatosProyecto(datos = {}) {
   lanzarSiHayErrores(validar(datos, {
     presupuesto: [numeroNoNegativo()],
@@ -59,4 +71,6 @@ function validarDatosProyecto(datos = {}) {
   return cambios;
 }
 
-module.exports = { validarNuevoProyecto, validarEstado, validarDatosProyecto, ESTADOS };
+module.exports = {
+  validarNuevoProyecto, validarEstado, validarAtencion, validarDatosProyecto, ESTADOS, ATENCION,
+};

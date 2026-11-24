@@ -1,11 +1,15 @@
 // Seguimiento del proyecto sin conversación: actualizaciones estructuradas (RF-16, CC-04)
 // y actividades que se marcan como realizadas y le aparecen al cliente (RF-17, CC-07).
+const fs = require('node:fs');
 const db = require('../config/db');
 const actualizaciones = require('../repositories/actualizaciones.repository');
 const actividades = require('../repositories/actividades.repository');
 const notificaciones = require('./notificaciones.service');
 const { verificarAcceso } = require('./proyectos.service');
-const { noEncontrado, conflicto } = require('../utils/errores');
+const { rutaRelativa, rutaAbsoluta } = require('../utils/archivos');
+const { noEncontrado, conflicto, solicitudInvalida } = require('../utils/errores');
+
+const esImagen = (archivo) => archivo.mimetype.startsWith('image/');
 
 // Guarda el evento en el historial y avisa a los clientes. Se llama dentro de una transacción.
 async function publicar(admin, proyecto, { tipo, descripcion }, conexion) {
@@ -14,13 +18,34 @@ async function publicar(admin, proyecto, { tipo, descripcion }, conexion) {
   return { actualizacion: { id, proyectoId: proyecto.id, tipo, descripcion, responsable: admin.nombre }, clientes };
 }
 
-async function registrarActualizacion(admin, proyectoId, datos) {
+// Las fotos son opcionales (RF-07). Solo se aceptan imágenes: los PDF van en Documentos.
+async function registrarActualizacion(admin, proyectoId, datos, fotos = []) {
+  if (!fotos.every(esImagen)) throw solicitudInvalida('Las fotos deben ser imágenes JPG, PNG o WEBP.');
+
   const { proyecto, actualizacion, clientes } = await db.transaccion(async (conexion) => {
     const encontrado = await verificarAcceso(admin, proyectoId, conexion);
-    return { proyecto: encontrado, ...(await publicar(admin, encontrado, datos, conexion)) };
+    const publicado = await publicar(admin, encontrado, datos, conexion);
+    for (const foto of fotos) {
+      await actualizaciones.agregarFoto(
+        { actualizacionId: publicado.actualizacion.id, ruta: rutaRelativa('fotos', foto), tipoMime: foto.mimetype },
+        conexion,
+      );
+    }
+    return { proyecto: encontrado, ...publicado };
   });
   notificaciones.enviarCorreos(clientes, proyecto, actualizacion);
-  return actualizacion;
+  return { ...actualizacion, fotos: fotos.length };
+}
+
+// Devuelve dónde está la foto, solo si el usuario puede ver ese proyecto.
+async function obtenerFotoParaVer(usuario, fotoId) {
+  const id = Number(fotoId);
+  const foto = Number.isInteger(id) && id > 0 ? await actualizaciones.buscarFoto(id) : null;
+  if (!foto) throw noEncontrado('La foto no existe.');
+  await verificarAcceso(usuario, foto.proyectoId);
+  const ruta = rutaAbsoluta(foto.ruta);
+  if (!fs.existsSync(ruta)) throw noEncontrado('El archivo de la foto ya no está disponible.');
+  return { ...foto, ruta };
 }
 
 async function listarActividades(usuario, proyectoId) {
@@ -51,4 +76,6 @@ async function marcarRealizada(admin, actividadId) {
   return actualizacion;
 }
 
-module.exports = { publicar, registrarActualizacion, listarActividades, crearActividad, marcarRealizada };
+module.exports = {
+  publicar, registrarActualizacion, obtenerFotoParaVer, listarActividades, crearActividad, marcarRealizada,
+};
