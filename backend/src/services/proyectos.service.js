@@ -2,9 +2,11 @@ const db = require('../config/db');
 const proyectos = require('../repositories/proyectos.repository');
 const empresas = require('../repositories/empresas.repository');
 const actualizaciones = require('../repositories/actualizaciones.repository');
+const cotizaciones = require('../repositories/cotizaciones.repository');
+const solicitudes = require('../repositories/solicitudes.repository');
 const notificaciones = require('./notificaciones.service');
 const { ESTADOS } = require('../validators/proyecto.validator');
-const { noEncontrado, solicitudInvalida } = require('../utils/errores');
+const { noEncontrado, solicitudInvalida, conflicto } = require('../utils/errores');
 
 // Busca el proyecto y comprueba que el usuario pueda verlo.
 // A un cliente de otra empresa se le responde "no existe", para no revelar proyectos ajenos (RNF-06).
@@ -47,13 +49,32 @@ async function abrir(admin, datos, conexion) {
   return { proyecto, clientes, evento };
 }
 
-async function crear(admin, datos) {
+// La cotización tiene que ser de un cliente de la misma empresa y no tener ya un proyecto.
+async function verificarCotizacion(cotizacionId, empresaId, conexion) {
+  const cotizacion = await cotizaciones.buscarPorId(cotizacionId, conexion);
+  if (!cotizacion) throw solicitudInvalida('Revisa los campos marcados.', { cotizacionId: 'La cotización no existe.' });
+  if (cotizacion.proyectoId) throw conflicto(`Esa cotización ya tiene el proyecto #${cotizacion.proyectoId}.`);
+  if (cotizacion.empresaId !== empresaId) {
+    throw solicitudInvalida('Revisa los campos marcados.', { empresaId: 'Elige la empresa del cliente que pidió la cotización.' });
+  }
+  return cotizacion;
+}
+
+async function crear(admin, { cotizacionId, ...datos }) {
   if (!(await empresas.buscarPorId(datos.empresaId))) {
     throw solicitudInvalida('Revisa los campos marcados.', { empresaId: 'La empresa no existe.' });
   }
-  const { proyecto, clientes, evento } = await db.transaccion((conexion) => abrir(admin, datos, conexion));
+  const { proyecto, clientes, evento } = await db.transaccion(async (conexion) => {
+    const cotizacion = cotizacionId ? await verificarCotizacion(cotizacionId, datos.empresaId, conexion) : null;
+    const abierto = await abrir(admin, datos, conexion);
+    if (cotizacion) {
+      await cotizaciones.ligarProyecto(cotizacion.id, abierto.proyecto.id, conexion);
+      await solicitudes.ligarProyectoPorCotizacion(cotizacion.id, abierto.proyecto.id, conexion);
+    }
+    return abierto;
+  });
   notificaciones.enviarCorreos(clientes, proyecto, evento);
-  return proyecto;
+  return cotizacionId ? { ...proyecto, cotizacionId } : proyecto;
 }
 
 async function cambiarEstado(admin, proyectoId, estado) {

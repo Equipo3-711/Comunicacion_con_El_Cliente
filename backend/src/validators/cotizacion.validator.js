@@ -28,4 +28,18 @@ function validarCotizacion(datos) {
   };
 }
 
-module.exports = { validarCotizacion, TIPOS_CLIENTE, TIPOS_TRABAJO };
+const ESTADOS_COTIZACION = {
+  recibida: 'Recibida',
+  en_revision: 'En revisión',
+  enviada: 'Enviada',
+};
+
+function validarEstadoCotizacion(datos) {
+  const errores = validar(datos, { estado: [requerido('Elige el nuevo estado.'), unoDe(Object.keys(ESTADOS_COTIZACION))] });
+  if (Object.keys(errores).length > 0) throw solicitudInvalida('Revisa los campos marcados.', errores);
+  return texto(datos.estado).toLowerCase();
+}
+
+module.exports = {
+  validarCotizacion, validarEstadoCotizacion, TIPOS_CLIENTE, TIPOS_TRABAJO, ESTADOS_COTIZACION,
+};

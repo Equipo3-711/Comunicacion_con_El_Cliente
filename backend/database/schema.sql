@@ -5,7 +5,7 @@
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-DROP TABLE IF EXISTS pendientes, mensajes, documentos, actividades, actualizacion_fotos, actualizaciones,
+DROP TABLE IF EXISTS pendientes, solicitudes, mensajes, documentos, actividades, actualizacion_fotos, actualizaciones,
   cotizacion_archivos, cotizaciones, proyectos, usuarios, empresas;
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -53,6 +53,7 @@ CREATE TABLE proyectos (
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 -- Solicitudes de cotización, siempre de un cliente registrado (RF-03, CC-01, CC-10).
+-- El cliente puede modificarla (RF-11). proyecto_id liga la cotización con el proyecto que se abrió a partir de ella.
 CREATE TABLE cotizaciones (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   usuario_id INT UNSIGNED NOT NULL,
@@ -63,9 +64,12 @@ CREATE TABLE cotizaciones (
   medidas VARCHAR(255) NULL,
   descripcion TEXT NOT NULL,
   estado ENUM('recibida', 'en_revision', 'enviada') NOT NULL DEFAULT 'recibida',
+  proyecto_id INT UNSIGNED NULL,
   creado_en DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  modificada_en DATETIME NULL,
   KEY ix_cotizaciones_usuario (usuario_id),
-  CONSTRAINT fk_cotizaciones_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id)
+  CONSTRAINT fk_cotizaciones_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id),
+  CONSTRAINT fk_cotizaciones_proyecto FOREIGN KEY (proyecto_id) REFERENCES proyectos (id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 -- Fotos o planos opcionales de una cotización.
@@ -143,11 +147,39 @@ CREATE TABLE mensajes (
   CONSTRAINT fk_mensajes_autor FOREIGN KEY (autor_id) REFERENCES usuarios (id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
+-- Todo lo que un cliente pide, llegue por donde llegue (RF-01, T-01). Se clasifica (RF-04) y se asigna
+-- a un responsable (RF-05). Si quien la pide no tiene cuenta, se guardan su nombre y su teléfono.
+-- atendida_en sirve para medir el tiempo de respuesta (RF-15).
+CREATE TABLE solicitudes (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  canal ENUM('portal', 'whatsapp', 'llamada', 'redes_sociales', 'correo', 'presencial') NOT NULL,
+  categoria ENUM('cotizacion', 'duda', 'modificacion', 'queja', 'seguimiento', 'informacion') NOT NULL,
+  estado ENUM('nueva', 'en_atencion', 'atendida') NOT NULL DEFAULT 'nueva',
+  descripcion VARCHAR(1000) NOT NULL,
+  cliente_id INT UNSIGNED NULL,
+  contacto_nombre VARCHAR(120) NULL,
+  contacto_telefono VARCHAR(30) NULL,
+  proyecto_id INT UNSIGNED NULL,
+  cotizacion_id INT UNSIGNED NULL,
+  responsable_id INT UNSIGNED NULL,
+  registrada_por INT UNSIGNED NOT NULL,
+  creado_en DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  atendida_en DATETIME NULL,
+  KEY ix_solicitudes_estado (estado, creado_en),
+  KEY ix_solicitudes_responsable (responsable_id, estado),
+  CONSTRAINT fk_solicitudes_cliente FOREIGN KEY (cliente_id) REFERENCES usuarios (id),
+  CONSTRAINT fk_solicitudes_proyecto FOREIGN KEY (proyecto_id) REFERENCES proyectos (id),
+  CONSTRAINT fk_solicitudes_cotizacion FOREIGN KEY (cotizacion_id) REFERENCES cotizaciones (id),
+  CONSTRAINT fk_solicitudes_responsable FOREIGN KEY (responsable_id) REFERENCES usuarios (id),
+  CONSTRAINT fk_solicitudes_registrada_por FOREIGN KEY (registrada_por) REFERENCES usuarios (id),
+  CONSTRAINT ck_solicitudes_contacto CHECK (cliente_id IS NOT NULL OR contacto_nombre IS NOT NULL)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+
 -- Lo que alimenta la campana de cada usuario (RF-18, CC-08).
 CREATE TABLE pendientes (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   usuario_id INT UNSIGNED NOT NULL,
-  tipo ENUM('actualizacion', 'mensaje', 'cotizacion') NOT NULL,
+  tipo ENUM('actualizacion', 'mensaje', 'cotizacion', 'solicitud') NOT NULL,
   descripcion VARCHAR(255) NOT NULL,
   proyecto_id INT UNSIGNED NULL,
   leido BOOLEAN NOT NULL DEFAULT FALSE,
