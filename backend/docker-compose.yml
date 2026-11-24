@@ -1,0 +1,31 @@
+# Base de datos MySQL para desarrollo local.
+# Toma el nombre de la base, el usuario y la contraseña de backend/.env:
+# aquí solo van los nombres de las variables, nunca sus valores (AGENTS.md).
+#   cd backend
+#   docker compose up -d        # levanta MySQL y carga database/schema.sql la primera vez
+#   docker compose down -v      # la apaga y borra los datos (para volver a cargar el esquema)
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: portal-proyectos-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      # Las fechas del historial se guardan en la hora del centro de México.
+      TZ: America/Mexico_City
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    volumes:
+      - mysql-datos:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u\"$$MYSQL_USER\" -p\"$$MYSQL_PASSWORD\" --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  mysql-datos:

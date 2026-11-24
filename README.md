@@ -51,7 +51,7 @@ La carpeta `backend/` tiene la API que usa la aplicación web, como indica el [d
 ### Requisitos
 
 - Node.js 20 o superior.
-- MySQL 8.
+- Docker Desktop, que levanta MySQL 8 sin instalarlo. También sirve un MySQL 8 instalado en la computadora.
 
 ### Cómo levantarla
 
@@ -64,20 +64,33 @@ Todos los comandos de `AGENTS.md` (`npm install`, `npm run dev`, `npm test` y `n
    npm install
    ```
 
-2. Copia `backend/.env.example` como `backend/.env` y llena los valores: la conexión a MySQL y una frase larga y aleatoria en `JWT_SECRET`. El archivo `.env` nunca se sube al repositorio.
+2. Copia `backend/.env.example` como `backend/.env` y llena los valores: un usuario y una contraseña para MySQL, y una frase larga y aleatoria en `JWT_SECRET`. El archivo `.env` nunca se sube al repositorio.
 
-3. Crea la base de datos y sus tablas:
+3. Levanta MySQL con Docker. La primera vez crea la base con el usuario y la contraseña del `.env`, y carga `database/schema.sql`:
+
+   ```bash
+   docker compose up -d
+   ```
+
+   Si ya tienes otro MySQL ocupando el puerto 3306, pon `DB_PORT=3307` en el `.env` antes de levantarlo. Para borrar los datos y volver a cargar el esquema: `docker compose down -v` y otra vez `docker compose up -d`.
+
+   <details>
+   <summary>Sin Docker, con un MySQL instalado</summary>
 
    ```bash
    mysql -u TU_USUARIO -p -e "CREATE DATABASE portal_proyectos CHARACTER SET utf8mb4"
    mysql -u TU_USUARIO -p portal_proyectos < database/schema.sql
    ```
 
-4. Crea la cuenta del personal. El script pide nombre, correo y contraseña en la terminal, para que ninguna contraseña quede escrita en el repositorio:
+   </details>
+
+4. Carga los datos de prueba: un arquitecto, tres clientes con sus proyectos, actividades, un documento y mensajes. El script pide una contraseña para todas las cuentas, para que ninguna quede escrita en el repositorio, y al final muestra los correos con los que se entra:
 
    ```bash
-   npm run crear-admin
+   node scripts/datos-prueba.js
    ```
+
+   Para crear solo una cuenta de administrador, sin datos de ejemplo, usa `npm run crear-admin`.
 
 5. Levanta la API y comprueba que responde en `http://localhost:3000/api/salud`:
 
@@ -96,6 +109,8 @@ Los clientes crean su propia cuenta con `POST /api/auth/registro`.
 | `npm test` | Corre las pruebas. No necesita MySQL. |
 | `npm run build` | No hace nada: la API no necesita compilarse. |
 | `npm run crear-admin` | Crea una cuenta de administrador. |
+| `node scripts/datos-prueba.js` | Llena la base con datos de ejemplo para probar la aplicación web. |
+| `docker compose up -d` | Levanta MySQL en Docker con los datos del `.env`. |
 
 ### Cómo está organizada
 
