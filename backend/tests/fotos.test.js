@@ -60,6 +60,21 @@ describe('registrar una actualización con fotos', () => {
     expect(archivosEnFotos()).toBe(antes);
   });
 
+  test('rechaza una foto cuyo contenido no es una imagen aunque diga image/png', async () => {
+    const antes = archivosEnFotos();
+
+    const respuesta = await request(app)
+      .post('/api/proyectos/7/actualizaciones')
+      .set('Authorization', bearer(ADMIN))
+      .field('descripcion', 'Avance de la obra')
+      .attach('fotos', Buffer.from('MZ programa disfrazado de foto'), { filename: 'avance.png', contentType: 'image/png' });
+
+    expect(respuesta.status).toBe(400);
+    expect(respuesta.body.error).toBe('El archivo no es una imagen JPG, PNG o WEBP ni un PDF válido.');
+    expect(actualizaciones.crear).not.toHaveBeenCalled();
+    expect(archivosEnFotos()).toBe(antes);
+  });
+
   test('si falta la descripción, también borra las fotos recibidas', async () => {
     const antes = archivosEnFotos();
 
