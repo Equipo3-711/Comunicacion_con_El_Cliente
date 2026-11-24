@@ -7,6 +7,20 @@ y este proyecto sigue el [Versionado Semántico](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+### Added
+
+- Bandeja de **Solicitudes** para el personal: todo lo que piden los clientes, con su canal de origen (portal, WhatsApp, llamada, redes sociales, correo o en persona), su categoría, su responsable y su estado. El personal registra en un solo formulario lo que llega por fuera del portal, y quien recibe una solicitud asignada se entera en su campana (T-26: RF-01, RF-04, RF-05, RF-12, RNF-01).
+- Seguimiento de la cotización: el personal ve su detalle con los planos y la marca como Recibida, En revisión o Enviada. El cliente la modifica mientras no tenga proyecto, y el cambio entra a la bandeja como modificación. Al abrir el proyecto desde la cotización, quedan ligados (T-26: RF-11).
+- Segunda cuenta del personal y solicitudes de ejemplo en los datos de prueba.
+
+### Changed
+
+- La base de datos tiene la tabla `solicitudes` y dos columnas nuevas en `cotizaciones`. Para cargar el esquema en una base local que ya existe: `docker compose down -v` y `docker compose up -d` (borra los datos de prueba).
+
+### Fixed
+
+- Los nombres de archivo con acentos o «ñ» se guardaban mal (por ejemplo, «plano baÃ±o.pdf»). Afectaba a los planos de la cotización y a los documentos del proyecto.
+
 ## [0.2.0] - 2026-11-24
 
 El Portal de Proyectos deja de ser una maqueta: la aplicación web con las interfaces V2 ya funciona conectada a una API con base de datos, y cada pull request pasa por pruebas, análisis estático y revisión de seguridad. Son las notas de la [release v0.2.0](https://github.com/Equipo3-711/Comunicacion_con_El_Cliente/releases/tag/v0.2.0), editadas a mano.

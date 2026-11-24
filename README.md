@@ -39,8 +39,9 @@ También puedes descargar una versión publicada desde [Releases](https://github
 
    Tiene que abrirse con un servidor como Live Server, no con doble clic: las pantallas usan módulos de JavaScript, que el navegador no carga desde un archivo suelto. Si la API está en otra dirección, cámbiala en `frontend/js/config.js`.
 3. Entra con una de las cuentas que creó `node scripts/datos-prueba.js`, con la contraseña que escribiste al cargarlas:
-   - **Arquitecto** (`arquitecto@tefficiency.test`): ve a sus clientes con el semáforo de atención, agrega clientes, registra avances con fotos, marca actividades como realizadas, sube documentos y responde dudas.
-   - **Cliente** (`ana@roble.test`): ve sus proyectos con presupuesto, pagos, garantía, historial y documentos, solicita cotizaciones y escribe sus dudas en el chat.
+   - **Arquitecto** (`arquitecto@tefficiency.test`): ve a sus clientes con el semáforo de atención, agrega clientes, registra avances con fotos, marca actividades como realizadas, sube documentos y responde dudas. En **Solicitudes** registra lo que llega por WhatsApp, llamada, redes sociales, correo o en persona, lo clasifica y lo asigna; también avanza cada cotización y ve los planos del cliente.
+   - **Personal** (`paola@tefficiency.test`): otra persona del personal, para probar la asignación de solicitudes.
+   - **Cliente** (`ana@roble.test`): ve sus proyectos con presupuesto, pagos, garantía, historial y documentos, solicita cotizaciones, las modifica si quiere cambios y escribe sus dudas en el chat.
 
    También puedes crear tu propia cuenta de cliente con **Crear cuenta**.
 
@@ -48,7 +49,7 @@ También puedes descargar una versión publicada desde [Releases](https://github
 | :--- | :--- |
 | Iniciar sesión y crear cuenta | `frontend/index.html` y `frontend/registro.html` |
 | Mis proyectos, cotización, detalle, visor de documentos y chat del cliente | `frontend/cliente/` |
-| Mis clientes, proyecto y chat del arquitecto | `frontend/arquitecto/` |
+| Mis clientes, solicitudes, detalle de la cotización, proyecto y chat del arquitecto | `frontend/arquitecto/` |
 | Campana de pendientes | En el encabezado de todas las pantallas con sesión |
 | Correo de aviso | Lo envía la API (`backend/src/services/notificaciones.service.js`) |
 
@@ -144,9 +145,15 @@ Todas empiezan con `/api`. Salvo el registro, el inicio de sesión y la ruta de 
 | `POST /auth/registro` | Cualquiera | Crear la cuenta de cliente con su empresa | RF-02, CC-01 |
 | `POST /auth/login` | Cualquiera | Iniciar sesión; el rol decide qué puede hacer | RNF-06 |
 | `POST /cotizaciones` | Cliente | Enviar el formulario de cotización, con fotos o planos opcionales | RF-03, CC-10 |
-| `GET /cotizaciones` | Ambos | El cliente ve las suyas; el personal, todas | RF-03 |
+| `GET /cotizaciones` y `GET /cotizaciones/:id` | Ambos | El cliente ve las suyas; el personal, todas, con sus fotos o planos | RF-03 |
+| `PUT /cotizaciones/:id` | Ambos | Modificar la cotización mientras no tenga proyecto; si ya se había enviado, vuelve a revisión | RF-11 |
+| `PATCH /cotizaciones/:id/estado` | Personal | Recibida, En revisión o Enviada; al enviarla, sus solicitudes quedan atendidas | RF-03 |
+| `GET /cotizaciones/archivos/:id/ver` | Ambos | Ver una foto o un plano de la cotización dentro del portal | RF-03 |
+| `GET` y `POST /solicitudes` | Personal | Bandeja de solicitudes con filtros, y registrar las que llegan por fuera del portal con su canal | RF-01, RF-04, RNF-01 |
+| `PATCH /solicitudes/:id` | Personal | Clasificar, cambiar el estado o asignar el responsable, que recibe el aviso | RF-04, RF-05, RF-12 |
+| `GET /solicitudes/responsables` y `GET /clientes` | Personal | Listas para el formulario de solicitudes | RF-05 |
 | `GET /proyectos` y `GET /proyectos/:id` | Ambos | Mis proyectos y su detalle, sin las notas internas para el cliente | RF-08, T-06 |
-| `POST /proyectos` y `PATCH /proyectos/:id/estado` | Personal | Abrir un proyecto y cambiar su estado | RF-07 |
+| `POST /proyectos` y `PATCH /proyectos/:id/estado` | Personal | Abrir un proyecto, opcionalmente ligado a la cotización de la que nace, y cambiar su estado | RF-07 |
 | `POST /clientes` | Personal | Agregar un cliente a la cartera: su cuenta, su empresa y su primer proyecto | RF-02 |
 | `PATCH /proyectos/:id/atencion` | Personal | Semáforo de las dudas: No atendido, Pendiente o Atendido | CC-04 |
 | `GET /proyectos/:id/historial` | Ambos | Todo lo que ha sucedido en el proyecto, en orden de fecha | RF-06, CC-06 |
@@ -156,6 +163,8 @@ Todas empiezan con `/api`. Salvo el registro, el inicio de sesión y la ruta de 
 | `GET /proyectos/:id/documentos` y `GET /documentos/:id/ver` | Ambos | Ver los documentos dentro del portal, sin descarga | RF-08, CC-02 |
 | `GET` y `POST /proyectos/:id/mensajes` | Ambos | Chat del proyecto, solo para dudas | CC-04 |
 | `GET /pendientes` | Ambos | Contador y lista de la campana | RF-18, CC-08 |
+
+Todo lo que piden los clientes entra a la bandeja de **Solicitudes**: la cotización y sus cambios llegan solos por el portal, y el personal registra lo que llega por WhatsApp, llamada, redes sociales, correo o en persona. La conexión automática con WhatsApp todavía no existe; el canal ya queda guardado para cuando se conecte.
 
 El semáforo de atención cambia solo con el chat: una duda nueva del cliente deja el proyecto en «No atendido» y la respuesta del arquitecto lo pasa a «Pendiente», hasta que él lo marca como «Atendido».
 
