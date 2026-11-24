@@ -13,6 +13,7 @@ module.exports = [
     },
     rules: {
       complexity: ['error', 10],
+      'no-unused-vars': ['error', { ignoreRestSiblings: true }],
     },
   },
 ];
