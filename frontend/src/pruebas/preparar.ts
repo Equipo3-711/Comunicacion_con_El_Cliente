@@ -13,9 +13,11 @@ if (!HTMLDialogElement.prototype.showModal) {
 }
 Element.prototype.scrollIntoView = vi.fn();
 
+// Node 25 trae su propio localStorage y, sin --localstorage-file, ese objeto no tiene métodos.
+// La aplicación solo usa sessionStorage; localStorage se limpia solo si de verdad se puede.
 afterEach(() => {
   cleanup();
   sessionStorage.clear();
-  localStorage.clear();
+  if (typeof globalThis.localStorage?.clear === 'function') localStorage.clear();
   vi.restoreAllMocks();
 });
