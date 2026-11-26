@@ -106,6 +106,12 @@ Cada historia se demuestra en el bloque del guion que la menciona, con el criter
 - **¿El cliente ve todo lo que registra el arquitecto?** Ve avances, cambios de estado, documentos y actividades realizadas, con fecha y responsable. Las notas internas no.
 - **¿Quién decide a quién se asigna una solicitud?** El personal, desde la bandeja. Quien la recibe se entera en su campana.
 
+### Documentos y acceso (Romina)
+
+- **¿El cliente puede descargar los documentos del proyecto?** No. Puede consultarlos directamente desde el portal, pero no descargarlos. Esto permite mantener los documentos dentro de la plataforma.
+
+- **¿Qué pasa si el usuario escribe incorrectamente su contraseña?** El sistema muestra un mensaje indicando que el correo o la contraseña son incorrectos, sin especificar cuál de los dos datos falló.
+
 ## Retrospectiva
 
 _La escribe Romina después de la presentación: qué funcionó, qué no y qué cambia el equipo para la presentación con el cliente real._
