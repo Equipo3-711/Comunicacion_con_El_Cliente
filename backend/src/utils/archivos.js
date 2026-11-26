@@ -27,6 +27,8 @@ function subidaEn(subcarpeta, { maxArchivos = 1 } = {}) {
 
   return multer({
     storage: almacenamiento,
+    // Los navegadores mandan el nombre del archivo en UTF-8; sin esto, «plano baño.pdf» llega como «plano baÃ±o.pdf».
+    defParamCharset: 'utf8',
     limits: { fileSize: config.archivos.tamanoMaximoMb * 1024 * 1024, files: maxArchivos },
     fileFilter(req, archivo, listo) {
       if (TIPOS_PERMITIDOS[archivo.mimetype]) return listo(null, true);

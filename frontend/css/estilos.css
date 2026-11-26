@@ -80,6 +80,7 @@ h3 { font-size: 16px; }
 /* Tarjetas y rejillas. */
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 22px; }
 .gi { background: linear-gradient(135deg, #F58220, #FFD000); color: #0E2238; border-radius: 24px; padding: 22px; border: 0; text-align: left; font: inherit; cursor: pointer; width: 100%; }
+a.gi { display: block; text-decoration: none; }
 .gi h3 { color: #0E2238; }
 .gi p { margin: 6px 0 0; opacity: .85; }
 .gi b { display: inline-block; margin-top: 8px; background: #0E2238; color: #fff; border-radius: 999px; padding: 2px 10px; font-size: 12px; }
@@ -153,6 +154,20 @@ textarea.in { min-height: 90px; resize: vertical; }
 .vacio { color: var(--soft); margin: 0; }
 .filtro { display: flex; gap: 6px; align-items: center; font-size: 13px; }
 
+/* Bandeja de solicitudes y detalle de la cotización. */
+.filtros { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0 12px; }
+.in.chico { min-height: 38px; padding: 7px 12px; margin: 4px 0 8px; font-size: 14px; }
+.btn.auto { width: auto; }
+.sol { flex-direction: column; align-items: stretch; gap: 6px; }
+.sol p { margin: 6px 0 0; }
+.controles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 12px; }
+.tag.nueva { background: #F58220; color: #fff; }
+.tag.en_atencion { background: #F4C84A; color: #0E2238; }
+.tag.atendida { background: #5CC796; color: #0E2238; }
+.datos { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0 0 12px; align-items: baseline; }
+.datos dt { color: var(--soft); font-size: 13px; font-weight: 700; }
+.datos dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+
 /* Historial del proyecto. */
 .ti { border-left: 3px solid var(--line); padding: 2px 0 14px 16px; margin-left: 6px; position: relative; }
 .ti::before { content: ""; position: absolute; left: -8px; top: 4px; width: 13px; height: 13px; border-radius: 50%; background: var(--acc); border: 2px solid var(--card); }
@@ -186,6 +201,9 @@ dialog.foto img { display: block; max-width: 100%; max-height: 80vh; border-radi
 
 @media (max-width: 760px) {
   .hero, .g2, .g3, .dos-uno { grid-template-columns: 1fr; }
+  .filtros { grid-template-columns: 1fr 1fr; }
+  .controles { grid-template-columns: 1fr; }
+  .datos { grid-template-columns: 1fr; }
   .usr, .ic { position: static; margin: 0 auto; }
   .top { flex-direction: column; gap: 8px; }
   .bm { right: 0; left: 0; margin: 0 auto; }

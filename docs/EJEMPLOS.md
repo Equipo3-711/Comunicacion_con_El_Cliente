@@ -40,7 +40,23 @@ Antes de empezar, levanta la API, carga los datos de prueba con `node scripts/da
 
 1. Como arquitecto, da clic en **Agregar usuario**.
 2. Con **Cliente nuevo**, escribe sus datos, una contraseña inicial que le compartirás y el nombre de la obra. El cliente y su proyecto aparecen en **Mis clientes** (RF-02).
-3. Si el cliente ya creó su cuenta (por ejemplo, porque mandó una cotización), usa **Cliente ya registrado** y elige su empresa. Desde **Cotizaciones recibidas**, **Abrir proyecto** llena la empresa y el tipo de trabajo.
+3. Si el cliente ya creó su cuenta (por ejemplo, porque mandó una cotización), usa **Cliente ya registrado** y elige su empresa. Desde **Cotizaciones recibidas**, **Abrir proyecto** llena la empresa y el tipo de trabajo, y deja el proyecto ligado a la cotización.
+
+## Ejemplo: registrar una solicitud que llegó por WhatsApp
+
+1. Como arquitecto, entra a **Solicitudes** desde tu inicio. Ves todo lo que piden los clientes, con las nuevas primero, y puedes filtrar por estado, categoría, canal o responsable (RF-01).
+2. Da clic en **Registrar solicitud** y envía el formulario vacío: se marcan el canal, la categoría, el cliente y la descripción.
+3. Elige **WhatsApp**, la categoría **Duda**, **Cliente registrado** con Ana López y su proyecto de ventanas. Escribe qué pidió y elige a **Ing. Paola Ruiz** como responsable. Son 5 pasos (RNF-01).
+4. Al guardar, la solicitud aparece en la bandeja. Si entras como `paola@tefficiency.test`, su campana dice «Te asignaron una solicitud de Ana López» y lleva a la bandeja (RF-05, RF-12).
+5. Si quien escribió no tiene cuenta, usa **Alguien sin cuenta** y anota su nombre y su teléfono.
+6. En cada fila puedes cambiar la categoría (RF-04), el responsable y el estado. Al marcarla **Atendida**, se guarda la fecha para medir el tiempo de respuesta.
+
+## Ejemplo: el cliente cambia su cotización
+
+1. Entra como `laura@ramirez.test`. En **Mis cotizaciones**, da clic en **Modificar**, cambia las medidas y guarda (RF-11).
+2. Como arquitecto, en **Solicitudes** aparece una **Modificación** de Laura. Con **Ver cotización** abres el detalle: los datos, los planos en el visor y el estado.
+3. Si la cotización ya estaba **Enviada**, al modificarla vuelve a **En revisión**. Cuando la marcas como **Enviada**, sus solicitudes quedan atendidas y Laura recibe el aviso en su campana.
+4. Con **Abrir proyecto**, el proyecto queda ligado a la cotización y Laura ya no puede modificarla: los cambios se piden en el chat del proyecto.
 
 ## Ejemplo de contribución
 

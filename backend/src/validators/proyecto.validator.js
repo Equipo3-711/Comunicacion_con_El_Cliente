@@ -32,6 +32,7 @@ function validarNuevoProyecto(datos) {
     presupuesto: [numeroNoNegativo()],
     garantiaHasta: [fecha()],
     notasInternas: [maximo(2000)],
+    cotizacionId: [enteroPositivo()],
   }));
   return {
     empresaId: Number(datos.empresaId),
@@ -40,6 +41,8 @@ function validarNuevoProyecto(datos) {
     presupuesto: numeroONulo(datos.presupuesto),
     garantiaHasta: vacio(datos.garantiaHasta) ? null : datos.garantiaHasta,
     notasInternas: texto(datos.notasInternas) || null,
+    // Opcional: la cotización de la que nace el proyecto.
+    cotizacionId: numeroONulo(datos.cotizacionId),
   };
 }
 

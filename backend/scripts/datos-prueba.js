@@ -1,5 +1,5 @@
-// Llena la base con datos de ejemplo para probar la aplicación web: un arquitecto,
-// tres clientes con sus proyectos, actividades, un documento, mensajes y una cotización.
+// Llena la base con datos de ejemplo para probar la aplicación web: dos personas del personal,
+// tres clientes con sus proyectos, actividades, un documento, mensajes, una cotización y solicitudes.
 // Usa los mismos servicios que la API, así que el historial y la campana quedan como en uso real.
 // Pide una sola contraseña para todas las cuentas, para que ninguna quede escrita en el repositorio.
 //   node scripts/datos-prueba.js
@@ -17,8 +17,15 @@ const seguimiento = require('../src/services/seguimiento.service');
 const documentosService = require('../src/services/documentos.service');
 const mensajesService = require('../src/services/mensajes.service');
 const cotizacionesService = require('../src/services/cotizaciones.service');
+const solicitudesService = require('../src/services/solicitudes.service');
 
 const CORREO_ARQUITECTO = 'arquitecto@tefficiency.test';
+
+// Segunda persona del personal, para probar la asignación de solicitudes (RF-05).
+const PERSONAL = [
+  { nombre: 'Arq. Miguel Sánchez', correo: CORREO_ARQUITECTO, telefono: '4771112233' },
+  { nombre: 'Ing. Paola Ruiz', correo: 'paola@tefficiency.test', telefono: '4771114455' },
+];
 
 const CLIENTES = [
   { nombre: 'Ana López', empresa: 'Constructora Roble', correo: 'ana@roble.test', telefono: '4771234567' },
@@ -35,10 +42,9 @@ async function pedirContrasena() {
   return value ?? '';
 }
 
-async function crearArquitecto(contrasena) {
+async function crearPersonal({ nombre, correo, telefono }, contrasena) {
   const contrasenaHash = await bcrypt.hash(contrasena, 10);
-  const nombre = 'Arq. Miguel Sánchez';
-  const id = await usuarios.crear({ nombre, correo: CORREO_ARQUITECTO, telefono: '4771112233', contrasenaHash, rol: 'admin' });
+  const id = await usuarios.crear({ nombre, correo, telefono, contrasenaHash, rol: 'admin' });
   return { id, nombre, rol: 'admin', empresaId: null };
 }
 
@@ -92,6 +98,7 @@ async function proyectoVentanas(arquitecto, ana) {
 
   await mensajesService.enviar(ana, proyecto.id, '¿Ya tienen fecha de instalación?');
   await mensajesService.enviar(arquitecto, proyecto.id, 'Sí, el 14 de noviembre a las 10:00.');
+  return proyecto;
 }
 
 async function proyectoBarandal(arquitecto, ana) {
@@ -116,6 +123,32 @@ async function proyectosDeOtrosClientes(arquitecto, carlos, laura) {
     direccion: 'Privada Sauces 8, Col. Jardines, León', medidas: '2 ventanas de 1.00 × 1.20 m',
     descripcion: 'Cambiar las ventanas de la recámara por aluminio negro.',
   });
+  return fachada;
+}
+
+// Solicitudes que llegaron por fuera del portal, como las registraría el personal (RF-01, RF-04, RF-05).
+async function solicitudes(arquitecto, paola, { ana, carlos, ventanas, fachada }) {
+  const sinCuenta = { clienteId: null, proyectoId: null };
+  await solicitudesService.registrar(arquitecto, {
+    ...sinCuenta, canal: 'whatsapp', categoria: 'informacion', responsableId: paola.id,
+    contactoNombre: 'Roberto Díaz', contactoTelefono: '4773001122',
+    descripcion: 'Pregunta si hacen canceles de baño de vidrio templado y cuánto tardan.',
+  });
+  await solicitudesService.registrar(arquitecto, {
+    ...sinCuenta, canal: 'redes_sociales', categoria: 'cotizacion', responsableId: null,
+    contactoNombre: 'Mariana Torres', contactoTelefono: null,
+    descripcion: 'Mensaje en Facebook: quiere cotizar un barandal de vidrio para la escalera de su casa.',
+  });
+  const queja = await solicitudesService.registrar(arquitecto, {
+    canal: 'correo', categoria: 'queja', clienteId: carlos.id, proyectoId: fachada.id, responsableId: null,
+    contactoNombre: null, contactoTelefono: null, descripcion: 'Un panel de la fachada llegó rayado.',
+  });
+  await solicitudesService.actualizar(arquitecto, queja.id, { estado: 'en_atencion' });
+  const llamada = await solicitudesService.registrar(arquitecto, {
+    canal: 'llamada', categoria: 'seguimiento', clienteId: ana.id, proyectoId: ventanas.id, responsableId: null,
+    contactoNombre: null, contactoTelefono: null, descripcion: 'Llamó para confirmar la instalación del 14 de noviembre.',
+  });
+  await solicitudesService.actualizar(arquitecto, llamada.id, { estado: 'atendida' });
 }
 
 async function main() {
@@ -136,16 +169,17 @@ async function main() {
       process.exitCode = 1;
       return;
     }
-    const arquitecto = await crearArquitecto(contrasena);
+    const [arquitecto, paola] = [await crearPersonal(PERSONAL[0], contrasena), await crearPersonal(PERSONAL[1], contrasena)];
     const clientes = [];
     for (const cliente of CLIENTES) clientes.push(await crearCliente(cliente, contrasena));
     const [ana, carlos, laura] = clientes;
-    await proyectoVentanas(arquitecto, ana);
+    const ventanas = await proyectoVentanas(arquitecto, ana);
     await proyectoBarandal(arquitecto, ana);
-    await proyectosDeOtrosClientes(arquitecto, carlos, laura);
+    const fachada = await proyectosDeOtrosClientes(arquitecto, carlos, laura);
+    await solicitudes(arquitecto, paola, { ana, carlos, ventanas, fachada });
 
     console.log('Datos de prueba listos. Cuentas (todas con la contraseña que escribiste):');
-    console.log(`  Arquitecto: ${CORREO_ARQUITECTO}`);
+    PERSONAL.forEach((persona) => console.log(`  Personal:   ${persona.correo} (${persona.nombre})`));
     CLIENTES.forEach((cliente) => console.log(`  Cliente:    ${cliente.correo} (${cliente.empresa})`));
   } finally {
     await db.cerrar();

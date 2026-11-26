@@ -2,6 +2,7 @@ jest.mock('../src/config/db', () => ({ consultar: jest.fn(), transaccion: jest.f
 jest.mock('../src/repositories/cotizaciones.repository');
 jest.mock('../src/repositories/usuarios.repository');
 jest.mock('../src/repositories/pendientes.repository');
+jest.mock('../src/repositories/solicitudes.repository');
 
 const fs = require('node:fs');
 const request = require('supertest');
@@ -9,6 +10,7 @@ const { crearApp } = require('../src/app');
 const cotizaciones = require('../src/repositories/cotizaciones.repository');
 const usuarios = require('../src/repositories/usuarios.repository');
 const pendientes = require('../src/repositories/pendientes.repository');
+const solicitudes = require('../src/repositories/solicitudes.repository');
 const { bearer, ADMIN, CLIENTE } = require('./ayudas');
 
 const app = crearApp();
@@ -71,6 +73,17 @@ describe('POST /api/cotizaciones', () => {
     expect(pendientes.crear.mock.calls[0][0]).toMatchObject({ usuarioId: 1, tipo: 'cotizacion' });
   });
 
+  test('la cotización entra a la bandeja de solicitudes por el portal, sin responsable todavía (RF-01)', async () => {
+    await request(app).post('/api/cotizaciones').set('Authorization', bearer(CLIENTE)).send(formulario);
+
+    expect(solicitudes.crear).toHaveBeenCalledWith(
+      expect.objectContaining({
+        canal: 'portal', categoria: 'cotizacion', cotizacionId: 40, clienteId: CLIENTE.id, registradaPor: CLIENTE.id, responsableId: null,
+      }),
+      'cx',
+    );
+  });
+
   test('acepta un plano en PDF junto con el formulario', async () => {
     const peticion = request(app).post('/api/cotizaciones').set('Authorization', bearer(CLIENTE));
     for (const [campo, valor] of Object.entries(formulario)) peticion.field(campo, valor);
@@ -82,6 +95,17 @@ describe('POST /api/cotizaciones', () => {
     expect(respuesta.status).toBe(201);
     expect(cotizaciones.agregarArchivo).toHaveBeenCalledWith(
       expect.objectContaining({ cotizacionId: 40, nombreOriginal: 'plano.pdf', tipoMime: 'application/pdf' }),
+      'cx',
+    );
+  });
+
+  test('conserva los acentos y la ñ del nombre del archivo', async () => {
+    const peticion = request(app).post('/api/cotizaciones').set('Authorization', bearer(CLIENTE));
+    for (const [campo, valor] of Object.entries(formulario)) peticion.field(campo, valor);
+    await peticion.attach('archivos', Buffer.from('%PDF-1.4 plano'), { filename: 'plano baño único.pdf', contentType: 'application/pdf' });
+
+    expect(cotizaciones.agregarArchivo).toHaveBeenCalledWith(
+      expect.objectContaining({ nombreOriginal: 'plano baño único.pdf' }),
       'cx',
     );
   });
