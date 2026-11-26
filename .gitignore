@@ -8,8 +8,11 @@ node_modules/
 backend/uploads/*
 !backend/uploads/.gitkeep
 
-# Reportes de pruebas
+# Reportes de pruebas y build del front
 coverage/
+frontend/dist/
+frontend/cypress/screenshots/
+frontend/cypress/videos/
 
 # Archivos del sistema
 .DS_Store

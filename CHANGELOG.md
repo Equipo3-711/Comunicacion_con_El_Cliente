@@ -11,11 +11,15 @@ y este proyecto sigue el [Versionado Semántico](https://semver.org/lang/es/).
 
 - Bandeja de **Solicitudes** para el personal: todo lo que piden los clientes, con su canal de origen (portal, WhatsApp, llamada, redes sociales, correo o en persona), su categoría, su responsable y su estado. El personal registra en un solo formulario lo que llega por fuera del portal, y quien recibe una solicitud asignada se entera en su campana (T-26: RF-01, RF-04, RF-05, RF-12, RNF-01).
 - Seguimiento de la cotización: el personal ve su detalle con los planos y la marca como Recibida, En revisión o Enviada. El cliente la modifica mientras no tenga proyecto, y el cambio entra a la bandeja como modificación. Al abrir el proyecto desde la cotización, quedan ligados (T-26: RF-11).
-- Segunda cuenta del personal y solicitudes de ejemplo en los datos de prueba.
+- **Preguntas frecuentes** con respuesta automática en el chat del cliente (RF-13). Antes de escribir, el cliente ve las preguntas activas; si su duda tiene palabras clave de alguna, el chat le sugiere la respuesta y le pregunta si resolvió su duda, y si no, su mensaje va al arquitecto como siempre. El personal las agrega, edita, apaga y borra en **Preguntas frecuentes**, y ve cuántas dudas resolvió cada una. No usa inteligencia artificial: no tiene costo y ningún dato sale del portal.
+- Segunda cuenta del personal, solicitudes y preguntas frecuentes de ejemplo en los datos de prueba.
 
 ### Changed
 
-- La base de datos tiene la tabla `solicitudes` y dos columnas nuevas en `cotizaciones`. Para cargar el esquema en una base local que ya existe: `docker compose down -v` y `docker compose up -d` (borra los datos de prueba).
+- La aplicación web pasa de HTML y JavaScript sueltos a **React con TypeScript y Vite**, con las mismas pantallas y el mismo diseño, en computadora, tableta y celular. Compila para los navegadores de Android 10 e iOS 15 en adelante (RNF-05), y se levanta con `npm run dev` dentro de `frontend/` en `http://localhost:5173` (ya no se usa Live Server). En el `.env` de la API, `CORS_ORIGIN` y `PORTAL_URL` cambian a esa dirección.
+- La aplicación web tiene sus propias pruebas: unitarias con Vitest y flujos completos con Cypress, que también revisan cada pantalla en celular, tableta y computadora. GitHub Actions las corre en cada pull request.
+- El visor de documentos usa pdf.js 6.4, que corrige una vulnerabilidad al abrir PDF hechos a propósito para atacar (GHSA-hq66-cqwq-w95j), en su versión para navegadores que no son los más recientes.
+- La base de datos tiene las tablas `solicitudes` y `preguntas_frecuentes`, y dos columnas nuevas en `cotizaciones`. Para cargar el esquema en una base local que ya existe: `docker compose down -v` y `docker compose up -d` (borra los datos de prueba).
 
 ### Fixed
 

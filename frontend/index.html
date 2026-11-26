@@ -2,37 +2,15 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Iniciar sesión · T Efficiency</title>
-  <link rel="icon" href="img/icono.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0E2238">
+  <title>T Efficiency · Portal de Proyectos</title>
+  <link rel="icon" href="/icono.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap">
-  <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-  <div class="w">
-    <header class="top" id="encabezado"></header>
-    <main class="card hero">
-      <div>
-        <h1>Cada ventana,<br>a la vista.</h1>
-        <p class="suave">Ventanas, fachadas, canceles y barandales. Sigue cada proyecto en tiempo real.</p>
-      </div>
-      <form id="formulario" novalidate>
-        <h2>Iniciar sesión</h2>
-        <p class="aviso" id="expirada" hidden>Tu sesión terminó. Vuelve a iniciar sesión.</p>
-        <label for="correo">Correo</label>
-        <input class="in" id="correo" name="correo" type="email" autocomplete="email" placeholder="tu@empresa.com" required>
-        <p class="er" data-error="correo"></p>
-        <label for="contrasena">Contraseña</label>
-        <input class="in" id="contrasena" name="contrasena" type="password" autocomplete="current-password" placeholder="••••••••" required>
-        <p class="er" data-error="contrasena"></p>
-        <p class="er general" data-error="general" role="alert"></p>
-        <button class="btn p" type="submit">Iniciar sesión</button>
-        <p class="centro suave">¿No tienes cuenta? <a href="registro.html">Crear cuenta</a></p>
-        <p class="nota centro">El personal de T Efficiency entra con su correo de trabajo.</p>
-      </form>
-    </main>
-  </div>
-  <script type="module" src="js/paginas/login.js"></script>
+  <div id="raiz"></div>
+  <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>

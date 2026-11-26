@@ -10,7 +10,7 @@ Guía para empaquetar y publicar cada versión del Portal de Proyectos.
 | Aplicación móvil Android | APK, o AAB para la Play Store | Teléfonos Android |
 | Aplicación móvil iOS | IPA | iPhone, firmada con una cuenta de Apple Developer |
 
-El Portal de Proyectos es una **aplicación web** con dos partes, como indica `docs/CONTAINERS.md`: la aplicación que abre el navegador (`frontend/`, con HTML, CSS y JavaScript) y la API (`backend/`, con Node.js, Express y MySQL). Ninguna de las dos se compila: el navegador abre los archivos tal cual y la API se ejecuta con `npm start` (por eso `npm run build` no hace nada). Por eso **la entrega es un ZIP** con el código.
+El Portal de Proyectos es una **aplicación web** con dos partes, como indica `docs/CONTAINERS.md`: la aplicación que abre el navegador (`frontend/`, con React, TypeScript y Vite) y la API (`backend/`, con Node.js, Express y MySQL). La aplicación web se compila con `npm run build` dentro de `frontend/`, que deja en `frontend/dist/` los archivos listos para publicarse en cualquier servidor web; la API no se compila y se ejecuta con `npm start`. Por eso **la entrega es un ZIP** con el código, y cada quien compila o levanta la aplicación en su computadora.
 
 No corresponde un APK ni un IPA porque no hay una aplicación móvil nativa. Si más adelante el módulo se hace con Expo React Native, como prevé `AGENTS.md`, el APK y el IPA se generarían con `eas build` y esta guía se actualizaría.
 
@@ -18,12 +18,12 @@ No corresponde un APK ni un IPA porque no hay una aplicación móvil nativa. Si 
 
 El archivo se llama `portal-proyectos-vX.Y.Z.zip` y contiene una carpeta `portal-proyectos-vX.Y.Z/` con:
 
-- `frontend/`: la aplicación web, una página por pantalla con sus estilos y su JavaScript.
+- `frontend/`: la aplicación web, con `package.json` y `package-lock.json`, el código en `src/`, las pruebas unitarias y los flujos de Cypress.
 - `backend/`: la API, con `package.json` y `package-lock.json`, el esquema de la base (`database/schema.sql`), `docker-compose.yml` para levantar MySQL, los scripts de datos de prueba, las pruebas y `.env.example` con los nombres de las variables.
 - `README.md`: cómo instalarla y usarla.
 - `CHANGELOG.md`: qué cambió en cada versión.
 
-No lleva la carpeta `docs/` ni la configuración del repositorio, porque no se necesitan para usar la aplicación. Tampoco lleva `backend/.env`, `node_modules`, los archivos que suben los usuarios ni el reporte de cobertura: no están en el repositorio, y `git archive` solo toma lo que está en él. Las dependencias se instalan con `npm ci`, y cada quien crea su `.env` a partir de `.env.example`.
+No lleva la carpeta `docs/` ni la configuración del repositorio, porque no se necesitan para usar la aplicación. Tampoco lleva `backend/.env`, `node_modules`, `frontend/dist`, los archivos que suben los usuarios ni el reporte de cobertura: no están en el repositorio, y `git archive` solo toma lo que está en él. Las dependencias se instalan con `npm ci`, y cada quien crea su `.env` a partir de `.env.example`.
 
 ## Cómo se genera
 
@@ -40,7 +40,7 @@ git archive --format=zip --prefix=portal-proyectos-v0.2.0/ -o portal-proyectos-v
 
 ## Cómo se verifica
 
-Se necesitan Node.js 20 o superior, Docker Desktop y VS Code con Live Server, como indica el README.
+Se necesitan Node.js 22 o superior y Docker Desktop, como indica el README.
 
 1. Descomprime `portal-proyectos-v0.2.0.zip` y abre la carpeta `portal-proyectos-v0.2.0` en VS Code.
 2. Prepara la API:
@@ -61,7 +61,17 @@ Se necesitan Node.js 20 o superior, Docker Desktop y VS Code con Live Server, co
    ```
 
    `http://localhost:3000/api/salud` debe responder con `"ok": true`.
-4. Abre `frontend/index.html` con **Open with Live Server**.
+4. En otra terminal, prepara y levanta la aplicación web:
+
+   ```bash
+   cd frontend
+   npm ci
+   npm test
+   npm run build
+   npm run dev
+   ```
+
+   Las pruebas y el build deben pasar. Abre `http://localhost:5173`; también se puede abrir desde un celular conectado a la misma red con `npm run dev -- --host`.
 5. Entra como arquitecto y como cliente con las cuentas que mostró `datos-prueba.js`. Cada uno debe ver solo lo que le corresponde: el arquitecto, a sus clientes con el semáforo; el cliente, sus propios proyectos.
 
 Para que quien descargue el ZIP pueda comprobar que no se alteró, se publica también su huella SHA-256:

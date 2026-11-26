@@ -1,5 +1,6 @@
 // Llena la base con datos de ejemplo para probar la aplicación web: dos personas del personal,
-// tres clientes con sus proyectos, actividades, un documento, mensajes, una cotización y solicitudes.
+// tres clientes con sus proyectos, actividades, un documento, mensajes, una cotización, solicitudes
+// y las preguntas frecuentes del chat.
 // Usa los mismos servicios que la API, así que el historial y la campana quedan como en uso real.
 // Pide una sola contraseña para todas las cuentas, para que ninguna quede escrita en el repositorio.
 //   node scripts/datos-prueba.js
@@ -18,6 +19,7 @@ const documentosService = require('../src/services/documentos.service');
 const mensajesService = require('../src/services/mensajes.service');
 const cotizacionesService = require('../src/services/cotizaciones.service');
 const solicitudesService = require('../src/services/solicitudes.service');
+const preguntasService = require('../src/services/preguntas.service');
 
 const CORREO_ARQUITECTO = 'arquitecto@tefficiency.test';
 
@@ -151,6 +153,40 @@ async function solicitudes(arquitecto, paola, { ana, carlos, ventanas, fachada }
   await solicitudesService.actualizar(arquitecto, llamada.id, { estado: 'atendida' });
 }
 
+// Preguntas frecuentes que el chat responde solo (RF-13). La última está apagada, para ver la diferencia.
+const PREGUNTAS = [
+  {
+    pregunta: '¿Cuánto tarda la instalación?',
+    respuesta: 'Depende del tamaño de la obra. Unas ventanas o un cancel se instalan en 1 o 2 días; una fachada, de 1 a 3 semanas. Tu arquitecto te confirma la fecha en el historial del proyecto.',
+    palabrasClave: 'cuánto tarda, tardan, instalación, instalan, cuándo terminan, fecha, días',
+  },
+  {
+    pregunta: '¿Qué garantía tienen los trabajos?',
+    respuesta: 'Todos los trabajos tienen garantía por escrito: 2 años en herrajes y sellos, y 5 años en perfiles de aluminio. La fecha exacta aparece en «Garantía» dentro de tu proyecto.',
+    palabrasClave: 'garantía, garantia, se rompe, falla, defecto',
+  },
+  {
+    pregunta: '¿El vidrio es templado?',
+    respuesta: 'Sí. En canceles, barandales y fachadas usamos vidrio templado de 6 a 10 mm, según la medida. En ventanas puede ser claro, filtrasol o templado; viene indicado en tu cotización.',
+    palabrasClave: 'templado, vidrio, cristal, grosor, espesor, mm',
+  },
+  {
+    pregunta: '¿Cómo puedo pagar?',
+    respuesta: 'Puedes pagar por transferencia o con tarjeta. Se pide un anticipo del 50 % para fabricar y el resto al terminar la instalación. Tus pagos aparecen en «Pagos realizados».',
+    palabrasClave: 'pago, pagar, anticipo, transferencia, tarjeta, factura',
+  },
+  {
+    pregunta: '¿Trabajan en fin de semana?',
+    respuesta: 'Instalamos de lunes a sábado. Los domingos solo en casos acordados con tu arquitecto.',
+    palabrasClave: 'sábado, domingo, fin de semana, horario',
+    activa: false,
+  },
+];
+
+async function preguntasFrecuentes(arquitecto) {
+  for (const pregunta of PREGUNTAS) await preguntasService.crear(arquitecto, { activa: true, ...pregunta });
+}
+
 async function main() {
   const faltantes = config.variablesFaltantes();
   if (faltantes.length > 0) {
@@ -177,6 +213,7 @@ async function main() {
     await proyectoBarandal(arquitecto, ana);
     const fachada = await proyectosDeOtrosClientes(arquitecto, carlos, laura);
     await solicitudes(arquitecto, paola, { ana, carlos, ventanas, fachada });
+    await preguntasFrecuentes(arquitecto);
 
     console.log('Datos de prueba listos. Cuentas (todas con la contraseña que escribiste):');
     PERSONAL.forEach((persona) => console.log(`  Personal:   ${persona.correo} (${persona.nombre})`));

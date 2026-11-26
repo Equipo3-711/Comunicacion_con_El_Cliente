@@ -5,7 +5,7 @@
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-DROP TABLE IF EXISTS pendientes, solicitudes, mensajes, documentos, actividades, actualizacion_fotos, actualizaciones,
+DROP TABLE IF EXISTS preguntas_frecuentes, pendientes, solicitudes, mensajes, documentos, actividades, actualizacion_fotos, actualizaciones,
   cotizacion_archivos, cotizaciones, proyectos, usuarios, empresas;
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -187,4 +187,20 @@ CREATE TABLE pendientes (
   KEY ix_pendientes_usuario (usuario_id, leido),
   CONSTRAINT fk_pendientes_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id),
   CONSTRAINT fk_pendientes_proyecto FOREIGN KEY (proyecto_id) REFERENCES proyectos (id)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+
+-- Preguntas frecuentes que configura el personal (RF-13). El chat del cliente las ofrece antes de escribir
+-- y las sugiere si su duda contiene alguna palabra clave. «resueltas» cuenta cuántas dudas resolvió sola.
+CREATE TABLE preguntas_frecuentes (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  pregunta VARCHAR(200) NOT NULL,
+  respuesta VARCHAR(1000) NOT NULL,
+  palabras_clave VARCHAR(300) NOT NULL,
+  activa BOOLEAN NOT NULL DEFAULT TRUE,
+  resueltas INT UNSIGNED NOT NULL DEFAULT 0,
+  creada_por INT UNSIGNED NOT NULL,
+  creado_en DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  actualizado_en DATETIME NULL,
+  KEY ix_preguntas_activa (activa),
+  CONSTRAINT fk_preguntas_creada_por FOREIGN KEY (creada_por) REFERENCES usuarios (id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
