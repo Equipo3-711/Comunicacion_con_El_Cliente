@@ -8,11 +8,11 @@ const OBLIGATORIAS = ['DB_HOST', 'DB_USER', 'DB_NAME', 'JWT_SECRET'];
 const config = {
   puerto: Number(process.env.PORT) || 3000,
   entorno: process.env.NODE_ENV || 'development',
-  origenesWeb: (process.env.CORS_ORIGIN || 'http://127.0.0.1:5500')
+  origenesWeb: (process.env.CORS_ORIGIN || 'http://localhost:5173')
     .split(',')
     .map((origen) => origen.trim())
     .filter(Boolean),
-  urlPortal: process.env.PORTAL_URL || 'http://127.0.0.1:5500/frontend/index.html',
+  urlPortal: process.env.PORTAL_URL || 'http://localhost:5173/',
   db: {
     host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT) || 3306,

@@ -1,0 +1,237 @@
+{
+  "admin": {
+    "id": 1,
+    "nombre": "Arq. Laura Méndez",
+    "correo": "laura@tefficiency.test",
+    "telefono": null,
+    "rol": "admin",
+    "empresaId": null,
+    "empresa": null
+  },
+  "cliente": {
+    "id": 10,
+    "nombre": "Ana López",
+    "correo": "ana@roble.test",
+    "telefono": "477 123 4567",
+    "rol": "cliente",
+    "empresaId": 3,
+    "empresa": "Constructora Roble"
+  },
+  "proyectos": [
+    {
+      "id": 7,
+      "nombre": "Ventanas · Blvd. Campestre 214",
+      "estado": "en_proceso",
+      "atencion": "no_atendido",
+      "tipoTrabajo": "ventanas",
+      "empresaId": 3,
+      "empresa": "Constructora Roble",
+      "cliente": "Ana López",
+      "responsable": "Arq. Laura Méndez",
+      "responsableId": 1,
+      "presupuesto": "185000.00",
+      "pagado": "92500.00",
+      "garantiaHasta": "2028-03-01",
+      "notasInternas": "Cliente prefiere llamadas por la tarde.",
+      "ultimaActualizacion": "2026-11-20 10:30:00"
+    },
+    {
+      "id": 8,
+      "nombre": "Fachada de cristal templado con herrajes de acero inoxidable · Torre Norte",
+      "estado": "en_instalacion",
+      "atencion": "atendido",
+      "tipoTrabajo": "fachada",
+      "empresaId": 4,
+      "empresa": "Grupo Inmobiliario del Bajío Internacional",
+      "cliente": "Carlos Hernández Villaseñor",
+      "responsable": "Arq. Laura Méndez",
+      "responsableId": 1,
+      "presupuesto": null,
+      "pagado": null,
+      "garantiaHasta": null,
+      "notasInternas": null,
+      "ultimaActualizacion": "2026-11-18 16:00:00"
+    }
+  ],
+  "cotizaciones": [
+    {
+      "id": 40,
+      "clienteId": 10,
+      "cliente": "Ana López",
+      "empresaId": 3,
+      "empresa": "Constructora Roble",
+      "correo": "ana@roble.test",
+      "telefono": "477 123 4567",
+      "tipoCliente": "constructora",
+      "tipoTrabajo": "barandales",
+      "direccion": "Calle Roble 12, Col. Centro, León",
+      "medidas": "4 m lineales",
+      "descripcion": "Barandal de vidrio para escalera.",
+      "estado": "recibida",
+      "proyectoId": null,
+      "creadoEn": "2026-11-21 09:00:00",
+      "modificadaEn": "2026-11-22 11:15:00",
+      "archivos": 2
+    }
+  ],
+  "solicitudes": [
+    {
+      "id": 70,
+      "canal": "whatsapp",
+      "categoria": "duda",
+      "estado": "nueva",
+      "descripcion": "Pregunta si hacen canceles de baño templados y cuánto tardan en instalarlos.",
+      "clienteId": null,
+      "contacto": "Roberto Díaz",
+      "telefono": "477 555 0123",
+      "empresa": null,
+      "proyectoId": null,
+      "proyecto": null,
+      "cotizacionId": null,
+      "responsableId": 5,
+      "responsable": "Ing. Paola Ruiz",
+      "registradaPorId": 1,
+      "registradaPor": "Arq. Laura Méndez",
+      "creadoEn": "2026-11-20 09:15:00",
+      "atendidaEn": null
+    },
+    {
+      "id": 71,
+      "canal": "portal",
+      "categoria": "cotizacion",
+      "estado": "en_atencion",
+      "descripcion": "Barandal de vidrio para escalera.",
+      "clienteId": 10,
+      "contacto": "Ana López",
+      "telefono": "477 123 4567",
+      "empresa": "Constructora Roble",
+      "proyectoId": 7,
+      "proyecto": "Ventanas · Blvd. Campestre 214",
+      "cotizacionId": 40,
+      "responsableId": null,
+      "responsable": null,
+      "registradaPorId": 10,
+      "registradaPor": "Ana López",
+      "creadoEn": "2026-11-21 09:00:00",
+      "atendidaEn": null
+    }
+  ],
+  "responsables": [
+    {
+      "id": 1,
+      "nombre": "Arq. Laura Méndez"
+    },
+    {
+      "id": 5,
+      "nombre": "Ing. Paola Ruiz"
+    }
+  ],
+  "pendientes": [
+    {
+      "id": 3,
+      "tipo": "mensaje",
+      "descripcion": "Ana López escribió en el chat de Ventanas · Blvd. Campestre 214",
+      "proyectoId": 7,
+      "creadoEn": "2026-11-22 10:00:00"
+    }
+  ],
+  "historial": [
+    {
+      "id": 1,
+      "tipo": "avance",
+      "descripcion": "Se instalaron 2 de 3 ventanas.",
+      "fecha": "2026-11-20 10:30:00",
+      "responsable": "Arq. Laura Méndez",
+      "fotos": []
+    },
+    {
+      "id": 2,
+      "tipo": "cambio_estado",
+      "descripcion": "El proyecto pasó a «En proceso».",
+      "fecha": "2026-11-10 09:00:00",
+      "responsable": "Arq. Laura Méndez",
+      "fotos": []
+    }
+  ],
+  "documentos": [
+    {
+      "id": 5,
+      "nombre": "Contrato firmado",
+      "creadoEn": "2026-11-11 12:00:00"
+    }
+  ],
+  "actividades": [
+    {
+      "id": 1,
+      "descripcion": "Medición en obra",
+      "realizada": 1,
+      "realizadaEn": "2026-11-12 10:00:00"
+    },
+    {
+      "id": 2,
+      "descripcion": "Instalación de cancelería",
+      "realizada": 0,
+      "realizadaEn": null
+    }
+  ],
+  "mensajes": [
+    {
+      "id": 1,
+      "autorId": 10,
+      "autor": "Ana López",
+      "texto": "¿Cuándo terminan la instalación?",
+      "creadoEn": "2026-11-22 10:00:00"
+    },
+    {
+      "id": 2,
+      "autorId": 1,
+      "autor": "Arq. Laura Méndez",
+      "texto": "Esta semana queda la última ventana.",
+      "creadoEn": "2026-11-22 10:20:00"
+    }
+  ],
+  "clientes": [
+    {
+      "id": 10,
+      "nombre": "Ana López",
+      "empresaId": 3,
+      "empresa": "Constructora Roble"
+    }
+  ],
+  "empresas": [
+    {
+      "id": 3,
+      "nombre": "Constructora Roble"
+    },
+    {
+      "id": 4,
+      "nombre": "Grupo Inmobiliario del Bajío Internacional"
+    }
+  ],
+  "preguntas": [
+    {
+      "id": 1,
+      "pregunta": "¿Cuánto tarda la instalación?",
+      "respuesta": "Unas ventanas se instalan en 1 o 2 días; una fachada, de 1 a 3 semanas.",
+      "palabrasClave": "cuánto tarda, instalación, fecha",
+      "activa": true,
+      "resueltas": 3
+    },
+    {
+      "id": 2,
+      "pregunta": "¿Qué garantía tienen los trabajos?",
+      "respuesta": "2 años en herrajes y sellos, y 5 años en perfiles de aluminio.",
+      "palabrasClave": "garantía, falla, defecto",
+      "activa": true,
+      "resueltas": 1
+    },
+    {
+      "id": 3,
+      "pregunta": "¿Trabajan en fin de semana?",
+      "respuesta": "Instalamos de lunes a sábado.",
+      "palabrasClave": "sábado, domingo, fin de semana",
+      "activa": false,
+      "resueltas": 0
+    }
+  ]
+}
