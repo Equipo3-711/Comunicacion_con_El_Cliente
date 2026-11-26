@@ -30,6 +30,11 @@ _Lo escribe Grecia: cada historia con su criterio de aceptación._
 
 Cada integrante agrega al menos 2 de la parte que presenta, en su propio pull request.
 
+### Registro, solicitudes y chat (Jorge)
+
+- **¿Cómo entran hoy los mensajes de WhatsApp?** El personal los registra en un solo formulario con el canal WhatsApp y quedan en Solicitudes junto con las del portal. Que entren solos es una propuesta: necesitamos su cuenta de WhatsApp Business.
+- **¿Las respuestas automáticas usan inteligencia artificial?** No. Comparan la pregunta con las palabras clave que ustedes configuran: no cuesta y los datos no salen del portal. Si no hay respuesta, la duda le llega al arquitecto.
+
 ### Aviso por correo (Jairo)
 
 - **¿Qué dice el correo y a quién le llega?** A los clientes de la empresa del proyecto: tipo de actualización, descripción, fecha, responsable y un enlace al portal.
