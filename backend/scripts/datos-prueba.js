@@ -11,6 +11,7 @@ const readline = require('node:readline');
 const bcrypt = require('bcryptjs');
 const config = require('../src/config/env');
 const db = require('../src/config/db');
+const almacen = require('../src/utils/almacen');
 const usuarios = require('../src/repositories/usuarios.repository');
 const authService = require('../src/services/auth.service');
 const proyectosService = require('../src/services/proyectos.service');
@@ -56,7 +57,7 @@ async function crearCliente(datos, contrasena) {
 }
 
 // Un PDF muy pequeño, escrito a mano, para probar el visor de documentos.
-function crearPdfContrato() {
+async function crearPdfContrato() {
   const contenido = 'BT /F1 18 Tf 72 720 Td (Contrato de servicios) Tj 0 -28 Td /F1 12 Tf (Ventanas - Calle Roble 12) Tj ET';
   const objetos = [
     '<< /Type /Catalog /Pages 2 0 R >>',
@@ -80,6 +81,8 @@ function crearPdfContrato() {
   const carpeta = path.join(config.archivos.carpeta, 'documentos');
   fs.mkdirSync(carpeta, { recursive: true });
   fs.writeFileSync(path.join(carpeta, filename), pdf);
+  // En el despliegue (Vercel Blob) lo sube; en local se queda en la carpeta.
+  await almacen.guardar(`documentos/${filename}`, path.join(carpeta, filename), 'application/pdf');
   return { filename, originalname: 'contrato.pdf', mimetype: 'application/pdf' };
 }
 
@@ -96,7 +99,7 @@ async function proyectoVentanas(arquitecto, ana) {
   await seguimiento.crearActividad(arquitecto, proyecto.id, { descripcion: 'Instalación' });
   await seguimiento.marcarRealizada(arquitecto, medicion.id);
   await seguimiento.registrarActualizacion(arquitecto, proyecto.id, { tipo: 'avance', descripcion: 'Fabricación de vidrios al 60 %.' });
-  await documentosService.subir(arquitecto, proyecto.id, crearPdfContrato(), 'Contrato');
+  await documentosService.subir(arquitecto, proyecto.id, await crearPdfContrato(), 'Contrato');
 
   await mensajesService.enviar(ana, proyecto.id, '¿Ya tienen fecha de instalación?');
   await mensajesService.enviar(arquitecto, proyecto.id, 'Sí, el 14 de noviembre a las 10:00.');

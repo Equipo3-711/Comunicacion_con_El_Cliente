@@ -1,12 +1,12 @@
 // Seguimiento del proyecto sin conversación: actualizaciones estructuradas (RF-16, CC-04)
 // y actividades que se marcan como realizadas y le aparecen al cliente (RF-17, CC-07).
-const fs = require('node:fs');
 const db = require('../config/db');
 const actualizaciones = require('../repositories/actualizaciones.repository');
 const actividades = require('../repositories/actividades.repository');
 const notificaciones = require('./notificaciones.service');
 const { verificarAcceso } = require('./proyectos.service');
-const { rutaRelativa, rutaAbsoluta } = require('../utils/archivos');
+const { rutaRelativa } = require('../utils/archivos');
+const almacen = require('../utils/almacen');
 const { noEncontrado, conflicto, solicitudInvalida } = require('../utils/errores');
 
 const esImagen = (archivo) => archivo.mimetype.startsWith('image/');
@@ -43,9 +43,9 @@ async function obtenerFotoParaVer(usuario, fotoId) {
   const foto = Number.isInteger(id) && id > 0 ? await actualizaciones.buscarFoto(id) : null;
   if (!foto) throw noEncontrado('La foto no existe.');
   await verificarAcceso(usuario, foto.proyectoId);
-  const ruta = rutaAbsoluta(foto.ruta);
-  if (!fs.existsSync(ruta)) throw noEncontrado('El archivo de la foto ya no está disponible.');
-  return { ...foto, ruta };
+  const guardado = await almacen.abrir(foto.ruta);
+  if (!guardado) throw noEncontrado('El archivo de la foto ya no está disponible.');
+  return { ...foto, guardado };
 }
 
 async function listarActividades(usuario, proyectoId) {

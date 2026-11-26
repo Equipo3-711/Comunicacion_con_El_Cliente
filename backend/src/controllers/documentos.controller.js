@@ -25,7 +25,7 @@ async function ver(req, res) {
     'Cache-Control': 'no-store',
     'X-Content-Type-Options': 'nosniff',
   });
-  res.sendFile(documento.ruta);
+  documento.guardado.enviar(res);
 }
 
 module.exports = { listar, subir, ver };
