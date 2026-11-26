@@ -1,6 +1,6 @@
 # Pruebas y calidad
 
-Cómo se prueba la API del portal (`backend/`) y qué revisa GitHub Actions en cada pull request. La investigación está en el issue #94.
+Cómo se prueban la API del portal (`backend/`) y la aplicación web (`frontend/`), y qué revisa GitHub Actions en cada pull request. La investigación está en el issue #94.
 
 ## Cómo ejecutar las pruebas
 
@@ -23,6 +23,24 @@ npm audit --audit-level=high   # dependencias con vulnerabilidades
 - Supertest hace peticiones HTTP a la app sin levantar el servidor.
 - `expect(...)` compara el resultado con lo esperado. Si no coincide, la prueba falla.
 
+## Pruebas de la aplicación web
+
+Se ejecutan dentro de `frontend/`. Ninguna necesita la API ni MySQL: las respuestas de la API se simulan.
+
+```bash
+cd frontend
+npm install
+npm test        # pruebas unitarias con Vitest y Testing Library
+npm run lint    # análisis estático con ESLint (complejidad máxima 10, como la API)
+npm run tipos   # revisión de tipos de TypeScript
+npm run dev     # en otra terminal, antes de Cypress
+npm run e2e     # flujos completos con Cypress
+```
+
+- **Vitest** prueba piezas sueltas: formatos de fecha y dinero, a dónde lleva cada pendiente, la conexión con la API (token, errores por campo y sesión expirada) y pantallas completas como iniciar sesión, la bandeja de solicitudes y modificar una cotización. Los archivos son `src/**/*.test.ts(x)`.
+- **Cypress** abre la aplicación en un navegador y recorre los flujos como lo haría una persona: iniciar sesión, la campana, registrar y atender solicitudes, abrir un proyecto desde una cotización, el visor de documentos y modificar una cotización. Las respuestas de la API salen de `cypress/fixtures/datos.json`.
+- `cypress/e2e/responsivo.cy.ts` abre cada pantalla en celular chico (360 px), celular (390 px), tableta (768 px) y computadora (1280 px), y falla si alguna se sale de la pantalla a los lados o si una parte del encabezado queda fuera.
+
 ## Flujo de GitHub Actions
 
 `.github/workflows/calidad.yml` se ejecuta en cada pull request y en cada cambio a `main`. Si un paso falla, la verificación **Calidad** aparece en rojo en el pull request.
@@ -31,7 +49,10 @@ npm audit --audit-level=high   # dependencias con vulnerabilidades
 | :--- | :--- | :--- |
 | Pruebas y análisis estático | Linter | ESLint encuentra un error, como una función con complejidad mayor a 10 |
 | Pruebas y análisis estático | Pruebas con cobertura | Falla una prueba o la cobertura queda bajo el umbral |
-| Dependencias y secretos | npm audit | Hay una dependencia con vulnerabilidad alta o crítica |
+| Aplicación web | Linter y tipos | ESLint o TypeScript encuentran un error |
+| Aplicación web | Pruebas unitarias y build | Falla una prueba de Vitest o la aplicación no compila |
+| Aplicación web | Flujos completos con Cypress | Falla un flujo o una pantalla no se ve completa en celular, tableta o computadora |
+| Dependencias y secretos | npm audit | Hay una dependencia con vulnerabilidad alta o crítica, en la API o en la aplicación web |
 | Dependencias y secretos | Gitleaks | Aparece una llave o contraseña en el código o en el historial |
 
 El repositorio es privado y del plan gratuito, así que GitHub no permite hacer obligatoria la verificación. El acuerdo del equipo es no integrar un pull request con el flujo en rojo.
