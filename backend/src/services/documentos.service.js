@@ -1,12 +1,12 @@
 // Documentos del proyecto (RF-08, RF-10). El cliente los ve sin opción de descarga (CC-02).
-const fs = require('node:fs');
 const path = require('node:path');
 const db = require('../config/db');
 const documentos = require('../repositories/documentos.repository');
 const notificaciones = require('./notificaciones.service');
 const { verificarAcceso } = require('./proyectos.service');
 const { publicar } = require('./seguimiento.service');
-const { rutaRelativa, rutaAbsoluta } = require('../utils/archivos');
+const { rutaRelativa } = require('../utils/archivos');
+const almacen = require('../utils/almacen');
 const { noEncontrado, solicitudInvalida } = require('../utils/errores');
 
 async function listar(usuario, proyectoId) {
@@ -38,9 +38,9 @@ async function obtenerParaVer(usuario, documentoId) {
   const documento = Number.isInteger(id) && id > 0 ? await documentos.buscarPorId(id) : null;
   if (!documento) throw noEncontrado('El documento no existe.');
   await verificarAcceso(usuario, documento.proyectoId);
-  const ruta = rutaAbsoluta(documento.ruta);
-  if (!fs.existsSync(ruta)) throw noEncontrado('El archivo del documento ya no está disponible.');
-  return { ...documento, ruta };
+  const guardado = await almacen.abrir(documento.ruta);
+  if (!guardado) throw noEncontrado('El archivo del documento ya no está disponible.');
+  return { ...documento, guardado };
 }
 
 module.exports = { listar, subir, obtenerParaVer };

@@ -2,7 +2,7 @@
 
 Recorridos paso a paso del Portal de Proyectos, con la aplicación web (`frontend/`) conectada a la API (`backend/`). Para instalar y comenzar a usar el proyecto, consulta el [README](../README.md).
 
-Antes de empezar, levanta la API, carga los datos de prueba con `node scripts/datos-prueba.js` y abre `frontend/index.html` con Live Server. Todas las cuentas de prueba usan la contraseña que escribiste al cargar los datos.
+Antes de empezar, levanta la API, carga los datos de prueba con `node scripts/datos-prueba.js` y levanta la aplicación web con `npm run dev` dentro de `frontend/` (se abre en `http://localhost:5173`). Todas las cuentas de prueba usan la contraseña que escribiste al cargar los datos.
 
 ## Ejemplo 1: datos incorrectos
 
@@ -40,7 +40,32 @@ Antes de empezar, levanta la API, carga los datos de prueba con `node scripts/da
 
 1. Como arquitecto, da clic en **Agregar usuario**.
 2. Con **Cliente nuevo**, escribe sus datos, una contraseña inicial que le compartirás y el nombre de la obra. El cliente y su proyecto aparecen en **Mis clientes** (RF-02).
-3. Si el cliente ya creó su cuenta (por ejemplo, porque mandó una cotización), usa **Cliente ya registrado** y elige su empresa. Desde **Cotizaciones recibidas**, **Abrir proyecto** llena la empresa y el tipo de trabajo.
+3. Si el cliente ya creó su cuenta (por ejemplo, porque mandó una cotización), usa **Cliente ya registrado** y elige su empresa. Desde **Cotizaciones recibidas**, **Abrir proyecto** llena la empresa y el tipo de trabajo, y deja el proyecto ligado a la cotización.
+
+## Ejemplo: registrar una solicitud que llegó por WhatsApp
+
+1. Como arquitecto, entra a **Solicitudes** desde tu inicio. Ves todo lo que piden los clientes, con las nuevas primero, y puedes filtrar por estado, categoría, canal o responsable (RF-01).
+2. Da clic en **Registrar solicitud** y envía el formulario vacío: se marcan el canal, la categoría, el cliente y la descripción.
+3. Elige **WhatsApp**, la categoría **Duda**, **Cliente registrado** con Ana López y su proyecto de ventanas. Escribe qué pidió y elige a **Ing. Paola Ruiz** como responsable. Son 5 pasos (RNF-01).
+4. Al guardar, la solicitud aparece en la bandeja. Si entras como `paola@tefficiency.test`, su campana dice «Te asignaron una solicitud de Ana López» y lleva a la bandeja (RF-05, RF-12).
+5. Si quien escribió no tiene cuenta, usa **Alguien sin cuenta** y anota su nombre y su teléfono.
+6. En cada fila puedes cambiar la categoría (RF-04), el responsable y el estado. Al marcarla **Atendida**, se guarda la fecha para medir el tiempo de respuesta.
+
+## Ejemplo: el cliente cambia su cotización
+
+1. Entra como `laura@ramirez.test`. En **Mis cotizaciones**, da clic en **Modificar**, cambia las medidas y guarda (RF-11).
+2. Como arquitecto, en **Solicitudes** aparece una **Modificación** de Laura. Con **Ver cotización** abres el detalle: los datos, los planos en el visor y el estado.
+3. Si la cotización ya estaba **Enviada**, al modificarla vuelve a **En revisión**. Cuando la marcas como **Enviada**, sus solicitudes quedan atendidas y Laura recibe el aviso en su campana.
+4. Con **Abrir proyecto**, el proyecto queda ligado a la cotización y Laura ya no puede modificarla: los cambios se piden en el chat del proyecto.
+
+## Ejemplo: preguntas frecuentes en el chat
+
+1. Entra como `ana@roble.test` y abre el chat de su proyecto de ventanas. Arriba del campo para escribir están las **Preguntas frecuentes** activas (RF-13).
+2. Toca **¿Qué garantía tienen los trabajos?**: la respuesta aparece sola, marcada como «Respuesta automática». Contesta **Sí, esto responde mi duda**: no se manda ningún mensaje al arquitecto y el semáforo no cambia.
+3. Escribe «¿Cuándo terminan la instalación?» y da clic en **Enviar**. Como tiene palabras clave de una pregunta frecuente, el chat primero te sugiere su respuesta. Con **No, enviar mi mensaje al arquitecto**, tu duda se manda como siempre y el proyecto queda en «No atendido».
+4. Escribe «Hola, buenas tardes»: no se parece a ninguna pregunta y se manda directo.
+5. Como arquitecto, entra a **Preguntas frecuentes** desde tu inicio. Agrega «¿Hacen canceles para baño?» con las palabras clave «cancel, baño, regadera». Ana la ve en su chat al recargar, y si escribe «Quiero un cancel para el baño», se la sugiere.
+6. **Apagar** deja de ofrecer una pregunta sin borrarla. Cada pregunta dice cuántas dudas resolvió sola.
 
 ## Ejemplo de contribución
 

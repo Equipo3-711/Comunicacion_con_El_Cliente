@@ -1,4 +1,5 @@
 // Avisos al cliente: un pendiente en su campana (RF-18) y un correo con el resumen (RF-19).
+const { waitUntil } = require('@vercel/functions');
 const config = require('../config/env');
 const usuarios = require('../repositories/usuarios.repository');
 const pendientes = require('../repositories/pendientes.repository');
@@ -30,10 +31,11 @@ async function avisarUsuario(usuarioId, proyecto, { tipo, descripcion }, conexio
   );
 }
 
-// Se llama después de guardar. No espera la respuesta del servidor de correo.
+// Se llama después de guardar. La respuesta no espera al servidor de correo; en Vercel,
+// waitUntil mantiene viva la función hasta que salen los correos (en local no hace nada).
 function enviarCorreos(clientes, proyecto, actualizacion) {
   const fecha = new Date().toLocaleString('es-MX', { timeZone: 'America/Mexico_City', dateStyle: 'long', timeStyle: 'short' });
-  return Promise.all(clientes.map((cliente) => correo.enviar({
+  const envio = Promise.all(clientes.map((cliente) => correo.enviar({
     para: cliente.correo,
     asunto: `Hay una actualización en tu proyecto ${proyecto.nombre}`,
     texto: [
@@ -51,6 +53,8 @@ function enviarCorreos(clientes, proyecto, actualizacion) {
       'Este es un aviso automático del Portal de Proyectos de T Efficiency.',
     ].join('\n'),
   })));
+  waitUntil(envio);
+  return envio;
 }
 
 module.exports = { avisarClientes, avisarUsuario, enviarCorreos, NOMBRES_TIPO };

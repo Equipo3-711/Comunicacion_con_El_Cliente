@@ -39,4 +39,9 @@ async function listarAdmins(conexion) {
   return db.consultar("SELECT id, nombre, correo FROM usuarios WHERE rol = 'admin'", [], conexion);
 }
 
-module.exports = { buscarPorCorreo, buscarPorId, crear, listarClientesDeEmpresa, listarAdmins };
+// Para que el personal elija al cliente al registrar una solicitud.
+async function listarClientes() {
+  return db.consultar(`SELECT ${COLUMNAS_PUBLICAS} ${DESDE_USUARIOS} WHERE u.rol = 'cliente' ORDER BY u.nombre`);
+}
+
+module.exports = { buscarPorCorreo, buscarPorId, crear, listarClientesDeEmpresa, listarAdmins, listarClientes };

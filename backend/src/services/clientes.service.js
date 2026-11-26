@@ -27,4 +27,9 @@ async function agregar(admin, { nombre, empresa, correo, telefono, contrasena, p
   return { cliente: resultado.cliente, proyecto: resultado.proyecto };
 }
 
-module.exports = { agregar };
+// Clientes con su empresa, para que el personal registre una solicitud a su nombre.
+async function listar() {
+  return usuarios.listarClientes();
+}
+
+module.exports = { agregar, listar };
