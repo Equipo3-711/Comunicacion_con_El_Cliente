@@ -86,6 +86,11 @@ Cada integrante agrega al menos 2 de la parte que presenta, en su propio pull re
 - **¿Qué dice el correo y a quién le llega?** A los clientes de la empresa del proyecto: tipo de actualización, descripción, fecha, responsable y un enlace al portal.
 - **¿Llega aunque el cliente no entre al portal?** Sí. Es para dar seguimiento sin estar en la plataforma, como pidieron en CC-03.
 
+### Asignación, actividad realizada e historial (Grecia)
+
+- **¿El cliente ve todo lo que registra el arquitecto?** Ve avances, cambios de estado, documentos y actividades realizadas, con fecha y responsable. Las notas internas no.
+- **¿Quién decide a quién se asigna una solicitud?** El personal, desde la bandeja. Quien la recibe se entera en su campana.
+
 ## Retrospectiva
 
 _La escribe Romina después de la presentación: qué funcionó, qué no y qué cambia el equipo para la presentación con el cliente real._
