@@ -4,8 +4,20 @@ Equipo 3 · Grupo 711 · Módulo de Comunicación con el Cliente · Iteración 7
 
 ## Lo terminado y lo pendiente
 
-_Lo escribe Ximena: cada punto con sus identificadores de RF y HU._
+### Ximena: seguimiento estructurado y campana
 
+**Lo terminado:**
+
+- **Campañas cuando hay algo pendiente (CC-08):** se completó la funcionalidad de avisos para situaciones pendientes del cliente.
+- **Campana con pendientes (RF-18, HU-22):** se implementó la notificación para informar al cliente sobre actualizaciones y pendientes.
+- **Seguimiento con un modelo (CC-04):** se completó el requerimiento de seguimiento solicitado por el cliente.
+- **Actualizaciones estructuradas (RF-16, HU-20):** se completó el registro de actualizaciones estructuradas para facilitar el seguimiento del proyecto.
+
+**Lo pendiente para la Iteración 8:**
+
+- Definir con el cliente qué fechas importantes necesita registrar y quién tendrá autorización para modificarlas.
+- Confirmar con la empresa los requisitos e información faltante para elaborar las propuestas.
+- Validar la información recibida antes de continuar con las propuestas y evitar retrasos en el desarrollo.
 ## Guion de la presentación
 
 Máximo 12 minutos. Jairo cuida el tiempo y avisa al minuto 6, al 7 y al 11.
@@ -28,8 +40,11 @@ _Lo escribe Grecia: cada historia con su criterio de aceptación._
 
 ## Preguntas probables del cliente
 
-Cada integrante agrega al menos 2 de la parte que presenta, en su propio pull request.
+### Seguimiento y campana (Ximena)
 
+- **¿Cuándo se enciende la campana?** Cuando hay una actualización, una respuesta del arquitecto, un cambio en la cotización o una solicitud asignada. Al abrir el aviso, se quita.
+
+- **¿Cuándo tendríamos las fechas importantes?** En la Iteración 8, cuando se definan qué fechas se necesitan registrar y quién tendrá autorización para modificarlas.
 ### Aviso por correo (Jairo)
 
 - **¿Qué dice el correo y a quién le llega?** A los clientes de la empresa del proyecto: tipo de actualización, descripción, fecha, responsable y un enlace al portal.
