@@ -13,6 +13,7 @@ y este proyecto sigue el [Versionado Semántico](https://semver.org/lang/es/).
 - Seguimiento de la cotización: el personal ve su detalle con los planos y la marca como Recibida, En revisión o Enviada. El cliente la modifica mientras no tenga proyecto, y el cambio entra a la bandeja como modificación. Al abrir el proyecto desde la cotización, quedan ligados (T-26: RF-11).
 - **Preguntas frecuentes** con respuesta automática en el chat del cliente (RF-13). Antes de escribir, el cliente ve las preguntas activas; si su duda tiene palabras clave de alguna, el chat le sugiere la respuesta y le pregunta si resolvió su duda, y si no, su mensaje va al arquitecto como siempre. El personal las agrega, edita, apaga y borra en **Preguntas frecuentes**, y ve cuántas dudas resolvió cada una. No usa inteligencia artificial: no tiene costo y ningún dato sale del portal.
 - Segunda cuenta del personal, solicitudes y preguntas frecuentes de ejemplo en los datos de prueba.
+- **Despliegue de prueba en Vercel** para que el equipo revise el portal desde cualquier lugar ([guía](docs/DESPLIEGUE.md)). La API corre como función con la misma app de siempre; las fotos y documentos van a Vercel Blob como archivos privados; la base puede estar en la nube con conexión cifrada (`DB_SSL`) y hora de México (`DB_TIMEZONE`), y `scripts/cargar-esquema.js` le carga las tablas. En local todo sigue igual.
 
 ### Changed
 

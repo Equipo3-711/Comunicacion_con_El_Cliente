@@ -1,4 +1,3 @@
-const fs = require('node:fs');
 const db = require('../config/db');
 const cotizaciones = require('../repositories/cotizaciones.repository');
 const usuarios = require('../repositories/usuarios.repository');
@@ -6,7 +5,8 @@ const pendientes = require('../repositories/pendientes.repository');
 const solicitudes = require('../repositories/solicitudes.repository');
 const solicitudesService = require('./solicitudes.service');
 const { ESTADOS_COTIZACION } = require('../validators/cotizacion.validator');
-const { rutaRelativa, rutaAbsoluta } = require('../utils/archivos');
+const { rutaRelativa } = require('../utils/archivos');
+const almacen = require('../utils/almacen');
 const { noEncontrado, solicitudInvalida, conflicto } = require('../utils/errores');
 
 // Avisa en la campana a cada administrador, o solo al responsable si la solicitud ya tiene uno.
@@ -111,9 +111,9 @@ async function obtenerArchivoParaVer(usuario, archivoId) {
   const archivo = Number.isInteger(id) && id > 0 ? await cotizaciones.buscarArchivo(id) : null;
   if (!archivo) throw noEncontrado('El archivo no existe.');
   await verificarAcceso(usuario, archivo.cotizacionId);
-  const ruta = rutaAbsoluta(archivo.ruta);
-  if (!fs.existsSync(ruta)) throw noEncontrado('El archivo ya no está disponible.');
-  return { ...archivo, ruta };
+  const guardado = await almacen.abrir(archivo.ruta);
+  if (!guardado) throw noEncontrado('El archivo ya no está disponible.');
+  return { ...archivo, guardado };
 }
 
 module.exports = {

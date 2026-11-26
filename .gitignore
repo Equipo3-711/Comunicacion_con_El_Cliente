@@ -1,8 +1,14 @@
 # Dependencias
 node_modules/
 
-# Variables de entorno: nunca se suben (AGENTS.md)
+# Variables de entorno: nunca se suben (AGENTS.md). También .env.nube y parecidos.
 .env
+.env.*
+!.env.example
+
+# Enlace local de la CLI de Vercel (vercel link) y certificados de la base en la nube
+.vercel/
+*.pem
 
 # Fotos y documentos que suben los usuarios
 backend/uploads/*

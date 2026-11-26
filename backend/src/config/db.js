@@ -14,8 +14,18 @@ function obtenerPool() {
       decimalNumbers: true,
       charset: 'utf8mb4',
     });
+    if (config.zonaHorariaDb) usarZonaHoraria(pool, config.zonaHorariaDb);
   }
   return pool;
+}
+
+// Cada conexión nueva queda en la hora de México antes de su primera consulta.
+function usarZonaHoraria(conjunto, zona) {
+  conjunto.pool.on('connection', (conexion) => {
+    conexion.query('SET time_zone = ?', [zona], (error) => {
+      if (error) console.error(`[db] No se pudo fijar la zona horaria: ${error.code || error.message}`);
+    });
+  });
 }
 
 // Ejecuta una consulta. Si recibe una conexión, la usa (para transacciones).

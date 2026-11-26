@@ -1,0 +1,11 @@
+# Lo que nunca se sube a Vercel con «vercel deploy».
+# Secretos (AGENTS.md): .env y cualquier .env.* con datos reales.
+.env
+.env.*
+!.env.example
+*.pem
+# Archivos de usuarios, reportes y pruebas: no hacen falta en el servidor.
+uploads
+coverage
+tests
+node_modules

@@ -19,7 +19,7 @@ async function registrarActualizacion(req, res) {
 async function verFoto(req, res) {
   const foto = await seguimiento.obtenerFotoParaVer(req.usuario, req.params.id);
   res.set({ 'Content-Type': foto.tipoMime, 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
-  res.sendFile(foto.ruta);
+  foto.guardado.enviar(res);
 }
 
 async function listarActividades(req, res) {

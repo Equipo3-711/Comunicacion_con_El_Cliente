@@ -1,0 +1,7 @@
+# Lo que no se sube a Vercel con «vercel deploy».
+.env
+.env.*
+node_modules
+dist
+cypress/screenshots
+cypress/videos

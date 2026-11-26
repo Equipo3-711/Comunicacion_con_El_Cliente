@@ -41,7 +41,7 @@ async function verArchivo(req, res) {
     'Cache-Control': 'no-store',
     'X-Content-Type-Options': 'nosniff',
   });
-  res.sendFile(archivo.ruta);
+  archivo.guardado.enviar(res);
 }
 
 module.exports = {

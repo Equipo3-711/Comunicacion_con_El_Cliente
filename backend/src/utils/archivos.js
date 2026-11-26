@@ -1,10 +1,11 @@
-// Recepción de fotos y documentos. Se guardan en la carpeta de archivos del servidor
-// (contenedor «Archivos» de docs/CONTAINERS.md), con un nombre aleatorio.
+// Recepción de fotos y documentos. Llegan a la carpeta de archivos del servidor con un nombre
+// aleatorio y, ya revisados, quedan donde diga utils/almacen.js (la carpeta o Vercel Blob).
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
 const multer = require('multer');
 const config = require('../config/env');
+const almacen = require('./almacen');
 const { solicitudInvalida } = require('./errores');
 
 const TIPOS_PERMITIDOS = {
@@ -40,11 +41,9 @@ function subidaEn(subcarpeta, { maxArchivos = 1 } = {}) {
 // Ruta relativa que se guarda en la base de datos, por ejemplo "documentos/abc.pdf".
 const rutaRelativa = (subcarpeta, archivo) => path.posix.join(subcarpeta, archivo.filename);
 
-const rutaAbsoluta = (relativa) => path.join(config.archivos.carpeta, relativa);
-
 // Borra archivos recibidos cuando la petición falla, para no dejar basura.
 async function borrarArchivos(archivos = []) {
-  await Promise.all(archivos.map((archivo) => fs.promises.unlink(archivo.path).catch(() => {})));
+  await almacen.borrarSubidos(archivos);
 }
 
 // Primeros bytes («firma») de cada tipo permitido. El tipo que manda el navegador
@@ -75,6 +74,7 @@ async function leerInicio(ruta) {
 }
 
 // Va después de multer: si algún archivo no es lo que dice ser, borra todos y responde 400.
+// Si todos están bien, los deja guardados donde corresponde.
 async function verificarContenido(req, res, siguiente) {
   const archivos = req.file ? [req.file] : req.files || [];
   for (const archivo of archivos) {
@@ -83,9 +83,15 @@ async function verificarContenido(req, res, siguiente) {
       throw solicitudInvalida('El archivo no es una imagen JPG, PNG o WEBP ni un PDF válido.');
     }
   }
+  try {
+    await almacen.guardarSubidos(archivos);
+  } catch (error) {
+    await borrarArchivos(archivos);
+    throw error;
+  }
   siguiente();
 }
 
 module.exports = {
-  subidaEn, rutaRelativa, rutaAbsoluta, borrarArchivos, coincideFirma, verificarContenido, TIPOS_PERMITIDOS,
+  subidaEn, rutaRelativa, borrarArchivos, coincideFirma, verificarContenido, TIPOS_PERMITIDOS,
 };
