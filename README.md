@@ -183,6 +183,7 @@ Los clientes crean su propia cuenta con `POST /api/auth/registro`.
 | `npm run crear-admin` | Crea una cuenta de administrador. |
 | `node scripts/datos-prueba.js` | Llena la base con datos de ejemplo para probar la aplicación web. |
 | `docker compose up -d` | Levanta MySQL en Docker con los datos del `.env`. |
+| `ENV_FILE=.env.nube node scripts/cargar-esquema.js` | Carga las tablas en una base que no es la de Docker, por ejemplo la del despliegue. |
 
 ### Cómo está organizada
 
@@ -195,7 +196,7 @@ Cada petición pasa por cuatro capas, para mantener separada la conexión de las
 | `src/services/` | Aplica las reglas del negocio, por ejemplo que sin sesión no se cotiza. |
 | `src/repositories/` | Hace las consultas SQL. Es la única capa que habla con MySQL. |
 
-Además están `src/validators/` (reglas de cada formulario), `src/middlewares/` (sesión, rol y errores), `src/utils/` (archivos y correo), `database/schema.sql` (tablas) y `tests/` (pruebas).
+Además están `src/validators/` (reglas de cada formulario), `src/middlewares/` (sesión, rol y errores), `src/utils/` (archivos y correo), `database/schema.sql` (tablas), `tests/` (pruebas) y `api/index.js` con `vercel.json` (la misma API como función de Vercel).
 
 ### Rutas principales
 
@@ -256,6 +257,7 @@ Cada actualización, cambio de estado, actividad realizada o documento nuevo le 
 - [Riesgos](docs/RIESGOS.md), [acuerdos y definición de terminado](docs/ACUERDOS.md) y [retrospectivas](docs/RETROSPECTIVAS.md).
 - [Ejemplos de uso](docs/EJEMPLOS.md).
 - [Pruebas y calidad](docs/PRUEBAS.md).
+- [Despliegue de prueba en Vercel](docs/DESPLIEGUE.md).
 
 ## Versiones
 
