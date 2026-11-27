@@ -91,11 +91,17 @@ Cada historia se demuestra en el bloque del guion que la menciona, con el criter
 
 ## Preguntas probables del cliente
 
+### Registro, solicitudes y chat (Jorge)
+
+- **¿Cómo entran hoy los mensajes de WhatsApp?** El personal los registra en un solo formulario con el canal WhatsApp y quedan en Solicitudes junto con las del portal. Que entren solos es una propuesta: necesitamos su cuenta de WhatsApp Business.
+- **¿Las respuestas automáticas usan inteligencia artificial?** No. Comparan la pregunta con las palabras clave que ustedes configuran: no cuesta y los datos no salen del portal. Si no hay respuesta, la duda le llega al arquitecto.
+
 ### Seguimiento y campana (Ximena)
 
 - **¿Cuándo se enciende la campana?** Cuando hay una actualización, una respuesta del arquitecto, un cambio en la cotización o una solicitud asignada. Al abrir el aviso, se quita.
 
 - **¿Cuándo tendríamos las fechas importantes?** En la Iteración 8, cuando se definan qué fechas se necesitan registrar y quién tendrá autorización para modificarlas.
+
 ### Aviso por correo (Jairo)
 
 - **¿Qué dice el correo y a quién le llega?** A los clientes de la empresa del proyecto: tipo de actualización, descripción, fecha, responsable y un enlace al portal.
