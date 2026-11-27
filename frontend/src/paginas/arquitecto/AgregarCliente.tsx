@@ -29,21 +29,22 @@ function adaptarErrores(modo: Modo) {
   };
 }
 
+// Son los datos de otra persona: sin autocompletar, para que el celular no ofrezca los del arquitecto.
 function CamposClienteNuevo({ errores }: { errores: Detalles }) {
   return (
     <>
       <div className="g g2">
         <div><label htmlFor="nombre">Nombre de contacto <i>*</i></label>
-          <input className={claseCampo(errores, 'nombre')} id="nombre" name="nombre" />
+          <input className={claseCampo(errores, 'nombre')} id="nombre" name="nombre" autoComplete="off" />
           <ErrorCampo mensaje={errores.nombre} /></div>
         <div><label htmlFor="empresa">Empresa <i>*</i></label>
-          <input className={claseCampo(errores, 'empresa')} id="empresa" name="empresa" />
+          <input className={claseCampo(errores, 'empresa')} id="empresa" name="empresa" autoComplete="off" />
           <ErrorCampo mensaje={errores.empresa} /></div>
         <div><label htmlFor="correoCliente">Correo <i>*</i></label>
-          <input className={claseCampo(errores, 'correo')} id="correoCliente" name="correo" type="email" />
+          <input className={claseCampo(errores, 'correo')} id="correoCliente" name="correo" type="email" autoComplete="off" />
           <ErrorCampo mensaje={errores.correo} /></div>
         <div><label htmlFor="telefonoCliente">Teléfono <i>*</i></label>
-          <input className={claseCampo(errores, 'telefono')} id="telefonoCliente" name="telefono" type="tel" />
+          <input className={claseCampo(errores, 'telefono')} id="telefonoCliente" name="telefono" type="tel" inputMode="tel" autoComplete="off" />
           <ErrorCampo mensaje={errores.telefono} /></div>
       </div>
       <label htmlFor="contrasenaInicial">Contraseña inicial <i>*</i> (compártela con el cliente; mínimo 8 caracteres)</label>
@@ -115,7 +116,7 @@ function FormularioAgregar({ cotizacion, alGuardar }: Pick<Props, 'cotizacion' |
 
 export function AgregarCliente({ abierto, cotizacion, alCerrar, alGuardar }: Props) {
   return (
-    <Dialogo abierto={abierto} alCerrar={alCerrar} titulo="Agregar usuario">
+    <Dialogo abierto={abierto} alCerrar={alCerrar} titulo="Agregar usuario" proteger>
       <FormularioAgregar key={cotizacion?.id ?? 'nuevo'} cotizacion={cotizacion} alGuardar={alGuardar} />
     </Dialogo>
   );

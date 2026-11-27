@@ -142,7 +142,7 @@ function FormularioSolicitud({ responsables, alGuardar }: Pick<Props, 'responsab
 
 export function RegistrarSolicitud({ abierto, responsables, alCerrar, alGuardar }: Props) {
   return (
-    <Dialogo abierto={abierto} alCerrar={alCerrar} titulo="Registrar solicitud">
+    <Dialogo abierto={abierto} alCerrar={alCerrar} titulo="Registrar solicitud" proteger>
       <FormularioSolicitud responsables={responsables} alGuardar={alGuardar} />
     </Dialogo>
   );
