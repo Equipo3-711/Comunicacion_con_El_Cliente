@@ -14,7 +14,8 @@ Antes de empezar, levanta la API, carga los datos de prueba con `node scripts/da
 1. Entra con `ana@roble.test`. Se abre **Mis proyectos** con sus dos obras; cada una dice si su duda está «Atendido» o «Pendiente».
 2. Da clic en **Ver proyecto** en «Ventanas · Calle Roble 12».
 3. Se ven el presupuesto, los pagos realizados, la garantía y el historial con fecha y responsable de cada movimiento (RF-06, RF-08).
-4. En **Documentos**, da clic en **Ver** junto a «Contrato». El documento se muestra dentro del portal, sin botones de descargar ni imprimir (CC-02).
+4. Arriba del historial, **Seguimiento automático** explica cómo va la obra sin que Ana pregunte: la etapa en la que está, cuántas actividades van realizadas y cuál sigue, el último movimiento, cuánto ha pagado y, si lleva 7 días o más sin movimientos, se lo dice. Se arma con lo que registra el arquitecto, así que cambia en cuanto él marca una actividad o publica un avance (CC-05). En el chat, el asistente virtual responde lo mismo con **¿Cómo va mi obra?**.
+5. En **Documentos**, da clic en **Ver** junto a «Contrato». El documento se muestra dentro del portal, sin botones de descargar ni imprimir (CC-02).
 
 ## Ejemplo 3: solicitar una cotización
 
@@ -53,15 +54,15 @@ Antes de empezar, levanta la API, carga los datos de prueba con `node scripts/da
 
 ## Ejemplo: el cliente cambia su cotización
 
-1. Entra como `laura@ramirez.test`. En **Mis cotizaciones**, da clic en **Modificar**, cambia las medidas y guarda (RF-11).
+1. Entra como `laura@ramirez.test`. En **Mis cotizaciones**, da clic en **Modificar**, cambia las medidas y guarda (RF-11). En **Tus fotos y planos** ve los que adjuntó, en el visor y sin poder descargarlos (CC-02).
 2. Como arquitecto, en **Solicitudes** aparece una **Modificación** de Laura. Con **Ver cotización** abres el detalle: los datos, los planos en el visor y el estado.
 3. Si la cotización ya estaba **Enviada**, al modificarla vuelve a **En revisión**. Cuando la marcas como **Enviada**, sus solicitudes quedan atendidas y Laura recibe el aviso en su campana.
 4. Con **Abrir proyecto**, el proyecto queda ligado a la cotización y Laura ya no puede modificarla: los cambios se piden en el chat del proyecto.
 
 ## Ejemplo: preguntas frecuentes en el chat
 
-1. Entra como `ana@roble.test` y abre el chat de su proyecto de ventanas. Arriba del campo para escribir están las **Preguntas frecuentes** activas (RF-13).
-2. Toca **¿Qué garantía tienen los trabajos?**: la respuesta aparece sola, marcada como «Respuesta automática». Contesta **Sí, esto responde mi duda**: no se manda ningún mensaje al arquitecto y el semáforo no cambia.
+1. Entra como `ana@roble.test` y abre el chat de su proyecto de ventanas. Como ya tiene conversación, primero se ven los mensajes; toca **Preguntar al asistente virtual** arriba del campo para escribir. En un chat sin mensajes, el asistente saluda solo (RF-13).
+2. Toca **¿Qué garantía tienen los trabajos?**: la respuesta aparece sola, marcada como «Asistente virtual». Contesta **Sí, esto responde mi duda**: no se manda ningún mensaje al arquitecto y el semáforo no cambia. Con **← Ver otras preguntas** regresas al menú; si hay más de 4 preguntas, las flechas **‹ ›** pasan de página. **Hablar con el arquitecto** cierra el menú y deja listo el campo para escribir.
 3. Escribe «¿Cuándo terminan la instalación?» y da clic en **Enviar**. Como tiene palabras clave de una pregunta frecuente, el chat primero te sugiere su respuesta. Con **No, enviar mi mensaje al arquitecto**, tu duda se manda como siempre y el proyecto queda en «No atendido».
 4. Escribe «Hola, buenas tardes»: no se parece a ninguna pregunta y se manda directo.
 5. Como arquitecto, entra a **Preguntas frecuentes** desde tu inicio. Agrega «¿Hacen canceles para baño?» con las palabras clave «cancel, baño, regadera». Ana la ve en su chat al recargar, y si escribe «Quiero un cancel para el baño», se la sugiere.

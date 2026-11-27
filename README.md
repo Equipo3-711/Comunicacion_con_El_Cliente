@@ -47,7 +47,7 @@ También puedes descargar una versión publicada desde [Releases](https://github
 3. Entra con una de las cuentas que creó `node scripts/datos-prueba.js`, con la contraseña que escribiste al cargarlas:
    - **Arquitecto** (`arquitecto@tefficiency.test`): ve a sus clientes con el semáforo de atención, agrega clientes, registra avances con fotos, marca actividades como realizadas, sube documentos y responde dudas. En **Solicitudes** registra lo que llega por WhatsApp, llamada, redes sociales, correo o en persona, lo clasifica y lo asigna; también avanza cada cotización y ve los planos del cliente. En **Preguntas frecuentes** configura las respuestas automáticas del chat.
    - **Personal** (`paola@tefficiency.test`): otra persona del personal, para probar la asignación de solicitudes.
-   - **Cliente** (`ana@roble.test`): ve sus proyectos con presupuesto, pagos, garantía, historial y documentos, solicita cotizaciones, las modifica si quiere cambios y escribe sus dudas en el chat, que antes le ofrece las preguntas frecuentes.
+   - **Cliente** (`ana@roble.test`): ve sus proyectos con presupuesto, pagos, garantía, historial y documentos, solicita cotizaciones, las modifica si quiere cambios y escribe sus dudas en el chat, donde un asistente virtual le contesta las preguntas frecuentes.
 
    También puedes crear tu propia cuenta de cliente con **Crear cuenta**.
 
@@ -210,7 +210,7 @@ Todas empiezan con `/api`. Salvo el registro, el inicio de sesión y la ruta de 
 | `GET /cotizaciones` y `GET /cotizaciones/:id` | Ambos | El cliente ve las suyas; el personal, todas, con sus fotos o planos | RF-03 |
 | `PUT /cotizaciones/:id` | Ambos | Modificar la cotización mientras no tenga proyecto; si ya se había enviado, vuelve a revisión | RF-11 |
 | `PATCH /cotizaciones/:id/estado` | Personal | Recibida, En revisión o Enviada; al enviarla, sus solicitudes quedan atendidas | RF-03 |
-| `GET /cotizaciones/archivos/:id/ver` | Ambos | Ver una foto o un plano de la cotización dentro del portal | RF-03 |
+| `GET /cotizaciones/archivos/:id/ver` | Ambos | Ver una foto o un plano de la cotización dentro del portal, sin descarga: el personal en el detalle y el cliente al modificarla | RF-03, CC-02 |
 | `GET` y `POST /solicitudes` | Personal | Bandeja de solicitudes con filtros, y registrar las que llegan por fuera del portal con su canal | RF-01, RF-04, RNF-01 |
 | `PATCH /solicitudes/:id` | Personal | Clasificar, cambiar el estado o asignar el responsable, que recibe el aviso | RF-04, RF-05, RF-12 |
 | `GET /solicitudes/responsables` y `GET /clientes` | Personal | Listas para el formulario de solicitudes | RF-05 |
@@ -219,6 +219,7 @@ Todas empiezan con `/api`. Salvo el registro, el inicio de sesión y la ruta de 
 | `POST /clientes` | Personal | Agregar un cliente a la cartera: su cuenta, su empresa y su primer proyecto | RF-02 |
 | `PATCH /proyectos/:id/atencion` | Personal | Semáforo de las dudas: No atendido, Pendiente o Atendido | CC-04 |
 | `GET /proyectos/:id/historial` | Ambos | Todo lo que ha sucedido en el proyecto, en orden de fecha | RF-06, CC-06 |
+| `GET /proyectos/:id/resumen` | Ambos | Seguimiento automático: etapa, actividades realizadas, último movimiento, pagos, garantía y avisos, armados con los datos del proyecto | CC-05 |
 | `POST /proyectos/:id/actualizaciones` | Personal | Registrar un avance con tipo, descripción, fecha, responsable y hasta 5 fotos opcionales | RF-16, RF-07 |
 | `GET /fotos/:id/ver` | Ambos | Ver las fotos de un avance dentro del portal | RF-07 |
 | `PATCH /actividades/:id/realizada` | Personal | Marcar una actividad como realizada y publicarla al cliente | RF-17, CC-07 |
@@ -231,7 +232,7 @@ Todas empiezan con `/api`. Salvo el registro, el inicio de sesión y la ruta de 
 
 Todo lo que piden los clientes entra a la bandeja de **Solicitudes**: la cotización y sus cambios llegan solos por el portal, y el personal registra lo que llega por WhatsApp, llamada, redes sociales, correo o en persona. La conexión automática con WhatsApp todavía no existe; el canal ya queda guardado para cuando se conecte.
 
-Antes de que el cliente escriba en el chat, ve las **preguntas frecuentes** que configuró el personal. Si escribe una duda con alguna de sus palabras clave, el chat le sugiere la respuesta y le pregunta si resolvió su duda; si no, su mensaje le llega al arquitecto como siempre. No usa inteligencia artificial: compara palabras sin importar acentos ni mayúsculas, así que no tiene costo y ningún dato sale del portal.
+En el chat del cliente, un **asistente virtual** le ofrece las **preguntas frecuentes** que configuró el personal, de 4 en 4 con flechas para pasar de página, y le contesta al momento; desde la respuesta regresa a las preguntas o habla con el arquitecto. Si escribe una duda con alguna de sus palabras clave, el chat le sugiere la respuesta y le pregunta si resolvió su duda; si no, su mensaje le llega al arquitecto como siempre. No usa inteligencia artificial: compara palabras sin importar acentos ni mayúsculas, así que no tiene costo y ningún dato sale del portal.
 
 El semáforo de atención cambia solo con el chat: una duda nueva del cliente deja el proyecto en «No atendido» y la respuesta del arquitecto lo pasa a «Pendiente», hasta que él lo marca como «Atendido».
 
