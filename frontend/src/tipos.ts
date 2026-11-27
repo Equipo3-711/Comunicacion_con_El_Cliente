@@ -52,6 +52,18 @@ export interface EventoHistorial {
   fotos: number[];
 }
 
+// Seguimiento automático (CC-05): cómo va la obra, armado por la API con los datos del proyecto.
+export interface ResumenProyecto {
+  etapa: { clave: EstadoProyecto; nombre: string; numero: number; total: number };
+  actividades: { realizadas: number; total: number; porcentaje: number; siguiente: string | null };
+  ultimoMovimiento: { descripcion: string; responsable: string; fecha: string; dias: number } | null;
+  pagos: { presupuesto: number; pagado: number; porcentaje: number; saldo: number } | null;
+  garantiaHasta: string | null;
+  puntos: string[];
+  avisos: string[];
+  generadoEn: string;
+}
+
 export interface Documento {
   id: number;
   nombre: string;

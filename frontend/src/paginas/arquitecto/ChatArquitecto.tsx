@@ -37,7 +37,11 @@ export default function ChatArquitecto() {
   }
 
   return (
-    <Pantalla titulo={carga.datos ? `Chat con ${carga.datos.cliente}` : 'Chat con el cliente'} className="g dos-uno chat">
+    <Pantalla
+      titulo={carga.datos ? `Chat con ${carga.datos.cliente}` : 'Chat con el cliente'}
+      className="g dos-uno chat"
+      regresar={{ a: `/arquitecto/proyectos/${id}`, texto: 'Proyecto' }}
+    >
       <SegunCarga carga={carga}>
         {({ proyecto, cliente }) => (
           <>

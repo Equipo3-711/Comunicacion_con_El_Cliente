@@ -130,7 +130,7 @@ export default function Proyecto() {
   }
 
   return (
-    <Pantalla titulo={carga.datos?.proyecto.nombre ?? 'Proyecto'}>
+    <Pantalla titulo={carga.datos?.proyecto.nombre ?? 'Proyecto'} regresar={{ a: '/arquitecto', texto: 'Mis clientes' }}>
       <SegunCarga carga={carga}>
         {({ proyecto }) => (
           <>
@@ -153,7 +153,6 @@ export default function Proyecto() {
             </div>
 
             <div className="row mt envolver">
-              <Link to="/arquitecto">Volver</Link>
               <Link to={`/arquitecto/proyectos/${id}/chat`}>Abrir chat</Link>
               <Link to={`/cliente/proyectos/${id}`}>Ver historial del cliente →</Link>
             </div>

@@ -5,6 +5,7 @@ import { proyectos } from '../../api';
 import { SegunCarga } from '../../componentes/Estados';
 import { Historial } from '../../componentes/Historial';
 import { Pantalla } from '../../componentes/Pantalla';
+import { ResumenObra } from '../../componentes/ResumenObra';
 import { useCarga } from '../../hooks/useCarga';
 import { useUsuario } from '../../sesion/Sesion';
 import { dinero, fechaCorta, mesYAnio } from '../../utilidades/formatos';
@@ -20,7 +21,10 @@ export default function ProyectoDetalle() {
   }, [id]);
 
   return (
-    <Pantalla titulo={carga.datos?.proyecto.nombre ?? 'Proyecto'}>
+    <Pantalla
+      titulo={carga.datos?.proyecto.nombre ?? 'Proyecto'}
+      regresar={esArquitecto ? { a: `/arquitecto/proyectos/${id}`, texto: 'Vista del arquitecto' } : { a: '/cliente', texto: 'Mis proyectos' }}
+    >
       <SegunCarga carga={carga}>
         {({ proyecto, documentos }) => (
           <>
@@ -42,6 +46,7 @@ export default function ProyectoDetalle() {
                 <h3 className="ok">{proyecto.garantiaHasta ? `Hasta ${mesYAnio(proyecto.garantiaHasta)}` : 'Por definir'}</h3>
               </div>
             </div>
+            <ResumenObra proyectoId={id} />
             <section className="card mt">
               <h2>Historial del proyecto</h2>
               <div><Historial proyectoId={id} /></div>

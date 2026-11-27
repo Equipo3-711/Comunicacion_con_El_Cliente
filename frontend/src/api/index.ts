@@ -3,7 +3,7 @@ import { consulta, pedir, pedirArchivo } from './cliente';
 import type {
   Actividad, CambiosSolicitud, ClienteRegistrado, Cotizacion, CotizacionDetalle, DatosCotizacion, Documento,
   DatosPregunta, Empresa, EventoHistorial, FiltrosSolicitudes, Mensaje, NuevaSolicitud, Pendiente, Persona,
-  PreguntaFrecuente, Proyecto, Sesion, Solicitud, Usuario,
+  PreguntaFrecuente, Proyecto, ResumenProyecto, Sesion, Solicitud, Usuario,
 } from '../tipos';
 
 export { ErrorApi, API_URL } from './cliente';
@@ -18,6 +18,7 @@ export const proyectos = {
   listar: () => pedir<{ proyectos: Proyecto[] }>('GET', '/proyectos'),
   obtener: (id: string | number) => pedir<{ proyecto: Proyecto }>('GET', `/proyectos/${id}`),
   historial: (id: string | number) => pedir<{ historial: EventoHistorial[] }>('GET', `/proyectos/${id}/historial`),
+  resumen: (id: string | number) => pedir<{ resumen: ResumenProyecto }>('GET', `/proyectos/${id}/resumen`),
   documentos: (id: string | number) => pedir<{ documentos: Documento[] }>('GET', `/proyectos/${id}/documentos`),
   verDocumento: (id: string | number) => pedirArchivo(`/documentos/${id}/ver`),
   verFoto: (id: string | number) => pedirArchivo(`/fotos/${id}/ver`),

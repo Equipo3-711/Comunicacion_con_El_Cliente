@@ -2,19 +2,51 @@
 describe('Preguntas frecuentes', () => {
   beforeEach(() => cy.apiFalsa());
 
-  it('el cliente toca una pregunta, ve la respuesta y la marca como resuelta', () => {
+  it('el asistente virtual saluda, responde una pregunta del menú y regresa al menú', () => {
     cy.intercept('POST', '/api/preguntas/2/resuelta', { statusCode: 204 }).as('resuelta');
     cy.intercept('POST', /\/api\/proyectos\/\d+\/mensajes$/).as('mensaje');
     cy.entrarComo('cliente', '/cliente/proyectos/7/chat');
 
-    cy.get('.faq .btn').should('have.length', 2).and('not.contain', 'fin de semana');
-    cy.contains('.faq .btn', '¿Qué garantía tienen los trabajos?').click();
+    // El proyecto 7 ya tiene conversación: primero se ven los mensajes y el asistente se abre con su botón.
+    cy.contains('.b.me', '¿Cuándo terminan');
+    cy.get('.b.asistente').should('not.exist');
+    cy.contains('button', 'Preguntar al asistente virtual').click();
+    cy.contains('.b.asistente', 'soy el asistente virtual');
+    // «¿Cómo va mi obra?» y las 2 preguntas activas (la apagada no aparece).
+    cy.get('.b.asistente .opcion').should('have.length', 3).and('not.contain', 'fin de semana');
+    cy.get('.b.asistente .opcion').first().should('contain', '¿Cómo va mi obra?');
+    cy.contains('.opcion', '¿Qué garantía tienen los trabajos?').click();
     cy.contains('.b.auto', '5 años en perfiles de aluminio');
+    cy.get('.b.asistente').should('not.exist');
     cy.contains('button', 'Sí, esto responde mi duda').click();
 
     cy.wait('@resuelta');
     cy.contains('.b.auto', '¡Qué bueno!');
     cy.get('@mensaje.all').should('have.length', 0);
+
+    cy.contains('button', 'Ver otras preguntas').click();
+    cy.contains('.b.asistente', '¿Qué más quieres saber?');
+    cy.contains('.b.asistente button', 'Hablar con el arquitecto').click();
+    cy.get('.b.asistente').should('not.exist');
+    cy.focused().should('have.id', 'texto');
+    cy.contains('button', 'Preguntar al asistente virtual');
+  });
+
+  it('«¿Cómo va mi obra?» responde con el seguimiento automático del proyecto', () => {
+    cy.intercept('POST', /\/api\/preguntas\/.+\/resuelta$/).as('resuelta');
+    cy.entrarComo('cliente', '/cliente/proyectos/7/chat');
+    cy.contains('button', 'Preguntar al asistente virtual').click();
+    cy.contains('.opcion', '¿Cómo va mi obra?').click();
+    cy.wait('@resumen');
+    cy.contains('.b.auto', 'etapa 2 de 4').and('contain', 'Lo siguiente es «Instalación de ventanas»');
+    cy.contains('button', 'Sí, esto responde mi duda').click();
+    cy.get('@resuelta.all').should('have.length', 0);
+  });
+
+  it('la flecha regresa del chat al proyecto', () => {
+    cy.entrarComo('cliente', '/cliente/proyectos/7/chat');
+    cy.contains('a.regresar', 'Mi proyecto').click();
+    cy.location('pathname').should('eq', '/cliente/proyectos/7');
   });
 
   it('si su duda se parece a una pregunta, primero la sugiere; con «No» la manda al arquitecto', () => {

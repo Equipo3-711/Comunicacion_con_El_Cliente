@@ -1,7 +1,6 @@
 // Preguntas frecuentes del chat (RF-13): el personal escribe cada pregunta, su respuesta y sus palabras clave.
 // El chat del cliente las ofrece antes de escribir y las sugiere cuando su duda tiene alguna palabra clave.
 import { useState, type FormEvent } from 'react';
-import { Link } from 'react-router';
 import { preguntas as apiPreguntas } from '../../api';
 import { useAvisos } from '../../componentes/Avisos';
 import { Dialogo } from '../../componentes/Dialogo';
@@ -124,8 +123,7 @@ export default function Preguntas() {
   }
 
   return (
-    <Pantalla titulo="Preguntas frecuentes">
-      <p><Link to="/arquitecto">← Mis clientes</Link></p>
+    <Pantalla titulo="Preguntas frecuentes" regresar={{ a: '/arquitecto', texto: 'Mis clientes' }}>
       <div className="row titulo-pagina amplio">
         <h1 className="pagina">Preguntas frecuentes</h1>
         <button className="btn p auto" type="button" onClick={() => setDialogo({ existente: null })}>＋ Agregar pregunta</button>
@@ -148,7 +146,7 @@ export default function Preguntas() {
           )}
         </SegunCarga>
       </section>
-      <Dialogo abierto={dialogo !== null} alCerrar={() => setDialogo(null)} titulo={dialogo?.existente ? 'Editar pregunta' : 'Agregar pregunta'}>
+      <Dialogo abierto={dialogo !== null} alCerrar={() => setDialogo(null)} titulo={dialogo?.existente ? 'Editar pregunta' : 'Agregar pregunta'} proteger>
         <FormularioPregunta key={dialogo?.existente?.id ?? 'nueva'} existente={dialogo?.existente ?? null} alGuardar={alGuardar} />
       </Dialogo>
     </Pantalla>

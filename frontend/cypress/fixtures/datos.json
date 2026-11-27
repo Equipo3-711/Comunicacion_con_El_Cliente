@@ -233,5 +233,40 @@
       "activa": false,
       "resueltas": 0
     }
-  ]
+  ],
+  "resumen": {
+    "etapa": {
+      "clave": "en_proceso",
+      "nombre": "En proceso",
+      "numero": 2,
+      "total": 4
+    },
+    "actividades": {
+      "realizadas": 1,
+      "total": 3,
+      "porcentaje": 33,
+      "siguiente": "Instalación de ventanas"
+    },
+    "ultimoMovimiento": {
+      "descripcion": "Se tomaron medidas en sitio.",
+      "responsable": "Arq. Laura Méndez",
+      "fecha": "2026-11-20 10:00:00",
+      "dias": 2
+    },
+    "pagos": {
+      "presupuesto": 185000,
+      "pagado": 92500,
+      "porcentaje": 50,
+      "saldo": 92500
+    },
+    "garantiaHasta": null,
+    "puntos": [
+      "Tu obra está en «En proceso», etapa 2 de 4.",
+      "Van 1 de 3 actividades realizadas (33 %). Lo siguiente es «Instalación de ventanas».",
+      "El último movimiento fue hace 2 días: «Se tomaron medidas en sitio.», por Arq. Laura Méndez.",
+      "Has pagado $92,500.00 de $185,000.00 (50 %)."
+    ],
+    "avisos": [],
+    "generadoEn": "2026-11-22T18:00:00.000Z"
+  }
 }

@@ -2,6 +2,7 @@
 // Cada tipo va a su propia ruta de la API; la fecha y el responsable se llenan solos.
 import { useState, type FormEvent } from 'react';
 import { proyectos } from '../../api';
+import { CampoArchivos } from '../../componentes/CampoArchivos';
 import { BotonEnviar, ErrorCampo, ErrorGeneral, Opciones, Pastillas, claseCampo } from '../../componentes/Formulario';
 import { useEnvio } from '../../hooks/useEnvio';
 import { useUsuario } from '../../sesion/Sesion';
@@ -65,9 +66,7 @@ export function RegistrarActualizacion({ proyectoId, estadoActual, alGuardar }: 
           <label htmlFor="descripcion">Descripción</label>
           <textarea className={claseCampo(errores, 'descripcion')} id="descripcion" name="descripcion" maxLength={500} placeholder="Se instalaron 2 de 3 ventanas." />
           <ErrorCampo mensaje={errores.descripcion} />
-          <label className="up">Fotos (opcional): hasta 5 imágenes JPG, PNG o WEBP.
-            <input type="file" name="fotos" multiple accept="image/jpeg,image/png,image/webp" />
-          </label>
+          <CampoArchivos nombre="fotos" titulo="Fotos (opcional)" ayuda="Hasta 5 imágenes JPG, PNG o WEBP." accept="image/jpeg,image/png,image/webp" multiple />
           <ErrorCampo mensaje={errores.fotos} />
         </div>
       )}
@@ -87,9 +86,7 @@ export function RegistrarActualizacion({ proyectoId, estadoActual, alGuardar }: 
           <label htmlFor="nombreDocumento">Nombre del documento</label>
           <input className={claseCampo(errores, 'nombre')} id="nombreDocumento" name="nombre" placeholder="Contrato, ficha técnica, garantía…" />
           <ErrorCampo mensaje={errores.nombre} />
-          <label className="up">Archivo PDF o imagen
-            <input type="file" name="archivo" accept="application/pdf,image/jpeg,image/png,image/webp" />
-          </label>
+          <CampoArchivos nombre="archivo" titulo="Archivo" ayuda="PDF o imagen JPG, PNG o WEBP." accept="application/pdf,image/jpeg,image/png,image/webp" />
           <ErrorCampo mensaje={errores.archivo} />
         </div>
       )}

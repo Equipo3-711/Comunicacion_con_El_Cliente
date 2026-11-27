@@ -1,15 +1,15 @@
 // Detalle de una cotización para el personal: datos del formulario, fotos o planos del cliente,
 // estado (Recibida, En revisión o Enviada) y el proyecto que se abrió a partir de ella.
-import { useRef, useState, type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { Link, useParams } from 'react-router';
 import { cotizaciones } from '../../api';
+import { ArchivosCotizacion } from '../../componentes/ArchivosCotizacion';
 import { useAvisos } from '../../componentes/Avisos';
 import { SegunCarga } from '../../componentes/Estados';
 import { Opciones } from '../../componentes/Formulario';
 import { Pantalla } from '../../componentes/Pantalla';
-import { Visor } from '../../componentes/Visor';
 import { useCarga } from '../../hooks/useCarga';
-import type { ArchivoCotizacion, CotizacionDetalle as Detalle, EstadoCotizacion } from '../../tipos';
+import type { CotizacionDetalle as Detalle, EstadoCotizacion } from '../../tipos';
 import { fechaCorta, hora } from '../../utilidades/formatos';
 import { ESTADOS_COTIZACION, TIPOS_CLIENTE, TIPOS_TRABAJO, nombreConEmpresa } from '../../utilidades/textos';
 
@@ -33,38 +33,6 @@ function Datos({ cotizacion }: { cotizacion: Detalle }) {
       <Dato titulo="Descripción">{cotizacion.descripcion}</Dato>
       <Dato titulo="Recibida">{`${fechaCorta(cotizacion.creadoEn)} a las ${hora(cotizacion.creadoEn)}${modificada}`}</Dato>
     </dl>
-  );
-}
-
-function Archivos({ archivos }: { archivos: ArchivoCotizacion[] }) {
-  const [abierto, setAbierto] = useState<{ archivo: Blob | null; nombre: string; error: string } | null>(null);
-  const visor = useRef<HTMLDivElement>(null);
-
-  async function ver(archivo: ArchivoCotizacion) {
-    setAbierto({ archivo: null, nombre: archivo.nombre, error: '' });
-    try {
-      const contenido = await cotizaciones.verArchivo(archivo.id);
-      setAbierto({ archivo: contenido, nombre: archivo.nombre, error: '' });
-      visor.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } catch (error) {
-      setAbierto({ archivo: null, nombre: archivo.nombre, error: (error as Error).message });
-    }
-  }
-
-  return (
-    <>
-      <div>
-        {archivos.length ? archivos.map((archivo) => (
-          <div className="act" key={archivo.id}>
-            <span>{archivo.nombre}</span>
-            <button className="btn s" type="button" onClick={() => ver(archivo)}>Ver</button>
-          </div>
-        )) : <p className="vacio">El cliente no adjuntó fotos ni planos.</p>}
-      </div>
-      <div ref={visor}>
-        {abierto && <Visor className="mt" archivo={abierto.archivo} titulo={abierto.nombre} error={abierto.error} />}
-      </div>
-    </>
   );
 }
 
@@ -106,8 +74,7 @@ export default function CotizacionDetalle() {
   const titulo = cotizacion ? `${TIPOS_TRABAJO[cotizacion.tipoTrabajo]} · ${cotizacion.cliente}` : 'Cotización';
 
   return (
-    <Pantalla titulo={`Cotización: ${titulo}`}>
-      <p><Link to="/arquitecto#cotizaciones">← Cotizaciones recibidas</Link></p>
+    <Pantalla titulo={`Cotización: ${titulo}`} regresar={{ a: '/arquitecto#cotizaciones', texto: 'Cotizaciones recibidas' }}>
       <SegunCarga carga={carga}>
         {({ cotizacion: actual }) => (
           <div className="g dos-uno">
@@ -118,7 +85,7 @@ export default function CotizacionDetalle() {
               </div>
               <Datos cotizacion={actual} />
               <h2 className="mt">Fotos y planos</h2>
-              <Archivos archivos={actual.archivos} />
+              <ArchivosCotizacion archivos={actual.archivos} vacio="El cliente no adjuntó fotos ni planos." />
             </section>
             <div className="g">
               <CambiarEstado key={actual.estado} cotizacion={actual} alGuardar={carga.recargar} />

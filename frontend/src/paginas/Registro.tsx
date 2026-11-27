@@ -1,28 +1,32 @@
 // Pantalla 2 · Crear cuenta. El registro es obligatorio antes de cotizar (CC-01, RF-02).
-import type { FormEvent } from 'react';
+import { useRef, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { cuenta } from '../api';
 import { BotonEnviar, ErrorCampo, ErrorGeneral, claseCampo, valoresDe } from '../componentes/Formulario';
 import { Pantalla } from '../componentes/Pantalla';
 import { useEnvio } from '../hooks/useEnvio';
+import { useProtegerCambios } from '../hooks/useProtegerCambios';
 import { useSesion } from '../sesion/Sesion';
 
 export default function Registro() {
   const { iniciar } = useSesion();
   const navegar = useNavigate();
   const { enviando, errores, general, enviar } = useEnvio();
+  const formulario = useRef<HTMLFormElement>(null);
+  const proteccion = useProtegerCambios(formulario);
 
   async function crearCuenta(evento: FormEvent<HTMLFormElement>) {
     evento.preventDefault();
     const sesion = await enviar(() => cuenta.registrar(valoresDe(evento.currentTarget)));
     if (!sesion) return;
+    proteccion.sinCambios();
     iniciar(sesion);
     navegar('/cliente?bienvenida=1', { replace: true });
   }
 
   return (
-    <Pantalla titulo="Crear cuenta" className="card angosta">
-      <form onSubmit={crearCuenta} noValidate>
+    <Pantalla titulo="Crear cuenta" className="card angosta" regresar={{ a: '/', texto: 'Iniciar sesión' }}>
+      <form ref={formulario} onSubmit={crearCuenta} noValidate>
         <h2>Crear cuenta</h2>
         <p className="suave">Necesitas una cuenta para solicitar una cotización y seguir tus proyectos.</p>
         <label htmlFor="nombre">Nombre de contacto <i>*</i></label>
@@ -35,7 +39,7 @@ export default function Registro() {
         <input className={claseCampo(errores, 'correo')} id="correo" name="correo" type="email" autoComplete="email" placeholder="ana@roble.com" />
         <ErrorCampo mensaje={errores.correo} />
         <label htmlFor="telefono">Teléfono <i>*</i></label>
-        <input className={claseCampo(errores, 'telefono')} id="telefono" name="telefono" type="tel" autoComplete="tel" placeholder="477 123 4567" />
+        <input className={claseCampo(errores, 'telefono')} id="telefono" name="telefono" type="tel" inputMode="tel" autoComplete="tel" placeholder="477 123 4567" />
         <ErrorCampo mensaje={errores.telefono} />
         <div className="g g2">
           <div>

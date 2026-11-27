@@ -25,6 +25,7 @@ Cypress.Commands.add('apiFalsa', () => {
     cy.intercept('GET', '/api/proyectos', { proyectos: datos.proyectos }).as('proyectos');
     cy.intercept('GET', /\/api\/proyectos\/\d+$/, { proyecto });
     cy.intercept('GET', /\/api\/proyectos\/\d+\/historial$/, { historial: datos.historial });
+    cy.intercept('GET', /\/api\/proyectos\/\d+\/resumen$/, { resumen: datos.resumen }).as('resumen');
     cy.intercept('GET', /\/api\/proyectos\/\d+\/documentos$/, { documentos: datos.documentos });
     cy.intercept('GET', /\/api\/proyectos\/\d+\/actividades$/, { actividades: datos.actividades });
     cy.intercept('GET', /\/api\/proyectos\/\d+\/mensajes$/, { mensajes: datos.mensajes });

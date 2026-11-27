@@ -25,7 +25,7 @@ export default function Documento() {
 
   const titulo = carga.datos?.titulo ?? 'Documento';
   return (
-    <Pantalla titulo={titulo} className="card media">
+    <Pantalla titulo={titulo} className="card media" regresar={{ a: `/cliente/proyectos/${id}`, texto: 'Proyecto' }}>
       <SegunCarga carga={carga}>
         {() => (
           <>

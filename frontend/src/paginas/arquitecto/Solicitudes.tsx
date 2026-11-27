@@ -128,8 +128,7 @@ export default function Solicitudes() {
   }
 
   return (
-    <Pantalla titulo="Solicitudes">
-      <p><Link to="/arquitecto">← Mis clientes</Link></p>
+    <Pantalla titulo="Solicitudes" regresar={{ a: '/arquitecto', texto: 'Mis clientes' }}>
       <div className="row titulo-pagina amplio">
         <h1 className="pagina">Solicitudes</h1>
         <button className="btn p auto" type="button" onClick={() => setRegistrando(true)}>＋ Registrar solicitud</button>

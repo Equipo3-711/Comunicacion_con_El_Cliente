@@ -5,7 +5,7 @@ import { chat } from '../api';
 import { useIntervalo } from '../hooks/useIntervalo';
 import { fechaCorta, hora } from '../utilidades/formatos';
 import type { Mensaje, Usuario } from '../tipos';
-import { Intercambios, PreguntasFrecuentes, useAsistente, type Intercambio } from './Asistente';
+import { BotonAsistente, Intercambios, MenuAsistente, useAsistente, type Asistente, type Intercambio } from './Asistente';
 import { useAvisos } from './Avisos';
 import { Cargando, ErrorAlCargar } from './Estados';
 
@@ -32,6 +32,29 @@ function Burbuja({ mensaje, usuario }: { mensaje: Mensaje; usuario: Usuario }) {
   );
 }
 
+interface PropsConversacion {
+  mensajes: Mensaje[] | null;
+  usuario: Usuario;
+  asistente: Asistente;
+  alNoResolver: (intercambio: Intercambio) => void;
+  alHablar: () => void;
+}
+
+// Los mensajes guardados y, en el chat del cliente, lo que contesta el asistente virtual.
+function Conversacion({ mensajes, usuario, asistente, alNoResolver, alHablar }: PropsConversacion) {
+  const menuVisible = asistente.disponible && asistente.menuAbierto;
+  const sinNada = mensajes?.length === 0 && asistente.intercambios.length === 0 && !menuVisible;
+  return (
+    <>
+      {mensajes === null && <Cargando />}
+      {sinNada && <p className="vacio">Todavía no hay mensajes. Escribe tu duda y te responderemos aquí.</p>}
+      {mensajes?.map((mensaje) => <Burbuja key={mensaje.id} mensaje={mensaje} usuario={usuario} />)}
+      <Intercambios asistente={asistente} alNoResolver={alNoResolver} />
+      {menuVisible && <MenuAsistente asistente={asistente} alHablar={alHablar} />}
+    </>
+  );
+}
+
 export function Chat({ proyectoId, usuario, alEnviar }: Props) {
   const [mensajes, setMensajes] = useState<Mensaje[] | null>(null);
   const [error, setError] = useState<Error | null>(null);
@@ -40,8 +63,9 @@ export function Chat({ proyectoId, usuario, alEnviar }: Props) {
   const lista = useRef<HTMLDivElement>(null);
   const campo = useRef<HTMLInputElement>(null);
   const avisar = useAvisos();
-  // Solo el cliente tiene respuestas automáticas a preguntas frecuentes (RF-13).
-  const asistente = useAsistente(usuario.rol === 'cliente');
+  // Solo el cliente tiene asistente virtual con las preguntas frecuentes (RF-13).
+  const asistente = useAsistente(usuario.rol === 'cliente', proyectoId);
+  const menuVisible = asistente.disponible && asistente.menuAbierto;
 
   // Solo se vuelve a dibujar si llegó un mensaje nuevo.
   const cargar = useCallback(async () => {
@@ -52,11 +76,20 @@ export function Chat({ proyectoId, usuario, alEnviar }: Props) {
   useEffect(() => {
     cargar().catch((fallo: Error) => setError(fallo));
   }, [cargar]);
+
+  // Si todavía no hay conversación, el asistente saluda solo; si ya la hay, primero se ven los mensajes.
+  const saludoDecidido = useRef(false);
+  const { abrirMenu } = asistente;
+  useEffect(() => {
+    if (mensajes === null || saludoDecidido.current) return;
+    saludoDecidido.current = true;
+    if (mensajes.length === 0) abrirMenu();
+  }, [mensajes, abrirMenu]);
   useIntervalo(() => { cargar().catch(() => {}); }, CADA_CUANTO_MS);
 
   useEffect(() => {
     if (lista.current) lista.current.scrollTop = lista.current.scrollHeight;
-  }, [mensajes, asistente.intercambios]);
+  }, [mensajes, asistente.intercambios, menuVisible]);
 
   async function mandar(limpio: string) {
     await chat.enviar(proyectoId, limpio);
@@ -69,6 +102,8 @@ export function Chat({ proyectoId, usuario, alEnviar }: Props) {
     evento.preventDefault();
     const limpio = texto.trim();
     if (!limpio) return;
+    // Si escribió su duda, ya no necesita el menú del asistente.
+    asistente.cerrarMenu();
     setEnviando(true);
     try {
       if (!(await asistente.revisar(limpio))) await mandar(limpio);
@@ -81,7 +116,13 @@ export function Chat({ proyectoId, usuario, alEnviar }: Props) {
     }
   }
 
-  // «No, esto no responde mi duda»: si la escribió, se manda; si la eligió de la lista, puede escribirla.
+  // «Hablar con el arquitecto»: se cierra el menú y queda listo el campo para escribir.
+  function hablarConArquitecto() {
+    asistente.cerrarMenu();
+    campo.current?.focus();
+  }
+
+  // «No, esto no responde mi duda»: si la escribió, se manda; si la eligió del menú, puede escribirla.
   async function noResuelta(intercambio: Intercambio) {
     asistente.cerrar(intercambio);
     if (intercambio.origen === 'pregunta') {
@@ -100,14 +141,9 @@ export function Chat({ proyectoId, usuario, alEnviar }: Props) {
   return (
     <>
       <div className="msgs" ref={lista} aria-live="polite">
-        {mensajes === null && <Cargando />}
-        {mensajes?.length === 0 && asistente.intercambios.length === 0 && (
-          <p className="vacio">Todavía no hay mensajes. Escribe tu duda y te responderemos aquí.</p>
-        )}
-        {mensajes?.map((mensaje) => <Burbuja key={mensaje.id} mensaje={mensaje} usuario={usuario} />)}
-        <Intercambios asistente={asistente} alNoResolver={noResuelta} />
+        <Conversacion mensajes={mensajes} usuario={usuario} asistente={asistente} alNoResolver={noResuelta} alHablar={hablarConArquitecto} />
       </div>
-      <PreguntasFrecuentes asistente={asistente} />
+      <BotonAsistente asistente={asistente} />
       <form className="escribir" onSubmit={enviar}>
         <label className="oculto" htmlFor="texto">Mensaje</label>
         <input
