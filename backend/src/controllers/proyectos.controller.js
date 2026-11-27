@@ -1,4 +1,5 @@
 const proyectosService = require('../services/proyectos.service');
+const resumenService = require('../services/resumen.service');
 const {
   validarNuevoProyecto, validarEstado, validarAtencion, validarDatosProyecto,
 } = require('../validators/proyecto.validator');
@@ -35,4 +36,11 @@ async function historial(req, res) {
   res.json({ historial: await proyectosService.historial(req.usuario, req.params.id) });
 }
 
-module.exports = { listar, obtener, crear, cambiarEstado, cambiarAtencion, actualizarDatos, historial };
+// Seguimiento automático (CC-05): cómo va la obra, armado con los datos del proyecto.
+async function resumen(req, res) {
+  res.json({ resumen: await resumenService.obtener(req.usuario, req.params.id) });
+}
+
+module.exports = {
+  listar, obtener, crear, cambiarEstado, cambiarAtencion, actualizarDatos, historial, resumen,
+};

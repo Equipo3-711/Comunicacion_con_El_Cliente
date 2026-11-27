@@ -18,6 +18,7 @@ router.patch('/:id', soloAdmin, proyectos.actualizarDatos);
 router.patch('/:id/estado', soloAdmin, proyectos.cambiarEstado);
 router.patch('/:id/atencion', soloAdmin, proyectos.cambiarAtencion);
 router.get('/:id/historial', proyectos.historial);
+router.get('/:id/resumen', proyectos.resumen);
 
 // Fotos opcionales del avance: hasta 5 imágenes en el campo "fotos" (RF-07).
 router.post(
