@@ -114,4 +114,14 @@ Cada historia se demuestra en el bloque del guion que la menciona, con el criter
 
 ## Retrospectiva
 
-_La escribe Romina después de la presentación: qué funcionó, qué no y qué cambia el equipo para la presentación con el cliente real._
+### ¿Qué funcionó bien?
+
+Durante el desarrollo y la presentación del proyecto hubo una buena organización y colaboración entre los integrantes del equipo. La comunicación permitió trabajar de manera coordinada y cumplir con las actividades asignadas. Además, los cambios solicitados durante el desarrollo fueron atendidos y corregidos satisfactoriamente, lo que permitió mejorar el sistema y cumplir con los requerimientos establecidos.
+
+### ¿Qué no funcionó o qué dificultades tuvimos?
+
+Al inicio del proyecto, no teníamos completamente claro qué necesitaba el cliente ni cómo esperaba que funcionara el sistema. Esto hizo necesario revisar y aclarar algunos requerimientos durante el desarrollo. Sin embargo, conforme avanzó el proyecto, logramos comprender mejor sus necesidades y realizar los ajustes correspondientes.
+
+### ¿Qué cambiaríamos si trabajáramos nuevamente con un cliente real?
+
+Si volviéramos a desarrollar este proyecto, dedicaríamos más tiempo a tener reuniones privadas con el cliente, en un espacio donde pudiera expresar sus necesidades, dudas y expectativas con mayor tranquilidad, sin estar limitados por el tiempo o por tener que hablar frente a todo el equipo. Esto nos permitiría comprender mejor sus requerimientos desde el inicio, evitar confusiones y desarrollar una solución más cercana a lo que realmente necesita.
